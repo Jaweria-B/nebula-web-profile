@@ -1,7 +1,7 @@
+
 import React, { useState } from 'react';
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from './ui/carousel';
 import { ExternalLink, Github } from 'lucide-react';
-import SectionMeteors from './SectionMeteors';
 
 interface Project {
   title: string;
@@ -198,160 +198,120 @@ const ProjectsSection = () => {
   ];
 
   return (
-    <section id="projects" className="py-20 relative overflow-hidden">
-      <SectionMeteors sectionId="projects" meteorCount={4} colors={['#60a5fa', '#a78bfa', '#f472b6']} />
-      
-      {/* Galactic Elements */}
-      <div className="absolute top-10 right-10 w-24 h-24 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-full blur-xl animate-pulse"></div>
-      <div className="absolute bottom-20 left-20 w-32 h-32 bg-gradient-to-r from-blue-500/15 to-cyan-500/15 rounded-full blur-2xl animate-bounce"></div>
-      
-      <div className="container mx-auto px-6 relative z-10">
+    <section id="projects" className="py-20 relative">
+      <div className="container mx-auto px-6">
         <div className="text-center mb-16">
-          <h2 className="text-6xl font-bold text-gradient mb-6 floating-element">
-            Project Galaxy
+          <h2 className="text-5xl font-bold text-gradient mb-6 floating-element">
+            Featured Projects
           </h2>
           <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            Explore my stellar portfolio across Web Development, Machine Learning, and AI Agents. 
+            Explore my portfolio across Web Development, Machine Learning, and AI Agents. 
             Each project showcases innovation, technical excellence, and real-world impact.
           </p>
         </div>
 
-        {/* Enhanced Filter Buttons */}
-        <div className="flex flex-wrap justify-center gap-6 mb-16">
+        {/* Filter Buttons */}
+        <div className="flex flex-wrap justify-center gap-4 mb-12">
           {filterButtons.map((button) => (
             <button
               key={button.id}
               onClick={() => setActiveFilter(button.id as any)}
-              className={`relative px-8 py-4 rounded-full font-bold text-lg transition-all duration-500 border-2 backdrop-blur-sm ${
-                activeFilter === button.id 
-                  ? 'bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white border-transparent shadow-2xl scale-110' 
-                  : 'bg-black/30 text-gray-300 border-gray-600 hover:border-blue-400 hover:text-blue-400 hover:scale-105'
+              className={`filter-button ${
+                activeFilter === button.id ? 'active' : 'inactive'
               }`}
             >
-              <span className="relative z-10">{button.label}</span>
+              {button.label}
               <span className="ml-2 text-sm opacity-75">({button.count})</span>
-              {activeFilter === button.id && (
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full blur opacity-50 animate-pulse"></div>
-              )}
             </button>
           ))}
         </div>
 
-        {/* Enhanced Projects Carousel */}
+        {/* Projects Carousel */}
         <div className="relative max-w-7xl mx-auto">
-          <Carousel className="w-full" opts={{ align: "start", loop: true }}>
-            <CarouselContent className="-ml-6">
+          <Carousel className="w-full">
+            <CarouselContent className="-ml-4">
               {filteredProjects.map((project, index) => (
-                <CarouselItem key={index} className="pl-6 md:basis-1/2 lg:basis-1/3">
-                  <div className="group relative">
-                    {/* Cosmic Glow Effect */}
-                    <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-2xl blur opacity-0 group-hover:opacity-30 transition-opacity duration-500"></div>
+                <CarouselItem key={index} className="pl-4 md:basis-1/2 lg:basis-1/3">
+                  <div className="glass-effect rounded-2xl p-6 h-full group hover:scale-105 transition-all duration-300 nebula-effect">
+                    <div className="relative overflow-hidden rounded-xl mb-4">
+                      <img 
+                        src={project.image} 
+                        alt={project.title}
+                        className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                    </div>
                     
-                    <div className="relative glass-effect rounded-2xl p-6 h-full group-hover:scale-105 transition-all duration-500 nebula-effect border border-gray-700/50 group-hover:border-blue-400/50">
-                      <div className="relative overflow-hidden rounded-xl mb-6">
-                        <img 
-                          src={project.image} 
-                          alt={project.title}
-                          className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-500"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                        
-                        {/* Floating particles on hover */}
-                        <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                          {[...Array(6)].map((_, i) => (
-                            <div
-                              key={i}
-                              className="absolute w-1 h-1 bg-blue-400 rounded-full animate-pulse"
-                              style={{
-                                left: `${Math.random() * 100}%`,
-                                top: `${Math.random() * 100}%`,
-                                animationDelay: `${i * 0.2}s`
-                              }}
-                            />
-                          ))}
-                        </div>
-                      </div>
-                      
-                      <h3 className="text-xl font-bold text-white mb-3 group-hover:text-gradient transition-all duration-500">
-                        {project.title}
-                      </h3>
-                      
-                      <p className="text-gray-300 text-sm mb-4 line-clamp-3 group-hover:text-gray-200 transition-colors duration-300">
-                        {project.description}
-                      </p>
-                      
-                      <div className="flex flex-wrap gap-2 mb-6">
-                        {project.tech.slice(0, 3).map((tech, techIndex) => (
-                          <span 
-                            key={techIndex}
-                            className="px-3 py-1 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full text-xs text-blue-300 border border-blue-500/30 hover:from-blue-500/30 hover:to-purple-500/30 transition-all duration-300"
-                          >
-                            {tech}
-                          </span>
-                        ))}
-                        {project.tech.length > 3 && (
-                          <span className="px-3 py-1 bg-gray-500/20 rounded-full text-xs text-gray-400 border border-gray-500/30">
-                            +{project.tech.length - 3} more
-                          </span>
-                        )}
-                      </div>
-                      
-                      <div className="flex gap-3 mt-auto">
-                        {project.liveUrl && (
-                          <a 
-                            href={project.liveUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg text-white text-sm font-semibold hover:from-green-600 hover:to-emerald-600 transition-all duration-300 flex-1 justify-center hover:scale-105"
-                          >
-                            <ExternalLink size={14} />
-                            Live Demo
-                          </a>
-                        )}
-                        {project.githubUrl && (
-                          <a 
-                            href={project.githubUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-2 px-4 py-2 glass-effect rounded-lg text-white text-sm font-semibold hover:bg-white/10 transition-all duration-300 flex-1 justify-center hover:scale-105"
-                          >
-                            <Github size={14} />
-                            Code
-                          </a>
-                        )}
-                      </div>
+                    <h3 className="text-xl font-bold text-white mb-3 group-hover:text-gradient transition-all duration-300">
+                      {project.title}
+                    </h3>
+                    
+                    <p className="text-gray-300 text-sm mb-4 line-clamp-3">
+                      {project.description}
+                    </p>
+                    
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {project.tech.slice(0, 3).map((tech, techIndex) => (
+                        <span 
+                          key={techIndex}
+                          className="px-2 py-1 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full text-xs text-blue-300 border border-blue-500/30"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                      {project.tech.length > 3 && (
+                        <span className="px-2 py-1 bg-gray-500/20 rounded-full text-xs text-gray-400">
+                          +{project.tech.length - 3} more
+                        </span>
+                      )}
+                    </div>
+                    
+                    <div className="flex gap-3 mt-auto">
+                      {project.liveUrl && (
+                        <a 
+                          href={project.liveUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-2 px-3 py-2 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg text-white text-sm font-semibold hover:from-green-600 hover:to-emerald-600 transition-all duration-300 flex-1 justify-center"
+                        >
+                          <ExternalLink size={14} />
+                          Live
+                        </a>
+                      )}
+                      {project.githubUrl && (
+                        <a 
+                          href={project.githubUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="flex items-center gap-2 px-3 py-2 glass-effect rounded-lg text-white text-sm font-semibold hover:bg-white/10 transition-all duration-300 flex-1 justify-center"
+                        >
+                          <Github size={14} />
+                          Code
+                        </a>
+                      )}
                     </div>
                   </div>
                 </CarouselItem>
               ))}
             </CarouselContent>
-            <CarouselPrevious className="glass-effect border-none text-white hover:bg-white/20 -left-16 w-12 h-12" />
-            <CarouselNext className="glass-effect border-none text-white hover:bg-white/20 -right-16 w-12 h-12" />
+            <CarouselPrevious className="glass-effect border-none text-white hover:bg-white/20" />
+            <CarouselNext className="glass-effect border-none text-white hover:bg-white/20" />
           </Carousel>
         </div>
 
-        {/* Enhanced Project Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20">
-          <div className="relative group">
-            <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl blur opacity-0 group-hover:opacity-50 transition-opacity duration-500"></div>
-            <div className="relative text-center glass-effect p-8 rounded-xl nebula-effect group-hover:scale-105 transition-transform duration-300">
-              <div className="text-5xl font-bold text-gradient mb-2">50+</div>
-              <div className="text-gray-400">Total Projects</div>
-            </div>
+        {/* Project Stats */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
+          <div className="text-center glass-effect p-6 rounded-xl nebula-effect">
+            <div className="text-4xl font-bold text-gradient">50+</div>
+            <div className="text-gray-400">Total Projects</div>
           </div>
-          <div className="relative group">
-            <div className="absolute -inset-1 bg-gradient-to-r from-purple-500 to-pink-500 rounded-xl blur opacity-0 group-hover:opacity-50 transition-opacity duration-500"></div>
-            <div className="relative text-center glass-effect p-8 rounded-xl nebula-effect group-hover:scale-105 transition-transform duration-300">
-              <div className="text-5xl font-bold text-gradient mb-2">100%</div>
-              <div className="text-gray-400">Client Satisfaction</div>
-            </div>
+          <div className="text-center glass-effect p-6 rounded-xl nebula-effect">
+            <div className="text-4xl font-bold text-gradient">100%</div>
+            <div className="text-gray-400">Client Satisfaction</div>
           </div>
-          <div className="relative group">
-            <div className="absolute -inset-1 bg-gradient-to-r from-pink-500 to-red-500 rounded-xl blur opacity-0 group-hover:opacity-50 transition-opacity duration-500"></div>
-            <div className="relative text-center glass-effect p-8 rounded-xl nebula-effect group-hover:scale-105 transition-transform duration-300">
-              <div className="text-5xl font-bold text-gradient mb-2">3+</div>
-              <div className="text-gray-400">Years Experience</div>
-            </div>
+          <div className="text-center glass-effect p-6 rounded-xl nebula-effect">
+            <div className="text-4xl font-bold text-gradient">3+</div>
+            <div className="text-gray-400">Years Experience</div>
           </div>
         </div>
       </div>
