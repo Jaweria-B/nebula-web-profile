@@ -1,6 +1,5 @@
 
 import React, { useEffect, useState } from 'react';
-import DynamicCosmicElements from './DynamicCosmicElements';
 
 const SolarSystemHero = () => {
   const [stars, setStars] = useState<Array<{ id: number; left: string; top: string; size: string; delay: string }>>([]);
@@ -25,24 +24,31 @@ const SolarSystemHero = () => {
 
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Dynamic Cosmic Elements */}
-      <DynamicCosmicElements 
-        sectionId="hero" 
-        density="high" 
-        types={['star', 'nebula', 'comet']}
-      />
-
       {/* Animated Stars */}
       {stars.map((star) => (
         <div
           key={star.id}
-          className="cosmic-star"
+          className="star"
           style={{
             left: star.left,
             top: star.top,
             width: star.size,
             height: star.size,
             animationDelay: star.delay
+          }}
+        />
+      ))}
+
+      {/* Meteors */}
+      {[...Array(5)].map((_, i) => (
+        <div
+          key={i}
+          className="meteor"
+          style={{
+            left: `${Math.random() * 100}%`,
+            top: `${Math.random() * 50}%`,
+            animationDelay: `${i * 2}s`,
+            animationDuration: `${3 + Math.random() * 2}s`
           }}
         />
       ))}
@@ -110,12 +116,10 @@ const SolarSystemHero = () => {
         </div>
       </div>
 
-      {/* Enhanced Constellation Lines */}
+      {/* Constellation Lines */}
       <div className="absolute top-1/4 left-1/4 constellation-line w-32 transform rotate-12"></div>
       <div className="absolute top-3/4 right-1/4 constellation-line w-24 transform -rotate-45"></div>
       <div className="absolute bottom-1/4 left-1/3 constellation-line w-40 transform rotate-45"></div>
-      <div className="absolute top-1/2 left-1/6 constellation-line w-28 transform rotate-75"></div>
-      <div className="absolute bottom-1/3 right-1/5 constellation-line w-36 transform -rotate-30"></div>
     </div>
   );
 };
