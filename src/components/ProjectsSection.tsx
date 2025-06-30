@@ -1,15 +1,15 @@
 
 import React, { useState } from 'react';
-import { ChevronLeft, ChevronRight, ExternalLink, Github } from 'lucide-react';
+import { ExternalLink, Github, Code, Brain, Bot } from 'lucide-react';
 
 interface Project {
   title: string;
   description: string;
   image: string;
   tech: string[];
-  liveUrl?: string;
-  githubUrl?: string;
-  category: string;
+  liveUrl: string;
+  githubUrl: string;
+  category: 'web' | 'ml' | 'ai';
 }
 
 interface ProjectsSectionProps {
@@ -23,11 +23,10 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({
   mlProjects, 
   aiAgentProjects 
 }) => {
-  const [activeCategory, setActiveCategory] = useState<'web' | 'ml' | 'ai'>('web');
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [activeFilter, setActiveFilter] = useState<'web' | 'ml' | 'ai'>('web');
 
   const getCurrentProjects = () => {
-    switch (activeCategory) {
+    switch (activeFilter) {
       case 'web': return webDevProjects;
       case 'ml': return mlProjects;
       case 'ai': return aiAgentProjects;
@@ -35,161 +34,141 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({
     }
   };
 
-  const projects = getCurrentProjects();
-
-  const nextSlide = () => {
-    setCurrentIndex((prev) => (prev + 1) % projects.length);
-  };
-
-  const prevSlide = () => {
-    setCurrentIndex((prev) => (prev - 1 + projects.length) % projects.length);
-  };
-
-  const handleCategoryChange = (category: 'web' | 'ml' | 'ai') => {
-    setActiveCategory(category);
-    setCurrentIndex(0);
+  const getFilterTitle = () => {
+    switch (activeFilter) {
+      case 'web': return 'Web Development Projects';
+      case 'ml': return 'Machine Learning Projects';
+      case 'ai': return 'AI & Agent Projects';
+      default: return 'Projects';
+    }
   };
 
   return (
     <section id="projects" className="py-20 relative z-10">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
-          <h2 className="text-5xl font-bold text-gradient mb-6">
-            Featured Projects
-          </h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            Explore my portfolio across different domains. Each project showcases innovation, 
-            technical excellence, and real-world impact.
+          <h2 className="text-5xl font-bold text-gradient mb-6">My Projects</h2>
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-12">
+            Explore my diverse portfolio spanning web development, machine learning, and AI agents
           </p>
-        </div>
 
-        {/* Category Filters */}
-        <div className="flex justify-center mb-12">
-          <div className="glass-effect rounded-full p-2">
+          {/* Enhanced Filter Buttons */}
+          <div className="flex flex-wrap justify-center gap-4 mb-12">
             <button
-              onClick={() => handleCategoryChange('web')}
-              className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 ${
-                activeCategory === 'web'
-                  ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white'
-                  : 'text-gray-300 hover:text-white'
+              onClick={() => setActiveFilter('web')}
+              className={`group relative px-8 py-4 rounded-2xl transition-all duration-500 transform hover:scale-105 ${
+                activeFilter === 'web' 
+                  ? 'glass-effect nebula-glow text-white shadow-lg shadow-blue-500/25' 
+                  : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white'
               }`}
             >
-              Web Development
+              <div className="flex items-center gap-3">
+                <Code className={`w-5 h-5 transition-colors duration-300 ${
+                  activeFilter === 'web' ? 'text-blue-400' : 'text-gray-500'
+                }`} />
+                <span className="font-semibold text-lg">Web Development</span>
+              </div>
+              {activeFilter === 'web' && (
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-blue-500/20 to-purple-500/20 animate-pulse"></div>
+              )}
             </button>
+
             <button
-              onClick={() => handleCategoryChange('ml')}
-              className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 ${
-                activeCategory === 'ml'
-                  ? 'bg-gradient-to-r from-green-600 to-emerald-600 text-white'
-                  : 'text-gray-300 hover:text-white'
+              onClick={() => setActiveFilter('ml')}
+              className={`group relative px-8 py-4 rounded-2xl transition-all duration-500 transform hover:scale-105 ${
+                activeFilter === 'ml' 
+                  ? 'glass-effect nebula-glow text-white shadow-lg shadow-green-500/25' 
+                  : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white'
               }`}
             >
-              Machine Learning
+              <div className="flex items-center gap-3">
+                <Brain className={`w-5 h-5 transition-colors duration-300 ${
+                  activeFilter === 'ml' ? 'text-green-400' : 'text-gray-500'
+                }`} />
+                <span className="font-semibold text-lg">Machine Learning</span>
+              </div>
+              {activeFilter === 'ml' && (
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-green-500/20 to-blue-500/20 animate-pulse"></div>
+              )}
             </button>
+
             <button
-              onClick={() => handleCategoryChange('ai')}
-              className={`px-6 py-3 rounded-full font-semibold transition-all duration-300 ${
-                activeCategory === 'ai'
-                  ? 'bg-gradient-to-r from-purple-600 to-pink-600 text-white'
-                  : 'text-gray-300 hover:text-white'
+              onClick={() => setActiveFilter('ai')}
+              className={`group relative px-8 py-4 rounded-2xl transition-all duration-500 transform hover:scale-105 ${
+                activeFilter === 'ai' 
+                  ? 'glass-effect nebula-glow text-white shadow-lg shadow-purple-500/25' 
+                  : 'bg-white/5 text-gray-400 hover:bg-white/10 hover:text-white'
               }`}
             >
-              AI & Agents
+              <div className="flex items-center gap-3">
+                <Bot className={`w-5 h-5 transition-colors duration-300 ${
+                  activeFilter === 'ai' ? 'text-purple-400' : 'text-gray-500'
+                }`} />
+                <span className="font-semibold text-lg">AI & Agents</span>
+              </div>
+              {activeFilter === 'ai' && (
+                <div className="absolute inset-0 rounded-2xl bg-gradient-to-r from-purple-500/20 to-pink-500/20 animate-pulse"></div>
+              )}
             </button>
           </div>
         </div>
 
-        {/* Project Slider */}
-        <div className="relative max-w-6xl mx-auto">
-          <div className="relative overflow-hidden rounded-2xl glass-effect">
-            <div 
-              className="flex transition-transform duration-500 ease-in-out"
-              style={{ transform: `translateX(-${currentIndex * 100}%)` }}
-            >
-              {projects.map((project, index) => (
-                <div key={index} className="w-full flex-shrink-0">
-                  <div className="flex flex-col lg:flex-row items-center p-8">
-                    <div className="lg:w-1/2 mb-6 lg:mb-0 lg:pr-8">
-                      <img 
-                        src={project.image} 
-                        alt={project.title}
-                        className="w-full h-64 object-cover rounded-xl shadow-2xl nebula-glow"
-                      />
-                    </div>
-                    
-                    <div className="lg:w-1/2 text-center lg:text-left">
-                      <h4 className="text-2xl font-bold text-white mb-4">{project.title}</h4>
-                      <p className="text-gray-300 mb-6 leading-relaxed">{project.description}</p>
-                      
-                      <div className="flex flex-wrap gap-2 mb-6 justify-center lg:justify-start">
-                        {project.tech.map((tech, techIndex) => (
-                          <span 
-                            key={techIndex}
-                            className="px-3 py-1 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full text-sm text-blue-300 border border-blue-500/30"
-                          >
-                            {tech}
-                          </span>
-                        ))}
-                      </div>
-                      
-                      <div className="flex gap-4 justify-center lg:justify-start">
-                        {project.liveUrl && (
-                          <a 
-                            href={project.liveUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-green-500 to-emerald-500 rounded-lg text-white font-semibold hover:from-green-600 hover:to-emerald-600 transition-all duration-300 transform hover:scale-105"
-                          >
-                            <ExternalLink size={16} />
-                            Live Demo
-                          </a>
-                        )}
-                        {project.githubUrl && (
-                          <a 
-                            href={project.githubUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex items-center gap-2 px-4 py-2 glass-effect rounded-lg text-white font-semibold hover:bg-white/10 transition-all duration-300 transform hover:scale-105"
-                          >
-                            <Github size={16} />
-                            Code
-                          </a>
-                        )}
-                      </div>
-                    </div>
+        {/* Projects Display */}
+        <div className="mb-8">
+          <h3 className="text-3xl font-bold text-center text-gradient mb-12 animate-fade-in">
+            {getFilterTitle()}
+          </h3>
+          
+          {/* Projects Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {getCurrentProjects().map((project, index) => (
+              <div 
+                key={index}
+                className="glass-effect rounded-2xl overflow-hidden transform transition-all duration-500 hover:scale-105 nebula-glow animate-fade-in"
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
+                <div className="relative h-48 overflow-hidden">
+                  <img 
+                    src={project.image} 
+                    alt={project.title}
+                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+                </div>
+                
+                <div className="p-6">
+                  <h4 className="text-xl font-bold text-white mb-3">{project.title}</h4>
+                  <p className="text-gray-300 text-sm mb-4 leading-relaxed">{project.description}</p>
+                  
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {project.tech.slice(0, 4).map((tech, techIndex) => (
+                      <span 
+                        key={techIndex}
+                        className="px-3 py-1 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full text-xs text-blue-300 border border-blue-500/30"
+                      >
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+                  
+                  <div className="flex gap-3">
+                    <a 
+                      href={project.liveUrl}
+                      className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg text-white text-sm font-medium hover:from-blue-600 hover:to-purple-600 transition-all duration-300 transform hover:scale-105"
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                      Live Demo
+                    </a>
+                    <a 
+                      href={project.githubUrl}
+                      className="flex items-center gap-2 px-4 py-2 bg-white/10 rounded-lg text-white text-sm font-medium hover:bg-white/20 transition-all duration-300 transform hover:scale-105"
+                    >
+                      <Github className="w-4 h-4" />
+                      Code
+                    </a>
                   </div>
                 </div>
-              ))}
-            </div>
-
-            {/* Navigation Arrows */}
-            <button 
-              onClick={prevSlide}
-              className="absolute left-4 top-1/2 transform -translate-y-1/2 glass-effect p-3 rounded-full hover:bg-white/10 transition-all duration-300 hover:scale-110"
-            >
-              <ChevronLeft className="w-6 h-6 text-white" />
-            </button>
-            
-            <button 
-              onClick={nextSlide}
-              className="absolute right-4 top-1/2 transform -translate-y-1/2 glass-effect p-3 rounded-full hover:bg-white/10 transition-all duration-300 hover:scale-110"
-            >
-              <ChevronRight className="w-6 h-6 text-white" />
-            </button>
-          </div>
-
-          {/* Dots Indicator */}
-          <div className="flex justify-center mt-6 gap-2">
-            {projects.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setCurrentIndex(index)}
-                className={`w-3 h-3 rounded-full transition-all duration-300 ${
-                  index === currentIndex 
-                    ? 'bg-blue-500 scale-125 nebula-glow' 
-                    : 'bg-gray-600 hover:bg-gray-500'
-                }`}
-              />
+              </div>
             ))}
           </div>
         </div>

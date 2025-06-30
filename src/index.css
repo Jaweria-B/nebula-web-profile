@@ -52,7 +52,7 @@
   }
 }
 
-/* Enhanced Solar System Animations */
+/* Enhanced Solar System Animations - Slower speeds */
 @keyframes orbit {
   0% { transform: rotate(0deg) translateX(var(--orbit-radius)) rotate(0deg); }
   100% { transform: rotate(360deg) translateX(var(--orbit-radius)) rotate(-360deg); }
@@ -114,7 +114,7 @@
   position: absolute;
   background: white;
   border-radius: 50%;
-  animation: twinkle 3s infinite;
+  animation: twinkle 4s infinite; /* Slower twinkle */
 }
 
 .meteor {
@@ -123,54 +123,54 @@
   height: 2px;
   background: linear-gradient(45deg, #fff, #0ea5e9);
   border-radius: 50%;
-  animation: meteor 3s linear infinite;
+  animation: meteor 5s linear infinite; /* Slower meteor */
 }
 
 .explosion {
-  animation: explosion 2s infinite;
+  animation: explosion 3s infinite; /* Slower explosion */
 }
 
 .nebula {
-  animation: nebula-drift 8s infinite;
+  animation: nebula-drift 12s infinite; /* Much slower nebula */
 }
 
 .falling-star {
-  animation: falling-star 4s linear infinite;
+  animation: falling-star 6s linear infinite; /* Slower falling star */
 }
 
 .animate-twinkle {
-  animation: twinkle 3s infinite;
+  animation: twinkle 4s infinite;
 }
 
 .animate-explosion {
-  animation: explosion 2s infinite;
+  animation: explosion 3s infinite;
 }
 
 .animate-nebula {
-  animation: nebula-drift 8s infinite;
+  animation: nebula-drift 12s infinite;
 }
 
 .animate-meteor {
-  animation: meteor 3s linear infinite;
+  animation: meteor 5s linear infinite;
 }
 
 .animate-falling-star {
-  animation: falling-star 4s linear infinite;
+  animation: falling-star 6s linear infinite;
 }
 
 .animate-fade-in {
-  animation: fade-in 0.6s ease-out;
+  animation: fade-in 0.8s ease-out;
 }
 
 .animate-scale-in {
-  animation: scale-in 0.6s ease-out;
+  animation: scale-in 0.8s ease-out;
 }
 
 .constellation-line {
   position: absolute;
   height: 1px;
   background: linear-gradient(90deg, transparent, rgba(147, 197, 253, 0.4), transparent);
-  animation: constellation-pulse 4s infinite;
+  animation: constellation-pulse 6s infinite; /* Slower pulse */
 }
 
 .sun {
@@ -178,7 +178,7 @@
   height: 60px;
   background: radial-gradient(circle, #fbbf24 0%, #f59e0b 100%);
   border-radius: 50%;
-  animation: pulse-glow 2s infinite;
+  animation: pulse-glow 3s infinite; /* Slower glow */
 }
 
 .planet {
@@ -186,12 +186,13 @@
   position: absolute;
 }
 
+/* Slower planet orbits */
 .mercury { 
   width: 8px; 
   height: 8px; 
   background: #8c7853; 
   --orbit-radius: 80px;
-  animation: orbit 10s linear infinite;
+  animation: orbit 15s linear infinite;
 }
 
 .venus { 
@@ -199,7 +200,7 @@
   height: 12px; 
   background: #ffc649; 
   --orbit-radius: 100px;
-  animation: orbit 15s linear infinite;
+  animation: orbit 20s linear infinite;
 }
 
 .earth { 
@@ -207,7 +208,7 @@
   height: 14px; 
   background: linear-gradient(45deg, #4f46e5, #06b6d4); 
   --orbit-radius: 120px;
-  animation: orbit 20s linear infinite;
+  animation: orbit 25s linear infinite;
 }
 
 .mars { 
@@ -215,7 +216,7 @@
   height: 10px; 
   background: #dc2626; 
   --orbit-radius: 140px;
-  animation: orbit 25s linear infinite;
+  animation: orbit 30s linear infinite;
 }
 
 .jupiter { 
@@ -223,7 +224,7 @@
   height: 24px; 
   background: linear-gradient(45deg, #d97706, #92400e); 
   --orbit-radius: 180px;
-  animation: orbit 35s linear infinite;
+  animation: orbit 40s linear infinite;
 }
 
 .saturn { 
@@ -231,7 +232,7 @@
   height: 20px; 
   background: #facc15; 
   --orbit-radius: 200px;
-  animation: orbit 40s linear infinite;
+  animation: orbit 45s linear infinite;
 }
 
 .uranus { 
@@ -239,7 +240,7 @@
   height: 16px; 
   background: #0ea5e9; 
   --orbit-radius: 220px;
-  animation: orbit 45s linear infinite;
+  animation: orbit 50s linear infinite;
 }
 
 .neptune { 
@@ -247,5 +248,5 @@
   height: 16px; 
   background: #1e40af; 
   --orbit-radius: 240px;
-  animation: orbit 50s linear infinite;
+  animation: orbit 55s linear infinite;
 }

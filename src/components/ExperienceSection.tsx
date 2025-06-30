@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Building, Calendar, MapPin, Briefcase, Users, Trophy, Code } from 'lucide-react';
+import { Building, Calendar, MapPin, Briefcase, Users, Trophy, Code, Zap, Star, Award } from 'lucide-react';
 
 interface Experience {
   company: string;
@@ -121,101 +121,109 @@ const ExperienceSection = () => {
           </p>
         </div>
 
-        {/* Horizontal Timeline */}
-        <div className="relative max-w-7xl mx-auto">
-          {/* Timeline Line */}
-          <div className="absolute top-1/2 left-0 right-0 h-1 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 rounded-full transform -translate-y-1/2"></div>
+        {/* Experience Timeline */}
+        <div className="relative max-w-6xl mx-auto">
+          {/* Central Timeline Line */}
+          <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-blue-500 via-purple-500 to-pink-500 rounded-full"></div>
           
           {/* Experience Cards */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="space-y-16">
             {experiences.map((exp, index) => (
               <div 
                 key={index} 
-                className={`glass-effect rounded-2xl p-6 transform transition-all duration-500 hover:scale-105 nebula-glow ${
-                  index % 2 === 0 ? 'animate-fade-in' : 'animate-scale-in'
+                className={`relative flex items-center w-full ${
+                  index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'
                 }`}
-                style={{ animationDelay: `${index * 0.2}s` }}
               >
                 {/* Timeline Node */}
-                <div className="relative -mt-12 mb-6 flex justify-center">
-                  <div className="w-6 h-6 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full border-4 border-background">
-                    <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full animate-ping opacity-30"></div>
-                  </div>
+                <div className="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full border-4 border-background z-10">
+                  <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full animate-ping opacity-20"></div>
                 </div>
 
-                {/* Company Header */}
-                <div className="text-center mb-4">
-                  <h3 className="text-xl font-bold text-white mb-2">{exp.position}</h3>
-                  <div className="flex items-center justify-center gap-2 text-blue-400 font-semibold mb-2">
-                    <Building className="w-4 h-4" />
-                    {exp.company}
-                  </div>
-                  <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${
-                    exp.type === 'Leadership' ? 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30' :
-                    exp.type === 'Freelance' ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' :
-                    exp.type === 'Internship' ? 'bg-green-500/20 text-green-400 border border-green-500/30' :
-                    'bg-purple-500/20 text-purple-400 border border-purple-500/30'
-                  }`}>
-                    {exp.type}
-                  </span>
-                </div>
+                {/* Experience Card */}
+                <div className={`w-5/12 ${index % 2 === 0 ? 'pr-8' : 'pl-8'}`}>
+                  <div 
+                    className="glass-effect rounded-2xl p-8 transform transition-all duration-500 hover:scale-105 nebula-glow animate-fade-in"
+                    style={{ animationDelay: `${index * 0.2}s` }}
+                  >
+                    {/* Company Header */}
+                    <div className="mb-6">
+                      <div className="flex items-center gap-3 mb-3">
+                        <Building className="w-6 h-6 text-blue-400" />
+                        <h3 className="text-2xl font-bold text-white">{exp.company}</h3>
+                      </div>
+                      <h4 className="text-xl text-gradient font-semibold mb-3">{exp.position}</h4>
+                      
+                      <div className="flex flex-wrap gap-4 text-sm text-gray-400 mb-4">
+                        <div className="flex items-center gap-2">
+                          <Calendar className="w-4 h-4" />
+                          {exp.duration}
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <MapPin className="w-4 h-4" />
+                          {exp.location}
+                        </div>
+                      </div>
 
-                {/* Duration and Location */}
-                <div className="flex flex-col gap-2 mb-4 text-gray-400 text-sm text-center">
-                  <div className="flex items-center justify-center gap-1">
-                    <Calendar className="w-3 h-3" />
-                    {exp.duration}
-                  </div>
-                  <div className="flex items-center justify-center gap-1">
-                    <MapPin className="w-3 h-3" />
-                    {exp.location}
-                  </div>
-                </div>
+                      <span className={`inline-block px-4 py-2 rounded-full text-sm font-semibold ${
+                        exp.type === 'Leadership' ? 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30' :
+                        exp.type === 'Freelance' ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' :
+                        exp.type === 'Internship' ? 'bg-green-500/20 text-green-400 border border-green-500/30' :
+                        'bg-purple-500/20 text-purple-400 border border-purple-500/30'
+                      }`}>
+                        {exp.type}
+                      </span>
+                    </div>
 
-                {/* Description */}
-                <ul className="space-y-2 mb-4 text-sm">
-                  {exp.description.slice(0, 3).map((item, itemIndex) => (
-                    <li key={itemIndex} className="text-gray-300 flex items-start gap-2">
-                      <span className="w-1 h-1 bg-blue-500 rounded-full mt-2 flex-shrink-0"></span>
-                      {item}
-                    </li>
-                  ))}
-                </ul>
+                    {/* Description */}
+                    <ul className="space-y-3 mb-6">
+                      {exp.description.map((item, itemIndex) => (
+                        <li key={itemIndex} className="text-gray-300 flex items-start gap-3">
+                          <Star className="w-4 h-4 text-blue-400 mt-0.5 flex-shrink-0" />
+                          <span className="text-sm leading-relaxed">{item}</span>
+                        </li>
+                      ))}
+                    </ul>
 
-                {/* Skills */}
-                <div className="flex flex-wrap gap-1 mb-3">
-                  {exp.skills.slice(0, 4).map((skill, skillIndex) => (
-                    <span 
-                      key={skillIndex}
-                      className="px-2 py-1 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-full text-xs text-purple-300 border border-purple-500/30"
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-
-                {/* Highlights */}
-                {exp.highlights && (
-                  <div className="border-t border-gray-700 pt-3">
-                    <div className="flex flex-wrap gap-1">
-                      {exp.highlights.map((highlight, hIndex) => (
+                    {/* Skills */}
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {exp.skills.map((skill, skillIndex) => (
                         <span 
-                          key={hIndex}
-                          className="inline-flex items-center gap-1 px-2 py-1 bg-yellow-500/20 text-yellow-300 rounded text-xs"
+                          key={skillIndex}
+                          className="px-3 py-1 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-full text-xs text-purple-300 border border-purple-500/30"
                         >
-                          <Trophy className="w-3 h-3" />
-                          {highlight}
+                          {skill}
                         </span>
                       ))}
                     </div>
+
+                    {/* Highlights */}
+                    {exp.highlights && (
+                      <div className="border-t border-gray-700 pt-4">
+                        <div className="flex flex-wrap gap-2">
+                          {exp.highlights.map((highlight, hIndex) => (
+                            <span 
+                              key={hIndex}
+                              className="inline-flex items-center gap-2 px-3 py-1 bg-yellow-500/20 text-yellow-300 rounded-lg text-xs"
+                            >
+                              <Award className="w-3 h-3" />
+                              {highlight}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
                   </div>
-                )}
+                </div>
+
+                {/* Empty space on the other side */}
+                <div className="w-5/12"></div>
               </div>
             ))}
           </div>
 
           {/* Experience Summary */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-16">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-20">
             <div className="text-center glass-effect p-6 rounded-xl hover:scale-105 transition-transform duration-300">
               <Briefcase className="w-8 h-8 text-blue-500 mx-auto mb-2" />
               <div className="text-3xl font-bold text-white">3+</div>
