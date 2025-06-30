@@ -18,7 +18,7 @@ const webDevProjects = [
     tech: ["React", "Node.js", "MongoDB", "Stripe", "JWT"],
     liveUrl: "https://example-ecommerce.com",
     githubUrl: "https://github.com/example",
-    category: "web"
+    category: "web" as const
   },
   {
     title: "Social Media Dashboard",
@@ -27,7 +27,7 @@ const webDevProjects = [
     tech: ["Vue.js", "Express", "PostgreSQL", "Chart.js", "WebSocket"],
     liveUrl: "https://example-dashboard.com",
     githubUrl: "https://github.com/example",
-    category: "web"
+    category: "web" as const
   },
   {
     title: "Learning Management System",
@@ -36,7 +36,7 @@ const webDevProjects = [
     tech: ["React", "Django", "AWS S3", "Redis", "Celery"],
     liveUrl: "https://example-lms.com",
     githubUrl: "https://github.com/example",
-    category: "web"
+    category: "web" as const
   },
   {
     title: "Real Estate Platform",
@@ -45,7 +45,7 @@ const webDevProjects = [
     tech: ["Next.js", "Prisma", "PostgreSQL", "MapBox", "Stripe"],
     liveUrl: "https://example-realestate.com",
     githubUrl: "https://github.com/example",
-    category: "web"
+    category: "web" as const
   },
   {
     title: "Healthcare Portal",
@@ -54,7 +54,7 @@ const webDevProjects = [
     tech: ["React", "Node.js", "MySQL", "WebRTC", "HIPAA"],
     liveUrl: "https://example-healthcare.com",
     githubUrl: "https://github.com/example",
-    category: "web"
+    category: "web" as const
   }
 ];
 
@@ -66,7 +66,7 @@ const mlProjects = [
     tech: ["Python", "scikit-learn", "Pandas", "TensorFlow", "Flask"],
     liveUrl: "https://example-analytics.com",
     githubUrl: "https://github.com/example",
-    category: "ml"
+    category: "ml" as const
   },
   {
     title: "Computer Vision System",
@@ -75,7 +75,7 @@ const mlProjects = [
     tech: ["PyTorch", "OpenCV", "YOLO", "FastAPI", "Docker"],
     liveUrl: "https://example-vision.com",
     githubUrl: "https://github.com/example",
-    category: "ml"
+    category: "ml" as const
   },
   {
     title: "NLP Sentiment Analyzer",
@@ -84,7 +84,7 @@ const mlProjects = [
     tech: ["Python", "NLTK", "Transformers", "SpaCy", "MongoDB"],
     liveUrl: "https://example-nlp.com",
     githubUrl: "https://github.com/example",
-    category: "ml"
+    category: "ml" as const
   },
   {
     title: "Recommendation Engine",
@@ -93,7 +93,7 @@ const mlProjects = [
     tech: ["Python", "Apache Spark", "MLlib", "Kafka", "Redis"],
     liveUrl: "https://example-recommender.com",
     githubUrl: "https://github.com/example",
-    category: "ml"
+    category: "ml" as const
   },
   {
     title: "Fraud Detection System",
@@ -102,7 +102,7 @@ const mlProjects = [
     tech: ["Python", "XGBoost", "Isolation Forest", "Kafka", "Elasticsearch"],
     liveUrl: "https://example-fraud.com",
     githubUrl: "https://github.com/example",
-    category: "ml"
+    category: "ml" as const
   }
 ];
 
@@ -114,7 +114,7 @@ const aiAgentProjects = [
     tech: ["OpenAI GPT", "LangChain", "Rasa", "Python", "WebSocket"],
     liveUrl: "https://example-chatbot.com",
     githubUrl: "https://github.com/example",
-    category: "ai"
+    category: "ai" as const
   },
   {
     title: "Autonomous Trading Agent",
@@ -123,7 +123,7 @@ const aiAgentProjects = [
     tech: ["Python", "TensorFlow", "Alpha Vantage", "MetaTrader", "QuantLib"],
     liveUrl: "https://example-trading.com",
     githubUrl: "https://github.com/example",
-    category: "ai"
+    category: "ai" as const
   },
   {
     title: "Content Generation AI",
@@ -132,7 +132,7 @@ const aiAgentProjects = [
     tech: ["OpenAI", "Stable Diffusion", "LangChain", "FFmpeg", "React"],
     liveUrl: "https://example-content.com",
     githubUrl: "https://github.com/example",
-    category: "ai"
+    category: "ai" as const
   },
   {
     title: "Smart Home Assistant",
@@ -141,7 +141,7 @@ const aiAgentProjects = [
     tech: ["Python", "Speech Recognition", "IoT", "MQTT", "TensorFlow"],
     liveUrl: "https://example-smarthome.com",
     githubUrl: "https://github.com/example",
-    category: "ai"
+    category: "ai" as const
   },
   {
     title: "Research Assistant AI",
@@ -150,7 +150,7 @@ const aiAgentProjects = [
     tech: ["OpenAI", "Semantic Scholar API", "LangChain", "Pinecone", "Streamlit"],
     liveUrl: "https://example-research.com",
     githubUrl: "https://github.com/example",
-    category: "ai"
+    category: "ai" as const
   }
 ];
 
