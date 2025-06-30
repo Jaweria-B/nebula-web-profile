@@ -109,63 +109,69 @@ const experiences: Experience[] = [
 
 const ExperienceSection = () => {
   return (
-    <section className="py-20 relative z-10">
-      <div className="container mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="text-5xl font-bold text-gradient mb-6">
+    <section className="py-12 md:py-20 relative z-10 overflow-hidden">
+      <div className="container mx-auto px-4 md:px-6">
+        <div className="text-center mb-12 md:mb-16">
+          <h2 className="text-3xl md:text-5xl font-bold text-gradient mb-4 md:mb-6 animate-[fade-in_0.8s_ease-out]">
             Professional Journey
           </h2>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+          <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto animate-[fade-in_0.8s_ease-out_0.2s_both]">
             My career spans leadership roles, freelance projects, and educational initiatives, 
             showcasing growth from developer to strategic leader across diverse tech domains.
           </p>
         </div>
 
-        {/* Experience Timeline */}
+        {/* Experience Timeline - Mobile First Design */}
         <div className="relative max-w-6xl mx-auto">
-          {/* Central Timeline Line */}
-          <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-blue-500 via-purple-500 to-pink-500 rounded-full"></div>
+          {/* Central Timeline Line - Properly sized */}
+          <div 
+            className="absolute left-4 md:left-1/2 md:transform md:-translate-x-1/2 w-0.5 md:w-1 bg-gradient-to-b from-blue-500 via-purple-500 to-pink-500 rounded-full"
+            style={{ 
+              height: `${(experiences.length - 1) * 280 + 200}px`,
+              maxHeight: `${experiences.length * 300}px`
+            }}
+          ></div>
           
           {/* Experience Cards */}
-          <div className="space-y-16">
+          <div className="space-y-8 md:space-y-16">
             {experiences.map((exp, index) => (
               <div 
                 key={index} 
-                className={`relative flex items-center w-full ${
-                  index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'
+                className={`relative flex items-start w-full animate-[slide-in-up_0.8s_ease-out] ${
+                  index % 2 === 0 ? 'md:flex-row' : 'md:flex-row-reverse'
                 }`}
+                style={{ animationDelay: `${index * 0.2}s`, animationFillMode: 'both' }}
               >
                 {/* Timeline Node */}
-                <div className="absolute left-1/2 transform -translate-x-1/2 w-6 h-6 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full border-4 border-background z-10">
+                <div className="absolute left-4 md:left-1/2 md:transform md:-translate-x-1/2 w-4 h-4 md:w-6 md:h-6 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full border-2 md:border-4 border-background z-10 mt-8">
                   <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-purple-500 rounded-full animate-ping opacity-20"></div>
                 </div>
 
-                {/* Experience Card */}
-                <div className={`w-5/12 ${index % 2 === 0 ? 'pr-8' : 'pl-8'}`}>
+                {/* Experience Card - Mobile: Always left aligned, Desktop: Alternating */}
+                <div className={`w-full md:w-5/12 pl-12 md:pl-0 ${index % 2 === 0 ? 'md:pr-8' : 'md:pl-8'}`}>
                   <div 
-                    className="glass-effect rounded-2xl p-8 transform transition-all duration-500 hover:scale-105 nebula-glow animate-fade-in"
-                    style={{ animationDelay: `${index * 0.2}s` }}
+                    className="glass-effect rounded-xl md:rounded-2xl p-4 md:p-8 transform transition-all duration-700 hover:scale-105 hover:shadow-2xl border border-white/10"
                   >
                     {/* Company Header */}
-                    <div className="mb-6">
-                      <div className="flex items-center gap-3 mb-3">
-                        <Building className="w-6 h-6 text-blue-400" />
-                        <h3 className="text-2xl font-bold text-white">{exp.company}</h3>
+                    <div className="mb-4 md:mb-6">
+                      <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-3">
+                        <Building className="w-5 md:w-6 h-5 md:h-6 text-blue-400" />
+                        <h3 className="text-lg md:text-2xl font-bold text-white">{exp.company}</h3>
                       </div>
-                      <h4 className="text-xl text-gradient font-semibold mb-3">{exp.position}</h4>
+                      <h4 className="text-base md:text-xl text-gradient font-semibold mb-2 md:mb-3">{exp.position}</h4>
                       
-                      <div className="flex flex-wrap gap-4 text-sm text-gray-400 mb-4">
-                        <div className="flex items-center gap-2">
-                          <Calendar className="w-4 h-4" />
+                      <div className="flex flex-col sm:flex-row flex-wrap gap-2 md:gap-4 text-xs md:text-sm text-gray-400 mb-3 md:mb-4">
+                        <div className="flex items-center gap-1 md:gap-2">
+                          <Calendar className="w-3 md:w-4 h-3 md:h-4" />
                           {exp.duration}
                         </div>
-                        <div className="flex items-center gap-2">
-                          <MapPin className="w-4 h-4" />
+                        <div className="flex items-center gap-1 md:gap-2">
+                          <MapPin className="w-3 md:w-4 h-3 md:h-4" />
                           {exp.location}
                         </div>
                       </div>
 
-                      <span className={`inline-block px-4 py-2 rounded-full text-sm font-semibold ${
+                      <span className={`inline-block px-3 md:px-4 py-1 md:py-2 rounded-full text-xs md:text-sm font-semibold ${
                         exp.type === 'Leadership' ? 'bg-yellow-500/20 text-yellow-400 border border-yellow-500/30' :
                         exp.type === 'Freelance' ? 'bg-blue-500/20 text-blue-400 border border-blue-500/30' :
                         exp.type === 'Internship' ? 'bg-green-500/20 text-green-400 border border-green-500/30' :
@@ -176,21 +182,22 @@ const ExperienceSection = () => {
                     </div>
 
                     {/* Description */}
-                    <ul className="space-y-3 mb-6">
+                    <ul className="space-y-2 md:space-y-3 mb-4 md:mb-6">
                       {exp.description.map((item, itemIndex) => (
-                        <li key={itemIndex} className="text-gray-300 flex items-start gap-3">
-                          <Star className="w-4 h-4 text-blue-400 mt-0.5 flex-shrink-0" />
-                          <span className="text-sm leading-relaxed">{item}</span>
+                        <li key={itemIndex} className="text-gray-300 flex items-start gap-2 md:gap-3 animate-[fade-in_0.6s_ease-out]" style={{ animationDelay: `${(index * 0.2) + (itemIndex * 0.1)}s`, animationFillMode: 'both' }}>
+                          <Star className="w-3 md:w-4 h-3 md:h-4 text-blue-400 mt-0.5 flex-shrink-0" />
+                          <span className="text-xs md:text-sm leading-relaxed">{item}</span>
                         </li>
                       ))}
                     </ul>
 
                     {/* Skills */}
-                    <div className="flex flex-wrap gap-2 mb-4">
+                    <div className="flex flex-wrap gap-1 md:gap-2 mb-3 md:mb-4">
                       {exp.skills.map((skill, skillIndex) => (
                         <span 
                           key={skillIndex}
-                          className="px-3 py-1 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-full text-xs text-purple-300 border border-purple-500/30"
+                          className="px-2 md:px-3 py-1 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-full text-xs text-purple-300 border border-purple-500/30 animate-[scale-in_0.4s_ease-out]"
+                          style={{ animationDelay: `${(index * 0.2) + (skillIndex * 0.05)}s`, animationFillMode: 'both' }}
                         >
                           {skill}
                         </span>
@@ -199,14 +206,15 @@ const ExperienceSection = () => {
 
                     {/* Highlights */}
                     {exp.highlights && (
-                      <div className="border-t border-gray-700 pt-4">
-                        <div className="flex flex-wrap gap-2">
+                      <div className="border-t border-gray-700 pt-3 md:pt-4">
+                        <div className="flex flex-wrap gap-1 md:gap-2">
                           {exp.highlights.map((highlight, hIndex) => (
                             <span 
                               key={hIndex}
-                              className="inline-flex items-center gap-2 px-3 py-1 bg-yellow-500/20 text-yellow-300 rounded-lg text-xs"
+                              className="inline-flex items-center gap-1 md:gap-2 px-2 md:px-3 py-1 bg-yellow-500/20 text-yellow-300 rounded-lg text-xs animate-[glow_0.6s_ease-out]"
+                              style={{ animationDelay: `${(index * 0.2) + (hIndex * 0.1)}s`, animationFillMode: 'both' }}
                             >
-                              <Award className="w-3 h-3" />
+                              <Award className="w-2 md:w-3 h-2 md:h-3" />
                               {highlight}
                             </span>
                           ))}
@@ -216,33 +224,33 @@ const ExperienceSection = () => {
                   </div>
                 </div>
 
-                {/* Empty space on the other side */}
-                <div className="w-5/12"></div>
+                {/* Empty space on desktop for alternating layout */}
+                <div className="hidden md:block md:w-5/12"></div>
               </div>
             ))}
           </div>
 
-          {/* Experience Summary */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mt-20">
-            <div className="text-center glass-effect p-6 rounded-xl hover:scale-105 transition-transform duration-300">
-              <Briefcase className="w-8 h-8 text-blue-500 mx-auto mb-2" />
-              <div className="text-3xl font-bold text-white">3+</div>
-              <div className="text-gray-400">Years Experience</div>
+          {/* Experience Summary - Responsive Grid */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-6 mt-12 md:mt-20">
+            <div className="text-center glass-effect p-3 md:p-6 rounded-lg md:rounded-xl hover:scale-105 transition-transform duration-300 animate-[bounce-in_0.6s_ease-out]" style={{ animationDelay: '0.2s', animationFillMode: 'both' }}>
+              <Briefcase className="w-6 md:w-8 h-6 md:h-8 text-blue-500 mx-auto mb-1 md:mb-2" />
+              <div className="text-xl md:text-3xl font-bold text-white">3+</div>
+              <div className="text-gray-400 text-xs md:text-sm">Years Experience</div>
             </div>
-            <div className="text-center glass-effect p-6 rounded-xl hover:scale-105 transition-transform duration-300">
-              <Building className="w-8 h-8 text-green-500 mx-auto mb-2" />
-              <div className="text-3xl font-bold text-white">6</div>
-              <div className="text-gray-400">Companies</div>
+            <div className="text-center glass-effect p-3 md:p-6 rounded-lg md:rounded-xl hover:scale-105 transition-transform duration-300 animate-[bounce-in_0.6s_ease-out]" style={{ animationDelay: '0.4s', animationFillMode: 'both' }}>
+              <Building className="w-6 md:w-8 h-6 md:h-8 text-green-500 mx-auto mb-1 md:mb-2" />
+              <div className="text-xl md:text-3xl font-bold text-white">6</div>
+              <div className="text-gray-400 text-xs md:text-sm">Companies</div>
             </div>
-            <div className="text-center glass-effect p-6 rounded-xl hover:scale-105 transition-transform duration-300">
-              <Users className="w-8 h-8 text-purple-500 mx-auto mb-2" />
-              <div className="text-3xl font-bold text-white">100+</div>
-              <div className="text-gray-400">Students Mentored</div>
+            <div className="text-center glass-effect p-3 md:p-6 rounded-lg md:rounded-xl hover:scale-105 transition-transform duration-300 animate-[bounce-in_0.6s_ease-out]" style={{ animationDelay: '0.6s', animationFillMode: 'both' }}>
+              <Users className="w-6 md:w-8 h-6 md:h-8 text-purple-500 mx-auto mb-1 md:mb-2" />
+              <div className="text-xl md:text-3xl font-bold text-white">100+</div>
+              <div className="text-gray-400 text-xs md:text-sm">Students Mentored</div>
             </div>
-            <div className="text-center glass-effect p-6 rounded-xl hover:scale-105 transition-transform duration-300">
-              <Code className="w-8 h-8 text-pink-500 mx-auto mb-2" />
-              <div className="text-3xl font-bold text-white">50+</div>
-              <div className="text-gray-400">Projects Delivered</div>
+            <div className="text-center glass-effect p-3 md:p-6 rounded-lg md:rounded-xl hover:scale-105 transition-transform duration-300 animate-[bounce-in_0.6s_ease-out]" style={{ animationDelay: '0.8s', animationFillMode: 'both' }}>
+              <Code className="w-6 md:w-8 h-6 md:h-8 text-pink-500 mx-auto mb-1 md:mb-2" />
+              <div className="text-xl md:text-3xl font-bold text-white">50+</div>
+              <div className="text-gray-400 text-xs md:text-sm">Projects Delivered</div>
             </div>
           </div>
         </div>
