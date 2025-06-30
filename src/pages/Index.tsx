@@ -1,13 +1,13 @@
-
 import React, { useEffect } from 'react';
 import SolarSystemHero from '../components/SolarSystemHero';
-import ProjectSlider from '../components/ProjectSlider';
+import ProjectsSection from '../components/ProjectsSection';
 import TestimonialSlider from '../components/TestimonialSlider';
 import HackathonSection from '../components/HackathonSection';
 import ExperienceSection from '../components/ExperienceSection';
 import ServicesSection from '../components/ServicesSection';
 import ContactPortal from '../components/ContactPortal';
 import Footer from '../components/Footer';
+import DynamicCosmicElements from '../components/DynamicCosmicElements';
 
 // Project data organized by categories
 const webDevProjects = [
@@ -165,34 +165,37 @@ const Index = () => {
   }, []);
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen relative">
+      {/* Dynamic Cosmic Elements */}
+      <DynamicCosmicElements />
+      
       {/* Hero Section */}
       <SolarSystemHero />
       
       {/* About Section */}
-      <section id="about" className="py-20 relative">
+      <section id="about" className="py-20 relative z-10">
         <div className="container mx-auto px-6 text-center">
           <h2 className="text-5xl font-bold text-gradient mb-8">About Me</h2>
           <div className="max-w-4xl mx-auto">
             <p className="text-xl text-gray-300 leading-relaxed mb-8">
               I'm a passionate software engineer and freelancer with 3+ years of experience in crafting 
               digital experiences that span across Web Development, Machine Learning, and AI Agents. 
-              My journey has taken me from mentoring 44 lessons at Stanford Code in Place to winning 
-              multiple hackathons and delivering 50+ successful projects.
+              My journey has taken me from mentoring at Stanford Code in Place to leading tech teams 
+              and delivering 50+ successful projects.
             </p>
-            <div className="glass-effect rounded-2xl p-8">
+            <div className="glass-effect rounded-2xl p-8 nebula-glow">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div className="text-center">
+                <div className="text-center transform hover:scale-105 transition-transform duration-300">
                   <div className="text-4xl font-bold text-blue-400 mb-2">50+</div>
                   <div className="text-gray-300">Projects Completed</div>
                 </div>
-                <div className="text-center">
-                  <div className="text-4xl font-bold text-green-400 mb-2">4</div>
-                  <div className="text-gray-300">Hackathons Won</div>
+                <div className="text-center transform hover:scale-105 transition-transform duration-300">
+                  <div className="text-4xl font-bold text-green-400 mb-2">6</div>
+                  <div className="text-gray-300">Companies & Roles</div>
                 </div>
-                <div className="text-center">
-                  <div className="text-4xl font-bold text-purple-400 mb-2">44</div>
-                  <div className="text-gray-300">Stanford Lessons</div>
+                <div className="text-center transform hover:scale-105 transition-transform duration-300">
+                  <div className="text-4xl font-bold text-purple-400 mb-2">100+</div>
+                  <div className="text-gray-300">Students Mentored</div>
                 </div>
               </div>
             </div>
@@ -201,37 +204,11 @@ const Index = () => {
       </section>
 
       {/* Projects Section */}
-      <section id="projects" className="py-20 relative">
-        <div className="container mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-5xl font-bold text-gradient mb-6">
-              Featured Projects
-            </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Explore my portfolio across Web Development, Machine Learning, and AI Agents. 
-              Each project showcases innovation, technical excellence, and real-world impact.
-            </p>
-          </div>
-
-          <ProjectSlider 
-            projects={webDevProjects} 
-            title="Web Development" 
-            category="web"
-          />
-          
-          <ProjectSlider 
-            projects={mlProjects} 
-            title="Machine Learning" 
-            category="ml"
-          />
-          
-          <ProjectSlider 
-            projects={aiAgentProjects} 
-            title="AI & Agents" 
-            category="ai"
-          />
-        </div>
-      </section>
+      <ProjectsSection 
+        webDevProjects={webDevProjects}
+        mlProjects={mlProjects}
+        aiAgentProjects={aiAgentProjects}
+      />
 
       {/* Hackathons Section */}
       <HackathonSection />
