@@ -4,7 +4,7 @@ import ProjectsSection from '../components/ProjectsSection';
 import TestimonialSlider from '../components/TestimonialSlider';
 import HackathonSection from '../components/HackathonSection';
 import ExperienceSection from '../components/ExperienceSection';
-
+import ServicesSection from '../components/ServicesSection';
 import ContactPortal from '../components/ContactPortal';
 import Footer from '../components/Footer';
 import DynamicCosmicElements from '../components/DynamicCosmicElements';
@@ -218,6 +218,9 @@ const Index = () => {
 
       {/* Experience Section */}
       <ExperienceSection />
+
+      {/* Services Section */}
+      <ServicesSection />
 
       {/* Contact Section */}
       <ContactPortal />
