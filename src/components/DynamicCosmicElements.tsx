@@ -34,8 +34,8 @@ const DynamicCosmicElements = () => {
       const newElements: CosmicElement[] = [];
       
       // Generate many more stars and beautiful cosmic elements
-      for (let i = 0; i < 200; i++) {
-        const types: CosmicElement['type'][] = ['star', 'star', 'star', 'star', 'star', 'sparkle', 'explosion', 'meteor', 'fallingstar', 'comet'];
+      for (let i = 0; i < 250; i++) {
+        const types: CosmicElement['type'][] = ['star', 'star', 'star', 'star', 'star', 'star', 'sparkle', 'sparkle', 'explosion', 'comet'];
         const type = types[Math.floor(Math.random() * types.length)];
         
         newElements.push({
@@ -201,22 +201,46 @@ const DynamicCosmicElements = () => {
         />
       ))}
 
-      {/* Enhanced falling stars with trails */}
-      {[...Array(4)].map((_, i) => (
+      {/* Beautiful Nebula Clouds */}
+      {[...Array(8)].map((_, i) => (
         <div
-          key={`falling-${i}`}
-          className="absolute animate-meteor opacity-80"
+          key={`nebula-${i}`}
+          className="absolute animate-float opacity-30 pointer-events-none"
           style={{
             left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100 - scrollY * 0.08}px`,
-            animationDelay: `${i * 4}s`,
-            animationDuration: `${6 + Math.random() * 4}s`
+            top: `${Math.random() * 200 - scrollY * 0.01}px`,
+            animationDelay: `${i * 3}s`,
+            animationDuration: `${15 + Math.random() * 10}s`,
+            width: `${100 + Math.random() * 200}px`,
+            height: `${60 + Math.random() * 120}px`,
+            background: i % 3 === 0 ? 
+              'radial-gradient(ellipse, rgba(147, 197, 253, 0.15) 0%, rgba(99, 102, 241, 0.1) 30%, transparent 70%)' :
+              i % 3 === 1 ?
+              'radial-gradient(ellipse, rgba(167, 139, 250, 0.15) 0%, rgba(139, 92, 246, 0.1) 30%, transparent 70%)' :
+              'radial-gradient(ellipse, rgba(52, 211, 153, 0.15) 0%, rgba(16, 185, 129, 0.1) 30%, transparent 70%)',
+            borderRadius: '50%',
+            filter: 'blur(2px)',
+            transform: `rotate(${Math.random() * 360}deg)`
           }}
-        >
-          <div className="w-2 h-2 bg-white rounded-full" 
-               style={{ boxShadow: '0 0 12px #ffffff, 0 0 24px #93c5fd, 0 0 36px rgba(147, 197, 253, 0.3)' }} />
-          <div className="absolute top-0 left-0 w-20 h-1 bg-gradient-to-r from-white via-blue-300 to-transparent opacity-60 transform -rotate-45 origin-left" />
-        </div>
+        />
+      ))}
+
+      {/* Cosmic Energy Swirls */}
+      {[...Array(5)].map((_, i) => (
+        <div
+          key={`swirl-${i}`}
+          className="absolute animate-spin opacity-20"
+          style={{
+            left: `${Math.random() * 100}%`,
+            top: `${Math.random() * 150 - scrollY * 0.005}px`,
+            animationDuration: `${20 + Math.random() * 15}s`,
+            width: `${80 + Math.random() * 120}px`,
+            height: `${80 + Math.random() * 120}px`,
+            background: 'conic-gradient(from 0deg, transparent, rgba(147, 197, 253, 0.2), transparent, rgba(139, 92, 246, 0.2), transparent)',
+            borderRadius: '50%',
+            filter: 'blur(1px)'
+          }}
+        />
       ))}
     </div>
   );

@@ -45,7 +45,7 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({
   };
 
   const projects = getCurrentProjects();
-  const projectsPerSlide = 3;
+  const projectsPerSlide = 2; // Changed to 2 for horizontal cards
   const totalSlides = Math.ceil(projects.length / projectsPerSlide);
 
   const nextSlide = () => {
@@ -170,53 +170,58 @@ const ProjectsSection: React.FC<ProjectsSectionProps> = ({
               >
                 {Array.from({ length: totalSlides }).map((_, slideIndex) => (
                   <div key={slideIndex} className="w-full flex-shrink-0">
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-8">
+                    <div className="space-y-6">
                       {projects.slice(slideIndex * projectsPerSlide, (slideIndex + 1) * projectsPerSlide).map((project, index) => (
                         <div 
                           key={index}
-                          className="glass-effect rounded-2xl overflow-hidden transform transition-all duration-500 hover:scale-105 nebula-glow animate-fade-in"
+                          className="glass-effect rounded-2xl overflow-hidden transform transition-all duration-500 hover:scale-102 nebula-glow animate-fade-in"
                           style={{ animationDelay: `${index * 0.1}s` }}
                         >
-                          <div className="relative h-40 md:h-48 overflow-hidden">
-                            <img 
-                              src={project.image} 
-                              alt={project.title}
-                              className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-                          </div>
-                          
-                          <div className="p-4 md:p-6">
-                            <h4 className="text-lg md:text-xl font-bold text-white mb-2 md:mb-3">{project.title}</h4>
-                            <p className="text-gray-300 text-xs md:text-sm mb-3 md:mb-4 leading-relaxed">{project.description}</p>
-                            
-                            <div className="flex flex-wrap gap-1 md:gap-2 mb-3 md:mb-4">
-                              {project.tech.slice(0, 4).map((tech, techIndex) => (
-                                <span 
-                                  key={techIndex}
-                                  className="px-2 md:px-3 py-1 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full text-xs text-blue-300 border border-blue-500/30"
-                                >
-                                  {tech}
-                                </span>
-                              ))}
+                          <div className="flex flex-col lg:flex-row">
+                            {/* Image Section */}
+                            <div className="relative lg:w-2/5 h-64 lg:h-auto overflow-hidden">
+                              <img 
+                                src={project.image} 
+                                alt={project.title}
+                                className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                              />
+                              <div className="absolute inset-0 bg-gradient-to-t lg:bg-gradient-to-r from-black/50 to-transparent"></div>
                             </div>
                             
-                            <div className="flex gap-2 md:gap-3">
-                              <a 
-                                href={project.liveUrl}
-                                className="flex items-center gap-1 md:gap-2 px-3 md:px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg text-white text-xs md:text-sm font-medium hover:from-blue-600 hover:to-purple-600 transition-all duration-300 transform hover:scale-105"
-                              >
-                                <ExternalLink className="w-3 md:w-4 h-3 md:h-4" />
-                                <span className="hidden sm:inline">Live Demo</span>
-                                <span className="sm:hidden">Demo</span>
-                              </a>
-                              <a 
-                                href={project.githubUrl}
-                                className="flex items-center gap-1 md:gap-2 px-3 md:px-4 py-2 bg-white/10 rounded-lg text-white text-xs md:text-sm font-medium hover:bg-white/20 transition-all duration-300 transform hover:scale-105"
-                              >
-                                <Github className="w-3 md:w-4 h-3 md:h-4" />
-                                Code
-                              </a>
+                            {/* Content Section */}
+                            <div className="lg:w-3/5 p-6 lg:p-8 flex flex-col justify-between">
+                              <div>
+                                <h4 className="text-2xl lg:text-3xl font-bold text-white mb-4">{project.title}</h4>
+                                <p className="text-gray-300 text-base lg:text-lg mb-6 leading-relaxed">{project.description}</p>
+                                
+                                <div className="flex flex-wrap gap-2 mb-6">
+                                  {project.tech.map((tech, techIndex) => (
+                                    <span 
+                                      key={techIndex}
+                                      className="px-3 py-1.5 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full text-sm text-blue-300 border border-blue-500/30"
+                                    >
+                                      {tech}
+                                    </span>
+                                  ))}
+                                </div>
+                              </div>
+                              
+                              <div className="flex gap-4">
+                                <a 
+                                  href={project.liveUrl}
+                                  className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg text-white font-medium hover:from-blue-600 hover:to-purple-600 transition-all duration-300 transform hover:scale-105"
+                                >
+                                  <ExternalLink className="w-5 h-5" />
+                                  Live Demo
+                                </a>
+                                <a 
+                                  href={project.githubUrl}
+                                  className="flex items-center gap-2 px-6 py-3 bg-white/10 rounded-lg text-white font-medium hover:bg-white/20 transition-all duration-300 transform hover:scale-105"
+                                >
+                                  <Github className="w-5 h-5" />
+                                  View Code
+                                </a>
+                              </div>
                             </div>
                           </div>
                         </div>
