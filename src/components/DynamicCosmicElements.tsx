@@ -33,9 +33,9 @@ const DynamicCosmicElements = () => {
     const generateElements = () => {
       const newElements: CosmicElement[] = [];
       
-      // Generate more stars and fewer other elements
+      // Generate more stars and cosmic effects without meteors
       for (let i = 0; i < 120; i++) {
-        const types: CosmicElement['type'][] = ['star', 'star', 'star', 'star', 'explosion', 'meteor', 'fallingstar'];
+        const types: CosmicElement['type'][] = ['star', 'star', 'star', 'star', 'star', 'explosion'];
         const type = types[Math.floor(Math.random() * types.length)];
         
         newElements.push({
@@ -138,7 +138,6 @@ const DynamicCosmicElements = () => {
           className={`absolute transition-all duration-1000 ${
             element.type === 'star' ? 'animate-twinkle' :
             element.type === 'explosion' ? 'animate-pulse' :
-            element.type === 'meteor' ? 'animate-meteor' :
             'animate-bounce'
           }`}
           style={{
@@ -162,17 +161,21 @@ const DynamicCosmicElements = () => {
         />
       ))}
 
-      {/* Additional falling stars - slower */}
-      {[...Array(3)].map((_, i) => (
+      {/* Nebula Effects */}
+      {[...Array(5)].map((_, i) => (
         <div
-          key={`falling-${i}`}
-          className="absolute w-1 h-1 bg-white rounded-full animate-meteor"
+          key={`nebula-${i}`}
+          className="absolute rounded-full opacity-20 animate-pulse"
           style={{
             left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100 - scrollY * 0.1}px`,
-            animationDelay: `${i * 3}s`,
-            animationDuration: `${5 + Math.random() * 3}s`, // Slower falling stars
-            boxShadow: '0 0 8px #ffffff, 0 0 15px #93c5fd'
+            top: `${Math.random() * 100 - scrollY * 0.05}px`,
+            width: `${100 + Math.random() * 200}px`,
+            height: `${100 + Math.random() * 200}px`,
+            background: `radial-gradient(circle, ${
+              ['#3b82f6', '#8b5cf6', '#06d6a0', '#f59e0b'][Math.floor(Math.random() * 4)]
+            }30, transparent)`,
+            animationDelay: `${i * 2}s`,
+            animationDuration: `${8 + Math.random() * 4}s`,
           }}
         />
       ))}
