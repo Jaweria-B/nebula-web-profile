@@ -46,7 +46,7 @@ const ProjectSlider: React.FC = () => {
     {
       title: "Monsters Rolodex",
       description: "React.js application showcasing component-based architecture with search functionality and responsive card layouts.",
-      image: "/assets/monsters-rolodex.webp",
+      image: "/assets/monsters-rolodex.png",
       tech: ["React", "JavaScript", "CSS", "API"],
       href: "https://monsters-rolodex-jb.vercel.app/",
       github: "https://github.com/Jaweria-B/monsters-rolodex-v2"
