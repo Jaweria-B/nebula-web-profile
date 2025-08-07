@@ -31,7 +31,7 @@ const ProjectSlider: React.FC = () => {
     {
       title: "TinDog",
       description: "Interactive web application for finding perfect matches for your dog with responsive design and modern UI components.",
-      image: "/assets/tindog.png",
+      image: "/assets/TinDog.png",
       tech: ["HTML", "CSS", "Bootstrap", "JavaScript"],
       href: "https://jaweria-b.github.io/TinDog/",
       github: "https://github.com/Jaweria-B/tindog"
@@ -46,7 +46,7 @@ const ProjectSlider: React.FC = () => {
     {
       title: "Monsters Rolodex",
       description: "React.js application showcasing component-based architecture with search functionality and responsive card layouts.",
-      image: "/assets/giphy-2.webp",
+      image: "/assets/monsters-rolodex.webp",
       tech: ["React", "JavaScript", "CSS", "API"],
       href: "https://monsters-rolodex-jb.vercel.app/",
       github: "https://github.com/Jaweria-B/monsters-rolodex-v2"
