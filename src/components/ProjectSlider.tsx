@@ -9,54 +9,172 @@ interface Project {
   description: string;
   image: string;
   tech: string[];
-  liveUrl: string;
-  githubUrl: string;
-  category: 'web' | 'ml' | 'ai';
+  href?: string;
+  github: string;
 }
 
-interface Category {
-  id: 'web' | 'ml' | 'ai';
-  title: string;
-  icon: React.ComponentType<any>;
-  color: string;
-  projects: Project[];
-}
-
-interface ProjectSliderProps {
-  webDevProjects: Project[];
-  mlProjects: Project[];
-  aiAgentProjects: Project[];
-}
-
-const ProjectSlider: React.FC<ProjectSliderProps> = ({ 
-  webDevProjects, 
-  mlProjects, 
-  aiAgentProjects 
-}) => {
+const ProjectSlider: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState(0);
   const [currentSlide, setCurrentSlide] = useState({ web: 0, ml: 0, ai: 0 });
 
-  const categories: Category[] = [
+  // Web Development Projects with enhanced descriptions and tech tags
+  const webProjects: Project[] = [
+    {
+      title: "Crwn Clothing",
+      description: "Full-stack e-commerce platform for stylish clothing with React, Redux, Firebase authentication, and Stripe payment integration.",
+      image: "/assets/crwn-clothing.png",
+      tech: ["React", "Redux", "Firebase", "Stripe", "Sass"],
+      href: "https://crwn-clothing-jb.netlify.app/",
+      github: "https://github.com/Jaweria-B/crwn-clothing"
+    },
+    {
+      title: "TinDog",
+      description: "Interactive web application for finding perfect matches for your dog with responsive design and modern UI components.",
+      image: "/assets/tindog.png",
+      tech: ["HTML", "CSS", "Bootstrap", "JavaScript"],
+      href: "https://jaweria-b.github.io/TinDog/",
+      github: "https://github.com/Jaweria-B/tindog"
+    },
+    {
+      title: "Daily Journal",
+      description: "Full-featured blog platform with CRUD operations, user authentication, and rich text editing capabilities.",
+      image: "/assets/blog-3.png",
+      tech: ["Node.js", "Express", "MongoDB", "EJS"],
+      github: "https://github.com/Jaweria-B/journey-junction-blogs"
+    },
+    {
+      title: "Monsters Rolodex",
+      description: "React.js application showcasing component-based architecture with search functionality and responsive card layouts.",
+      image: "/assets/giphy-2.webp",
+      tech: ["React", "JavaScript", "CSS", "API"],
+      href: "https://monsters-rolodex-jb.vercel.app/",
+      github: "https://github.com/Jaweria-B/monsters-rolodex-v2"
+    },
+    {
+      title: "To-Do-List Website",
+      description: "Task management application with database persistence, category organization, and intuitive user interface.",
+      image: "/assets/todo-2.png",
+      tech: ["Node.js", "Express", "MongoDB", "EJS"],
+      github: "https://github.com/Jaweria-B/to-do-list-v2"
+    },
+    {
+      title: "Drum Kit",
+      description: "Interactive musical instrument simulator with keyboard and mouse controls, featuring high-quality drum sounds.",
+      image: "/assets/drum-kit.png",
+      tech: ["HTML", "CSS", "JavaScript", "Audio API"],
+      href: "https://jaweria-b.github.io/Drum-Kit/",
+      github: "https://github.com/Jaweria-B/drum-kit"
+    },
+    {
+      title: "Simon Game",
+      description: "Classic memory challenge game with progressive difficulty, sound effects, and smooth animations using jQuery.",
+      image: "/assets/simon.png",
+      tech: ["HTML", "CSS", "JavaScript", "jQuery"],
+      href: "https://jaweria-b.github.io/Simon-Game/",
+      github: "https://github.com/Jaweria-B/simon-game"
+    },
+    {
+      title: "Dice Game",
+      description: "Multiplayer dice rolling game with random number generation, winner determination, and engaging visual effects.",
+      image: "/assets/dice.png",
+      tech: ["HTML", "CSS", "JavaScript", "DOM"],
+      href: "https://jaweria-b.github.io/dice-game/",
+      github: "https://github.com/Jaweria-B/dice-game"
+    }
+  ];
+
+  // Machine Learning Projects with enhanced descriptions and tech tags
+  const mlProjects: Project[] = [
+    {
+      title: "Iris Flower Prediction App",
+      description: "Machine learning classifier using scikit-learn to predict Iris flower species with interactive Streamlit interface.",
+      image: "/assets/iris.png",
+      tech: ["Python", "Streamlit", "Scikit-learn", "Pandas"],
+      href: "https://iris-flower-classification-jb.streamlit.app",
+      github: "https://github.com/Jaweria-B/iris-flower-classification"
+    },
+    {
+      title: "DNA Nucleotide Count App",
+      description: "Bioinformatics tool for DNA sequence analysis with nucleotide composition visualization and statistical insights.",
+      image: "/assets/dna.png",
+      tech: ["Python", "Streamlit", "Biopython", "Matplotlib"],
+      href: "https://dna-nucleotide-count-jb.streamlit.app/",
+      github: "https://github.com/Jaweria-B/bioinformatics-dna-app"
+    },
+    {
+      title: "Penguins Species Classification",
+      description: "Machine learning model for penguin species identification using morphological features and ensemble methods.",
+      image: "/assets/penguins.png",
+      tech: ["Python", "Streamlit", "Scikit-learn", "Seaborn"],
+      href: "https://penguins-classification-jb.streamlit.app",
+      github: "https://github.com/Jaweria-B/penguins-specie-classification"
+    },
+    {
+      title: "Stock Price Tracker App",
+      description: "Real-time financial data visualization tool tracking Amazon, Apple, and Microsoft stock prices with interactive charts.",
+      image: "/assets/stocks.png",
+      tech: ["Python", "Streamlit", "yfinance", "Plotly"],
+      href: "https://simple-stock-price.streamlit.app",
+      github: "https://github.com/Jaweria-B/simple-stock-price"
+    },
+    {
+      title: "Face Detection App",
+      description: "Computer vision application using OpenCV and Haar cascades for real-time face detection in images.",
+      image: "/assets/face.png",
+      tech: ["Python", "OpenCV", "Streamlit", "PIL"],
+      href: "https://face-detection-model-jb.streamlit.app",
+      github: "https://github.com/Jaweria-B/face-detection-model"
+    },
+    {
+      title: "Rain Prediction App",
+      description: "Weather forecasting model using machine learning algorithms to predict rainfall based on meteorological parameters.",
+      image: "/assets/rain.png",
+      tech: ["Python", "Scikit-learn", "Streamlit", "NumPy"],
+      href: "https://rain-prediction-jb.streamlit.app",
+      github: "https://github.com/Jaweria-B/rain-prediction-app"
+    }
+  ];
+
+  // AI Projects with enhanced descriptions and tech tags
+  const aiProjects: Project[] = [
+    {
+      title: "StoryVerse AI",
+      description: "Multi-modal AI application that generates captivating stories with synchronized images, text, and audio narration using advanced language models.",
+      image: "/assets/story.png",
+      tech: ["Python", "OpenAI API", "Streamlit", "Text-to-Speech"],
+      href: "https://storyverse-ai.streamlit.app",
+      github: "https://github.com/Jaweria-B/Media-App"
+    },
+    {
+      title: "Code Compass",
+      description: "AI-powered learning platform providing personalized coding paths, interactive quizzes, and project recommendations for developers.",
+      image: "/assets/code-compass.webp",
+      tech: ["Python", "AI/ML", "NLP", "Educational AI"],
+      github: "https://github.com/Jaweria-B/code-compass"
+    }
+  ];
+
+  const categories = [
     { 
-      id: 'web', 
+      id: 'web' as const, 
       title: 'Web Development', 
       icon: Code, 
       color: 'from-blue-500 to-cyan-500',
-      projects: webDevProjects
+      projects: webProjects
     },
     { 
-      id: 'ml', 
+      id: 'ml' as const, 
       title: 'Machine Learning', 
       icon: Brain, 
       color: 'from-purple-500 to-pink-500',
       projects: mlProjects
     },
     { 
-      id: 'ai', 
+      id: 'ai' as const, 
       title: 'AI & Agents', 
       icon: Sparkles, 
       color: 'from-green-500 to-emerald-500',
-      projects: aiAgentProjects
+      projects: aiProjects
     }
   ];
 
@@ -171,27 +289,31 @@ const ProjectSlider: React.FC<ProjectSliderProps> = ({
                               </div>
                               
                               <div className="flex gap-2 md:gap-4">
-                                <Button 
-                                  variant="outline" 
-                                  size="sm"
-                                  className="border-gray-600 hover:border-gray-400 backdrop-blur-sm text-xs md:text-sm"
-                                  asChild
-                                >
-                                  <a href={currentProject.githubUrl} target="_blank" rel="noopener noreferrer">
-                                    <Github className="w-3 md:w-4 h-3 md:h-4 mr-1 md:mr-2" />
-                                    Code
-                                  </a>
-                                </Button>
-                                <Button 
-                                  size="sm"
-                                  className={`bg-gradient-to-r ${category.color} hover:opacity-90 text-xs md:text-sm`}
-                                  asChild
-                                >
-                                  <a href={currentProject.liveUrl} target="_blank" rel="noopener noreferrer">
-                                    <ExternalLink className="w-3 md:w-4 h-3 md:h-4 mr-1 md:mr-2" />
-                                    Live Demo
-                                  </a>
-                                </Button>
+                                {currentProject.github && (
+                                  <Button 
+                                    variant="outline" 
+                                    size="sm"
+                                    className="border-gray-600 hover:border-gray-400 backdrop-blur-sm text-xs md:text-sm"
+                                    asChild
+                                  >
+                                    <a href={currentProject.github} target="_blank" rel="noopener noreferrer">
+                                      <Github className="w-3 md:w-4 h-3 md:h-4 mr-1 md:mr-2" />
+                                      Code
+                                    </a>
+                                  </Button>
+                                )}
+                                {currentProject.href && (
+                                  <Button 
+                                    size="sm"
+                                    className={`bg-gradient-to-r ${category.color} hover:opacity-90 text-xs md:text-sm`}
+                                    asChild
+                                  >
+                                    <a href={currentProject.href} target="_blank" rel="noopener noreferrer">
+                                      <ExternalLink className="w-3 md:w-4 h-3 md:h-4 mr-1 md:mr-2" />
+                                      Live Demo
+                                    </a>
+                                  </Button>
+                                )}
                               </div>
                             </div>
                             
