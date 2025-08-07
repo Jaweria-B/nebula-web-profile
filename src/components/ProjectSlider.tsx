@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, ExternalLink, Github, Code, Brain, Sparkles } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
@@ -16,6 +16,7 @@ interface Project {
 const ProjectSlider: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState(0);
   const [currentSlide, setCurrentSlide] = useState({ web: 0, ml: 0, ai: 0 });
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
   // Web Development Projects with enhanced descriptions and tech tags
   const webProjects: Project[] = [
@@ -178,6 +179,26 @@ const ProjectSlider: React.FC = () => {
     }
   ];
 
+  // Auto-play functionality
+  useEffect(() => {
+    if (!isAutoPlaying) return;
+    
+    const interval = setInterval(() => {
+      const currentCategory = categories[activeCategory];
+      if (currentCategory) {
+        nextSlide(currentCategory.id);
+      }
+    }, 4000); // Change slide every 4 seconds
+
+    return () => clearInterval(interval);
+  }, [activeCategory, currentSlide, isAutoPlaying]);
+
+  // Pause auto-play when user manually navigates
+  const handleManualNavigation = () => {
+    setIsAutoPlaying(false);
+    setTimeout(() => setIsAutoPlaying(true), 10000); // Resume after 10 seconds
+  };
+
   const nextSlide = (categoryId: 'web' | 'ml' | 'ai') => {
     const category = categories.find(cat => cat.id === categoryId);
     if (!category) return;
@@ -259,7 +280,10 @@ const ProjectSlider: React.FC = () => {
                     <Button
                       variant="outline"
                       size="icon"
-                      onClick={() => prevSlide(category.id)}
+                      onClick={() => {
+                        prevSlide(category.id);
+                        handleManualNavigation();
+                      }}
                       className="border-gray-600 hover:border-gray-400 backdrop-blur-sm"
                     >
                       <ChevronLeft className="w-4 h-4" />
@@ -334,7 +358,10 @@ const ProjectSlider: React.FC = () => {
                     <Button
                       variant="outline"
                       size="icon"
-                      onClick={() => nextSlide(category.id)}
+                      onClick={() => {
+                        nextSlide(category.id);
+                        handleManualNavigation();
+                      }}
                       className="border-gray-600 hover:border-gray-400 backdrop-blur-sm"
                     >
                       <ChevronRight className="w-4 h-4" />
@@ -346,7 +373,10 @@ const ProjectSlider: React.FC = () => {
                     {category.projects.map((_, projectIndex) => (
                       <button
                         key={projectIndex}
-                        onClick={() => setCurrentSlide(prev => ({ ...prev, [category.id]: projectIndex }))}
+                        onClick={() => {
+                          setCurrentSlide(prev => ({ ...prev, [category.id]: projectIndex }));
+                          handleManualNavigation();
+                        }}
                         className={`w-2 md:w-3 h-2 md:h-3 rounded-full transition-all duration-300 ${
                           projectIndex === currentSlide[category.id]
                             ? `bg-gradient-to-r ${category.color}`
