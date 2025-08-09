@@ -188,7 +188,7 @@ const ProjectSlider: React.FC = () => {
       if (currentCategory) {
         nextSlide(currentCategory.id);
       }
-    }, 4000); // Change slide every 4 seconds
+    }, 6000); // Change slide every 6 seconds
 
     return () => clearInterval(interval);
   }, [activeCategory, currentSlide, isAutoPlaying]);
@@ -266,8 +266,10 @@ const ProjectSlider: React.FC = () => {
             initial={{ opacity: 0, x: 100 }}
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -100 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.6, ease: 'easeInOut' }}
             className="relative"
+            onMouseEnter={() => setIsAutoPlaying(false)}
+            onMouseLeave={() => setIsAutoPlaying(true)}
           >
             {categories.map((category, categoryIndex) => {
               if (categoryIndex !== activeCategory) return null;
@@ -292,65 +294,75 @@ const ProjectSlider: React.FC = () => {
                     <div className="flex-1 mx-4 md:mx-8">
                       <Card className="bg-black/40 border-gray-800 backdrop-blur-sm overflow-hidden">
                         <CardContent className="p-4 md:p-8">
-                          <div className="grid md:grid-cols-2 gap-4 md:gap-8 items-center">
-                            <div>
-                              <h3 className="text-xl md:text-2xl font-bold text-white mb-3 md:mb-4">
-                                {currentProject.title}
-                              </h3>
-                              <p className="text-gray-300 mb-4 md:mb-6 text-sm md:text-base leading-relaxed">
-                                {currentProject.description}
-                              </p>
-                              
-                              <div className="flex flex-wrap gap-1 md:gap-2 mb-4 md:mb-6">
-                                {currentProject.tech.slice(0, 4).map((tech, techIndex) => (
-                                  <span
-                                    key={techIndex}
-                                    className={`px-2 md:px-3 py-1 bg-gradient-to-r ${category.color} bg-opacity-20 text-white text-xs md:text-sm rounded-full border border-current border-opacity-30`}
-                                  >
-                                    {tech}
-                                  </span>
-                                ))}
+                          <AnimatePresence mode="wait">
+                            <motion.div
+                              key={currentSlide[category.id]}
+                              initial={{ opacity: 0, x: 40 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              exit={{ opacity: 0, x: -40 }}
+                              transition={{ duration: 0.6, ease: 'easeInOut' }}
+                            >
+                              <div className="grid md:grid-cols-2 gap-4 md:gap-8 items-center">
+                                <div>
+                                  <h3 className="text-xl md:text-2xl font-bold text-white mb-3 md:mb-4">
+                                    {currentProject.title}
+                                  </h3>
+                                  <p className="text-gray-300 mb-4 md:mb-6 text-sm md:text-base leading-relaxed">
+                                    {currentProject.description}
+                                  </p>
+                                  
+                                  <div className="flex flex-wrap gap-1 md:gap-2 mb-4 md:mb-6">
+                                    {currentProject.tech.slice(0, 4).map((tech, techIndex) => (
+                                      <span
+                                        key={techIndex}
+                                        className={`px-2 md:px-3 py-1 bg-gradient-to-r ${category.color} bg-opacity-20 text-white text-xs md:text-sm rounded-full border border-current border-opacity-30`}
+                                      >
+                                        {tech}
+                                      </span>
+                                    ))}
+                                  </div>
+                                  
+                                  <div className="flex gap-2 md:gap-4">
+                                    {currentProject.github && (
+                                      <Button 
+                                        variant="outline" 
+                                        size="sm"
+                                        className="border-gray-600 hover:border-gray-400 backdrop-blur-sm text-xs md:text-sm"
+                                        asChild
+                                      >
+                                        <a href={currentProject.github} target="_blank" rel="noopener noreferrer">
+                                          <Github className="w-3 md:w-4 h-3 md:h-4 mr-1 md:mr-2" />
+                                          Code
+                                        </a>
+                                      </Button>
+                                    )}
+                                    {currentProject.href && (
+                                      <Button 
+                                        size="sm"
+                                        className={`bg-gradient-to-r ${category.color} hover:opacity-90 text-xs md:text-sm`}
+                                        asChild
+                                      >
+                                        <a href={currentProject.href} target="_blank" rel="noopener noreferrer">
+                                          <ExternalLink className="w-3 md:w-4 h-3 md:h-4 mr-1 md:mr-2" />
+                                          Live Demo
+                                        </a>
+                                      </Button>
+                                    )}
+                                  </div>
+                                </div>
+                                
+                                <div className="relative">
+                                  <div className="aspect-video bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg overflow-hidden">
+                                    <img 
+                                      src={currentProject.image} 
+                                      alt={currentProject.title}
+                                      className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
+                                    />
+                                  </div>
+                                </div>
                               </div>
-                              
-                              <div className="flex gap-2 md:gap-4">
-                                {currentProject.github && (
-                                  <Button 
-                                    variant="outline" 
-                                    size="sm"
-                                    className="border-gray-600 hover:border-gray-400 backdrop-blur-sm text-xs md:text-sm"
-                                    asChild
-                                  >
-                                    <a href={currentProject.github} target="_blank" rel="noopener noreferrer">
-                                      <Github className="w-3 md:w-4 h-3 md:h-4 mr-1 md:mr-2" />
-                                      Code
-                                    </a>
-                                  </Button>
-                                )}
-                                {currentProject.href && (
-                                  <Button 
-                                    size="sm"
-                                    className={`bg-gradient-to-r ${category.color} hover:opacity-90 text-xs md:text-sm`}
-                                    asChild
-                                  >
-                                    <a href={currentProject.href} target="_blank" rel="noopener noreferrer">
-                                      <ExternalLink className="w-3 md:w-4 h-3 md:h-4 mr-1 md:mr-2" />
-                                      Live Demo
-                                    </a>
-                                  </Button>
-                                )}
-                              </div>
-                            </div>
-                            
-                            <div className="relative">
-                              <div className="aspect-video bg-gradient-to-br from-gray-800 to-gray-900 rounded-lg overflow-hidden">
-                                <img 
-                                  src={currentProject.image} 
-                                  alt={currentProject.title}
-                                  className="w-full h-full object-cover transition-transform duration-500 hover:scale-110"
-                                />
-                              </div>
-                            </div>
-                          </div>
+                            </motion.div>
+                          </AnimatePresence>
                         </CardContent>
                       </Card>
                     </div>
