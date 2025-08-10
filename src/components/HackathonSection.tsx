@@ -1,6 +1,6 @@
 
 import React, { useEffect, useRef, useState } from 'react';
-import { Trophy, Calendar, Users, Award, ChevronLeft, ChevronRight, ExternalLink, FileText } from 'lucide-react';
+import { Trophy, Calendar, Users, Award, ChevronLeft, ChevronRight, ExternalLink, FileText, Rocket } from 'lucide-react';
 import { hackathonsParticipated, wonHackathons } from '../data/hackathons';
 
 // Data is sourced from src/data/hackathons.ts
@@ -52,6 +52,26 @@ const HackathonSection = () => {
     return () => stopAutoplay();
   }, [activeTab, filteredHackathons.length]);
 
+  const concisePosition = (text?: string) => {
+    if (!text) return 'Winner';
+    const lower = text.toLowerCase();
+    if (lower.includes('2nd')) return '2nd place';
+    if (lower.includes('3rd')) return '3rd place';
+    const topMatch = text.match(/Top\s+\d+/i);
+    if (topMatch) return `${topMatch[0]} Finalist`;
+    if (lower.includes('finalist')) return 'Finalist';
+    return text.split(/[—:-]/)[0].trim();
+  };
+
+  const wonFacts = (item: any) => {
+    const facts: string[] = [];
+    if (item.totalTeams) facts.push(`${item.totalTeams} teams`);
+    if (item.participants) facts.push(`~${item.participants} participants`);
+    const pct = (item.position as string)?.match(/Top\s*([\d.]+)%\s*of\s*teams/i)?.[1];
+    if (pct) facts.push(`Top ${pct}% of teams`);
+    return facts;
+  };
+
   return (
     <section className="py-20 relative">
       <div className="container mx-auto px-6">
@@ -101,6 +121,13 @@ const HackathonSection = () => {
           </div>
         </div>
 
+        <div className="flex justify-center mb-8">
+          <span className="glass-effect px-4 sm:px-6 py-2 rounded-full inline-flex items-center gap-2 text-sm text-white">
+            <Rocket className="w-4 h-4 text-purple-400" />
+            These are projects I built during hackathons.
+          </span>
+        </div>
+
         {/* Hackathon Slider */}
         <div className="relative max-w-5xl mx-auto">
           <div className="glass-effect rounded-2xl overflow-hidden" onMouseEnter={stopAutoplay} onMouseLeave={startAutoplay}>
@@ -126,7 +153,7 @@ const HackathonSection = () => {
                     <div className="flex items-center justify-center flex-wrap gap-3 mb-5">
                       {activeTab === 'won' ? (
                         <span className="px-4 py-2 rounded-full font-semibold bg-gradient-to-r from-yellow-500/20 to-yellow-600/20 text-yellow-400 border border-yellow-500/30">
-                          {item.position}
+                          {concisePosition(item.position)}
                         </span>
                       ) : (
                         <span className="px-4 py-2 rounded-full font-semibold bg-gradient-to-r from-blue-500/20 to-purple-500/20 text-blue-400 border border-blue-500/30">
@@ -138,13 +165,6 @@ const HackathonSection = () => {
                         <span className="flex items-center gap-1 text-gray-400">
                           <Calendar className="w-4 h-4" />
                           {item.date}
-                        </span>
-                      )}
-
-                      {item.team && (
-                        <span className="flex items-center gap-1 text-gray-400">
-                          <Users className="w-4 h-4" />
-                          Team of {item.team}
                         </span>
                       )}
                     </div>
@@ -169,6 +189,20 @@ const HackathonSection = () => {
                       </div>
                     )}
 
+                    {/* Details - won facts */}
+                    {activeTab === 'won' && wonFacts(item).length > 0 && (
+                      <div className="flex flex-wrap justify-center gap-2 mb-4">
+                        {wonFacts(item).map((fact, i) => (
+                          <span
+                            key={i}
+                            className="px-3 py-1 rounded-full text-sm text-yellow-300/90 border border-yellow-500/30 bg-yellow-500/10"
+                          >
+                            {fact}
+                          </span>
+                        ))}
+                      </div>
+                    )}
+
                     {/* Action Buttons */}
                     <div className="flex flex-wrap justify-center gap-3">
                       {item.project && item.project.length > 0 && (
@@ -187,6 +221,14 @@ const HackathonSection = () => {
                         </a>
                       )}
                     </div>
+                    {item.team && (
+                      <div className="mt-4">
+                        <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-sm text-gray-300 border border-white/10 glass-effect">
+                          <Users className="w-4 h-4" />
+                          Team of {item.team}
+                        </span>
+                      </div>
+                    )}
                   </div>
                 </div>
               ))}
