@@ -1,112 +1,56 @@
 
-import React, { useState } from 'react';
-import { Trophy, Calendar, Users, Award, ChevronLeft, ChevronRight } from 'lucide-react';
+import React, { useEffect, useRef, useState } from 'react';
+import { Trophy, Calendar, Users, Award, ChevronLeft, ChevronRight, ExternalLink, FileText } from 'lucide-react';
+import { hackathonsParticipated, wonHackathons } from '../data/hackathons';
 
-interface Hackathon {
-  name: string;
-  year: string;
-  position: string;
-  type: 'won' | 'participated';
-  description: string;
-  tech: string[];
-  teamSize?: number;
-  prize?: string;
-}
-
-const hackathons: Hackathon[] = [
-  // Won Hackathons
-  {
-    name: "AI for Good Hackathon",
-    year: "2024",
-    position: "1st Place",
-    type: "won",
-    description: "Developed an AI-powered solution for mental health support using NLP and machine learning algorithms.",
-    tech: ["Python", "TensorFlow", "React", "Node.js"],
-    teamSize: 4,
-    prize: "$5,000"
-  },
-  {
-    name: "Web3 Innovation Challenge",
-    year: "2024",
-    position: "2nd Place", 
-    type: "won",
-    description: "Built a decentralized application for transparent charity donations using blockchain technology.",
-    tech: ["Solidity", "React", "Web3.js", "IPFS"],
-    teamSize: 3,
-    prize: "$3,000"
-  },
-  {
-    name: "FinTech Revolution Hackathon",
-    year: "2023",
-    position: "1st Place",
-    type: "won",
-    description: "Created a mobile banking solution with advanced security features and AI-driven fraud detection.",
-    tech: ["React Native", "Python", "MongoDB", "JWT"],
-    teamSize: 4,
-    prize: "$7,500"
-  },
-  {
-    name: "Healthcare Innovation Lab",
-    year: "2023",
-    position: "3rd Place",
-    type: "won", 
-    description: "Designed a telemedicine platform with real-time patient monitoring and AI diagnostics.",
-    tech: ["Vue.js", "Python", "WebRTC", "TensorFlow"],
-    teamSize: 5,
-    prize: "$2,000"
-  },
-  // Participated Hackathons
-  {
-    name: "Global Climate Tech Challenge",
-    year: "2024",
-    position: "Finalist",
-    type: "participated",
-    description: "Developed a carbon footprint tracking application with gamification elements to encourage eco-friendly behavior.",
-    tech: ["React", "Node.js", "PostgreSQL", "Chart.js"],
-    teamSize: 3
-  },
-  {
-    name: "EdTech Innovation Summit",
-    year: "2024", 
-    position: "Top 10",
-    type: "participated",
-    description: "Built an adaptive learning platform using machine learning to personalize educational content.",
-    tech: ["React", "Python", "scikit-learn", "MongoDB"],
-    teamSize: 4
-  },
-  {
-    name: "Smart City Hackathon",
-    year: "2023",
-    position: "Participant",
-    type: "participated",
-    description: "Created an IoT-based traffic management system with real-time data analytics and optimization.",
-    tech: ["Arduino", "React", "Node.js", "InfluxDB"],
-    teamSize: 6
-  },
-  {
-    name: "Social Impact Code Challenge",
-    year: "2023",
-    position: "Participant", 
-    type: "participated",
-    description: "Developed a platform connecting volunteers with local NGOs for community service opportunities.",
-    tech: ["Angular", "Spring Boot", "MySQL", "AWS"],
-    teamSize: 4
-  }
-];
+// Data is sourced from src/data/hackathons.ts
 
 const HackathonSection = () => {
   const [activeTab, setActiveTab] = useState<'won' | 'participated'>('won');
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const filteredHackathons = hackathons.filter(h => h.type === activeTab);
+  const filteredHackathons = activeTab === 'won' ? wonHackathons : hackathonsParticipated;
 
+  const autoplayRef = useRef<number | null>(null);
+  const startAutoplay = () => {
+    if (autoplayRef.current) window.clearInterval(autoplayRef.current);
+    autoplayRef.current = window.setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % filteredHackathons.length);
+    }, 6000);
+  };
+  const stopAutoplay = () => {
+    if (autoplayRef.current) {
+      window.clearInterval(autoplayRef.current);
+      autoplayRef.current = null;
+    }
+  };
   const nextSlide = () => {
+    stopAutoplay();
     setCurrentIndex((prev) => (prev + 1) % filteredHackathons.length);
+    startAutoplay();
   };
 
   const prevSlide = () => {
+    stopAutoplay();
     setCurrentIndex((prev) => (prev - 1 + filteredHackathons.length) % filteredHackathons.length);
+    startAutoplay();
   };
+
+  const goToSlide = (i: number) => {
+    stopAutoplay();
+    setCurrentIndex(i);
+    startAutoplay();
+  };
+
+  const totalEvents = wonHackathons.length + hackathonsParticipated.length;
+  const projectsCount =
+    wonHackathons.filter((x) => x.project && x.project.length > 0).length +
+    hackathonsParticipated.filter((x) => x.project && x.project.length > 0).length;
+
+  useEffect(() => {
+    startAutoplay();
+    return () => stopAutoplay();
+  }, [activeTab, filteredHackathons.length]);
 
   return (
     <section className="py-20 relative">
@@ -134,6 +78,7 @@ const HackathonSection = () => {
                   ? 'bg-gradient-to-r from-yellow-500 to-yellow-600 text-black'
                   : 'text-white hover:bg-white/10'
               }`}
+              aria-label="Show won hackathons"
             >
               <Trophy className="w-5 h-5 inline mr-2" />
               Won Hackathons
@@ -148,6 +93,7 @@ const HackathonSection = () => {
                   ? 'bg-gradient-to-r from-blue-500 to-purple-500 text-white'
                   : 'text-white hover:bg-white/10'
               }`}
+              aria-label="Show participated hackathons"
             >
               <Users className="w-5 h-5 inline mr-2" />
               Participated
@@ -157,17 +103,17 @@ const HackathonSection = () => {
 
         {/* Hackathon Slider */}
         <div className="relative max-w-5xl mx-auto">
-          <div className="glass-effect rounded-2xl overflow-hidden">
+          <div className="glass-effect rounded-2xl overflow-hidden" onMouseEnter={stopAutoplay} onMouseLeave={startAutoplay}>
             <div 
-              className="flex transition-transform duration-500 ease-in-out"
+              className="flex transition-transform duration-700 ease-[cubic-bezier(0.22,0.61,0.36,1)]"
               style={{ transform: `translateX(-${currentIndex * 100}%)` }}
             >
-              {filteredHackathons.map((hackathon, index) => (
+              {filteredHackathons.map((item: any, index: number) => (
                 <div key={index} className="w-full flex-shrink-0 p-8">
-                  <div className="text-center">
+                  <div className="text-center animate-enter">
                     {/* Award Icon */}
                     <div className="mb-6">
-                      {hackathon.type === 'won' ? (
+                      {activeTab === 'won' ? (
                         <Trophy className="w-16 h-16 text-yellow-500 mx-auto mb-4" />
                       ) : (
                         <Award className="w-16 h-16 text-blue-500 mx-auto mb-4" />
@@ -175,52 +121,72 @@ const HackathonSection = () => {
                     </div>
 
                     {/* Hackathon Info */}
-                    <h3 className="text-3xl font-bold text-white mb-2">{hackathon.name}</h3>
-                    <div className="flex items-center justify-center gap-4 mb-4">
-                      <span className={`px-4 py-2 rounded-full font-semibold ${
-                        hackathon.type === 'won' 
-                          ? 'bg-gradient-to-r from-yellow-500/20 to-yellow-600/20 text-yellow-400 border border-yellow-500/30'
-                          : 'bg-gradient-to-r from-blue-500/20 to-purple-500/20 text-blue-400 border border-blue-500/30'
-                      }`}>
-                        {hackathon.position}
-                      </span>
-                      <span className="flex items-center gap-1 text-gray-400">
-                        <Calendar className="w-4 h-4" />
-                        {hackathon.year}
-                      </span>
+                    <h3 className="text-3xl font-bold text-white mb-3">{item.hackathonName}</h3>
+
+                    <div className="flex items-center justify-center flex-wrap gap-3 mb-5">
+                      {activeTab === 'won' ? (
+                        <span className="px-4 py-2 rounded-full font-semibold bg-gradient-to-r from-yellow-500/20 to-yellow-600/20 text-yellow-400 border border-yellow-500/30">
+                          {item.position}
+                        </span>
+                      ) : (
+                        <span className="px-4 py-2 rounded-full font-semibold bg-gradient-to-r from-blue-500/20 to-purple-500/20 text-blue-400 border border-blue-500/30">
+                          {item.placement || item.status || 'Participant'}
+                        </span>
+                      )}
+
+                      {item.date && (
+                        <span className="flex items-center gap-1 text-gray-400">
+                          <Calendar className="w-4 h-4" />
+                          {item.date}
+                        </span>
+                      )}
+
+                      {item.team && (
+                        <span className="flex items-center gap-1 text-gray-400">
+                          <Users className="w-4 h-4" />
+                          Team of {item.team}
+                        </span>
+                      )}
                     </div>
 
-                    {hackathon.prize && (
-                      <div className="mb-4">
-                        <span className="bg-gradient-to-r from-green-500/20 to-emerald-500/20 text-green-400 px-4 py-2 rounded-full font-semibold border border-green-500/30">
-                          Prize: {hackathon.prize}
-                        </span>
+                    {item.description && (
+                      <p className="text-gray-300 text-lg leading-relaxed mb-6 max-w-2xl mx-auto">
+                        {item.description}
+                      </p>
+                    )}
+
+                    {/* Tags */}
+                    {(item.tags?.length || item.keywords?.length) && (
+                      <div className="flex flex-wrap gap-2 justify-center mb-6">
+                        {(item.tags?.length ? item.tags : item.keywords).map((tag: string, tagIndex: number) => (
+                          <span
+                            key={tagIndex}
+                            className="px-3 py-1 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-full text-sm text-purple-300 border border-purple-500/30"
+                          >
+                            {tag}
+                          </span>
+                        ))}
                       </div>
                     )}
 
-                    <p className="text-gray-300 text-lg leading-relaxed mb-6 max-w-2xl mx-auto">
-                      {hackathon.description}
-                    </p>
-
-                    {/* Tech Stack */}
-                    <div className="flex flex-wrap gap-2 justify-center mb-6">
-                      {hackathon.tech.map((tech, techIndex) => (
-                        <span 
-                          key={techIndex}
-                          className="px-3 py-1 bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-full text-sm text-purple-300 border border-purple-500/30"
-                        >
-                          {tech}
-                        </span>
-                      ))}
+                    {/* Action Buttons */}
+                    <div className="flex flex-wrap justify-center gap-3">
+                      {item.project && item.project.length > 0 && (
+                        <a href={item.project} target="_blank" rel="noopener noreferrer" className="glass-effect px-4 py-2 rounded-full hover-scale inline-flex items-center gap-2">
+                          <ExternalLink className="w-4 h-4" /> Project
+                        </a>
+                      )}
+                      {item.certificate && item.certificate.length > 0 && (
+                        <a href={item.certificate} target="_blank" rel="noopener noreferrer" className="glass-effect px-4 py-2 rounded-full hover-scale inline-flex items-center gap-2">
+                          <FileText className="w-4 h-4" /> Certificate
+                        </a>
+                      )}
+                      {item.hackathonLink && item.hackathonLink.length > 0 && (
+                        <a href={item.hackathonLink} target="_blank" rel="noopener noreferrer" className="glass-effect px-4 py-2 rounded-full hover-scale inline-flex items-center gap-2">
+                          <ExternalLink className="w-4 h-4" /> Event
+                        </a>
+                      )}
                     </div>
-
-                    {/* Team Size */}
-                    {hackathon.teamSize && (
-                      <div className="flex items-center justify-center gap-2 text-gray-400">
-                        <Users className="w-4 h-4" />
-                        <span>Team of {hackathon.teamSize}</span>
-                      </div>
-                    )}
                   </div>
                 </div>
               ))}
@@ -252,7 +218,7 @@ const HackathonSection = () => {
               {filteredHackathons.map((_, index) => (
                 <button
                   key={index}
-                  onClick={() => setCurrentIndex(index)}
+                  onClick={() => goToSlide(index)}
                   className={`w-3 h-3 rounded-full transition-all duration-300 ${
                     index === currentIndex 
                       ? (activeTab === 'won' ? 'bg-yellow-500 scale-125' : 'bg-blue-500 scale-125')
@@ -268,18 +234,18 @@ const HackathonSection = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16 max-w-4xl mx-auto">
           <div className="text-center glass-effect p-6 rounded-xl">
             <Trophy className="w-8 h-8 text-yellow-500 mx-auto mb-2" />
-            <div className="text-3xl font-bold text-white">{hackathons.filter(h => h.type === 'won').length}</div>
-            <div className="text-gray-400">Hackathons Won</div>
+            <div className="text-3xl font-bold text-white">{wonHackathons.length}</div>
+            <div className="text-gray-400">Won / Finalists</div>
           </div>
           <div className="text-center glass-effect p-6 rounded-xl">
             <Users className="w-8 h-8 text-blue-500 mx-auto mb-2" />
-            <div className="text-3xl font-bold text-white">{hackathons.length}</div>
-            <div className="text-gray-400">Total Participated</div>
+            <div className="text-3xl font-bold text-white">{totalEvents}</div>
+            <div className="text-gray-400">Total Events</div>
           </div>
           <div className="text-center glass-effect p-6 rounded-xl">
             <Award className="w-8 h-8 text-green-500 mx-auto mb-2" />
-            <div className="text-3xl font-bold text-white">$17,500+</div>
-            <div className="text-gray-400">Prize Money Won</div>
+            <div className="text-3xl font-bold text-white">{projectsCount}</div>
+            <div className="text-gray-400">Projects Built</div>
           </div>
         </div>
       </div>
