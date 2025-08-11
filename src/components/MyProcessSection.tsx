@@ -211,7 +211,7 @@ const MyProcessSection: React.FC = () => {
                   initial={{ opacity: 0, y: 100, rotateX: -90 }}
                   whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.8, delay: index * 0.1 }}
+                  
                   className="absolute cursor-pointer"
                   onClick={() => setActiveCard(index)}
                   animate={{

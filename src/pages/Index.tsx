@@ -8,6 +8,7 @@ import ContactPortal from '../components/ContactPortal';
 import Footer from '../components/Footer';
 import DynamicCosmicElements from '../components/DynamicCosmicElements';
 import MyProcessSection from '../components/MyProcessSection';
+import FreelanceShowcase from '../components/FreelanceShowcase';
 
 const Index = () => {
   useEffect(() => {
@@ -63,6 +64,8 @@ const Index = () => {
 
       {/* Projects Section */}
       <ProjectSlider />
+      {/* Freelance Showcase Section */}
+      <FreelanceShowcase />
       {/* Hackathons Section */}
       <HackathonSection />
 
