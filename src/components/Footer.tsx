@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { Github, Linkedin, Mail, Heart, Rocket, Star } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -70,12 +71,21 @@ const Footer = () => {
             <ul className="space-y-3">
               {['About', 'Projects', 'Services', 'Experience', 'Contact'].map((link) => (
                 <li key={link}>
-                  <a 
-                    href={`#${link.toLowerCase()}`}
-                    className="text-gray-400 hover:text-blue-400 transition-colors duration-300 hover:translate-x-1 transform inline-block"
-                  >
-                    {link}
-                  </a>
+                  {link === 'Services' ? (
+                    <Link
+                      to="/services"
+                      className="text-gray-400 hover:text-blue-400 transition-colors duration-300 hover:translate-x-1 transform inline-block"
+                    >
+                      {link}
+                    </Link>
+                  ) : (
+                    <a 
+                      href={`#${link.toLowerCase()}`}
+                      className="text-gray-400 hover:text-blue-400 transition-colors duration-300 hover:translate-x-1 transform inline-block"
+                    >
+                      {link}
+                    </a>
+                  )}
                 </li>
               ))}
             </ul>

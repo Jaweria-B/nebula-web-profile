@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-
+import { Link } from 'react-router-dom';
 const SolarSystemHero = () => {
   const [stars, setStars] = useState<Array<{ id: number; left: string; top: string; size: string; delay: string }>>([]);
 
@@ -110,6 +110,9 @@ const SolarSystemHero = () => {
           <button className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full text-white font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 nebula-glow">
             Explore My Universe
           </button>
+          <Link to="/services" className="px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full text-white font-semibold hover:from-purple-700 hover:to-pink-700 transition-all duration-300 transform hover:scale-105 nebula-glow">
+            View Services
+          </Link>
           <button className="px-8 py-4 glass-effect rounded-full text-white font-semibold hover:bg-white/10 transition-all duration-300">
             Connect with Me
           </button>

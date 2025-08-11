@@ -7,6 +7,7 @@ import ExperienceSection from '../components/ExperienceSection';
 import ContactPortal from '../components/ContactPortal';
 import Footer from '../components/Footer';
 import DynamicCosmicElements from '../components/DynamicCosmicElements';
+import MyProcessSection from '../components/MyProcessSection';
 
 const Index = () => {
   useEffect(() => {
@@ -57,9 +58,11 @@ const Index = () => {
         </div>
       </section>
 
+      {/* My Process Section */}
+      <MyProcessSection />
+
       {/* Projects Section */}
       <ProjectSlider />
-
       {/* Hackathons Section */}
       <HackathonSection />
 
