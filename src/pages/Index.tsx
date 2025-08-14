@@ -9,6 +9,7 @@ import Footer from '../components/Footer';
 import DynamicCosmicElements from '../components/DynamicCosmicElements';
 import MyProcessSection from '../components/MyProcessSection';
 import FreelanceShowcase from '../components/FreelanceShowcase';
+import ProductsSection from '../components/ProductsSection';
 
 const Index = () => {
   useEffect(() => {
@@ -27,6 +28,9 @@ const Index = () => {
       
       {/* Hero Section */}
       <SolarSystemHero />
+      
+      {/* Products Section */}
+      <ProductsSection />
       
       {/* About Section */}
       <section id="about" className="py-20 relative z-10">
