@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Badge } from "./ui/badge";
-import { ChevronLeft, ChevronRight, Star } from "lucide-react";
+import { ChevronLeft, ChevronRight, Star, Zap, Orbit } from "lucide-react";
 
 const items = [
   {
@@ -20,8 +20,8 @@ const items = [
       "Agent frameworks",
     ],
     client: "Product / Software Client",
-    nebula: "from-purple-500/30 via-blue-600/20 to-pink-500/30",
-    accent: "from-purple-400 to-pink-400"
+    color: "from-purple-500/30 to-blue-600/30",
+    accent: "from-purple-400 to-blue-500",
   },
   {
     title: "XBot Automation",
@@ -41,8 +41,8 @@ const items = [
       "Docker",
     ],
     client: "Digital Marketing / Growth Teams",
-    nebula: "from-cyan-500/30 via-teal-600/20 to-emerald-500/30",
-    accent: "from-cyan-400 to-emerald-400"
+    color: "from-cyan-500/30 to-teal-600/30",
+    accent: "from-cyan-400 to-teal-500",
   },
   {
     title: "Email Automation",
@@ -55,8 +55,8 @@ const items = [
       "Automated email creation, personalization and sending workflows.",
     tech: ["React", "OpenAI/GPT-4", "Gemini", "DeepSeek", "Node.js", "SMTP APIs"],
     client: "B2B Sales / Outreach Teams",
-    nebula: "from-orange-500/30 via-red-600/20 to-rose-500/30",
-    accent: "from-orange-400 to-rose-400"
+    color: "from-pink-500/30 to-rose-600/30",
+    accent: "from-pink-400 to-rose-500",
   },
   {
     title: "DataHarvest Bot",
@@ -77,327 +77,314 @@ const items = [
       "Docker",
     ],
     client: "Data & Analytics Teams",
-    nebula: "from-indigo-500/30 via-violet-600/20 to-purple-500/30",
-    accent: "from-indigo-400 to-purple-400"
+    color: "from-emerald-500/30 to-green-600/30",
+    accent: "from-emerald-400 to-green-500",
   },
 ];
 
-// Generate random stars
-const generateStars = (count: number) => {
-  return Array.from({ length: count }, (_, i) => ({
-    id: i,
-    x: Math.random() * 100,
-    y: Math.random() * 100,
-    size: Math.random() * 3 + 1,
-    opacity: Math.random() * 0.8 + 0.2,
-    delay: Math.random() * 2
-  }));
-};
+const FloatingStars = () => (
+  <div className="absolute inset-0 overflow-hidden pointer-events-none">
+    {[...Array(50)].map((_, i) => (
+      <motion.div
+        key={i}
+        className="absolute w-1 h-1 bg-white rounded-full opacity-60"
+        style={{
+          left: `${Math.random() * 100}%`,
+          top: `${Math.random() * 100}%`,
+        }}
+        animate={{
+          opacity: [0.3, 1, 0.3],
+          scale: [0.5, 1.2, 0.5],
+        }}
+        transition={{
+          duration: 2 + Math.random() * 3,
+          repeat: Infinity,
+          delay: Math.random() * 2,
+        }}
+      />
+    ))}
+  </div>
+);
+
+const GalaxyBackground = () => (
+  <div className="absolute inset-0 overflow-hidden">
+    {/* Main nebula clouds */}
+    <div className="absolute top-10 left-10 w-96 h-96 bg-gradient-radial from-purple-500/20 via-blue-500/10 to-transparent rounded-full blur-3xl animate-pulse" />
+    <div className="absolute bottom-20 right-20 w-80 h-80 bg-gradient-radial from-pink-500/20 via-purple-500/10 to-transparent rounded-full blur-3xl animate-pulse" style={{ animationDelay: "1s" }} />
+    <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-radial from-cyan-500/15 via-teal-500/8 to-transparent rounded-full blur-3xl animate-pulse" style={{ animationDelay: "2s" }} />
+    
+    {/* Distant galaxies */}
+    <div className="absolute top-32 right-1/4 w-32 h-32 bg-gradient-radial from-yellow-400/20 to-transparent rounded-full blur-2xl animate-ping" style={{ animationDelay: "3s", animationDuration: "4s" }} />
+    <div className="absolute bottom-32 left-1/4 w-24 h-24 bg-gradient-radial from-green-400/20 to-transparent rounded-full blur-2xl animate-ping" style={{ animationDelay: "1s", animationDuration: "5s" }} />
+    
+    {/* Cosmic dust trails */}
+    <div className="absolute inset-0">
+      {[...Array(8)].map((_, i) => (
+        <motion.div
+          key={i}
+          className="absolute h-px bg-gradient-to-r from-transparent via-white/20 to-transparent"
+          style={{
+            left: `${Math.random() * 60}%`,
+            top: `${Math.random() * 80}%`,
+            width: `${100 + Math.random() * 200}px`,
+            transform: `rotate(${Math.random() * 360}deg)`,
+          }}
+          animate={{
+            opacity: [0, 0.5, 0],
+            x: [0, Math.random() * 100 - 50],
+          }}
+          transition={{
+            duration: 8 + Math.random() * 4,
+            repeat: Infinity,
+            delay: Math.random() * 4,
+          }}
+        />
+      ))}
+    </div>
+  </div>
+);
 
 const FreelanceShowcase: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [stars] = useState(generateStars(150));
-  const [autoplay, setAutoplay] = useState(true);
+  const [autoPlay, setAutoPlay] = useState(true);
 
-  // Auto-advance carousel
   useEffect(() => {
-    if (!autoplay) return;
+    if (!autoPlay) return;
+    
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % items.length);
-    }, 4000);
+    }, 6000);
+    
     return () => clearInterval(interval);
-  }, [autoplay]);
+  }, [autoPlay]);
 
-  const next = () => {
+  const nextSlide = () => {
     setCurrentIndex((prev) => (prev + 1) % items.length);
-    setAutoplay(false);
+    setAutoPlay(false);
   };
 
-  const prev = () => {
+  const prevSlide = () => {
     setCurrentIndex((prev) => (prev - 1 + items.length) % items.length);
-    setAutoplay(false);
+    setAutoPlay(false);
   };
 
-  const getCardPosition = (index: number) => {
-    const diff = index - currentIndex;
-    if (diff === 0) return { x: 0, y: 0, z: 0, scale: 1, opacity: 1 };
-    if (diff === 1 || diff === -items.length + 1) return { x: 320, y: 20, z: -1, scale: 0.9, opacity: 0.7 };
-    if (diff === -1 || diff === items.length - 1) return { x: -320, y: 20, z: -1, scale: 0.9, opacity: 0.7 };
-    return { x: diff > 0 ? 600 : -600, y: 40, z: -2, scale: 0.8, opacity: 0 };
+  const goToSlide = (index: number) => {
+    setCurrentIndex(index);
+    setAutoPlay(false);
   };
 
   return (
-    <section id="freelance" className="relative py-24 min-h-screen bg-black overflow-hidden">
+    <section id="freelance" className="relative py-32 min-h-screen overflow-hidden bg-gradient-to-b from-slate-950 via-slate-900 to-black">
       {/* Cosmic Background */}
-      <div className="absolute inset-0">
-        {/* Nebula Background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-purple-900/20 via-blue-900/10 to-black opacity-60" />
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-gradient-to-br from-purple-600/20 to-pink-600/20 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-gradient-to-br from-cyan-600/20 to-blue-600/20 rounded-full blur-3xl animate-pulse delay-1000" />
-        <div className="absolute top-1/2 right-1/3 w-64 h-64 bg-gradient-to-br from-emerald-600/15 to-teal-600/15 rounded-full blur-3xl animate-pulse delay-2000" />
-        
-        {/* Animated Stars */}
-        {stars.map((star) => (
-          <motion.div
-            key={star.id}
-            className="absolute bg-white rounded-full"
-            style={{
-              left: `${star.x}%`,
-              top: `${star.y}%`,
-              width: `${star.size}px`,
-              height: `${star.size}px`,
-            }}
-            animate={{
-              opacity: [star.opacity, star.opacity * 0.3, star.opacity],
-              scale: [1, 1.2, 1],
-            }}
-            transition={{
-              duration: 3 + star.delay,
-              repeat: Infinity,
-              delay: star.delay,
-            }}
-          />
-        ))}
-        
-        {/* Shooting Stars */}
-        <motion.div
-          className="absolute top-1/4 left-0 w-px h-px bg-white rounded-full shadow-[0_0_10px_2px_rgba(255,255,255,0.8)]"
-          animate={{
-            x: ["-100px", "100vw"],
-            y: [0, "50px"],
-          }}
-          transition={{
-            duration: 3,
-            repeat: Infinity,
-            repeatDelay: 8,
-            ease: "easeOut",
-          }}
-        />
-        <motion.div
-          className="absolute top-3/4 right-0 w-px h-px bg-white rounded-full shadow-[0_0_10px_2px_rgba(255,255,255,0.8)]"
-          animate={{
-            x: ["100px", "-100vw"],
-            y: [0, "-30px"],
-          }}
-          transition={{
-            duration: 2.5,
-            repeat: Infinity,
-            repeatDelay: 12,
-            ease: "easeOut",
-            delay: 4,
-          }}
-        />
-      </div>
-
+      <GalaxyBackground />
+      <FloatingStars />
+      
       <div className="container mx-auto px-6 relative z-10">
         {/* Header */}
         <motion.header 
-          className="mb-16 text-center"
-          initial={{ opacity: 0, y: -30 }}
+          className="mb-20 text-center"
+          initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
         >
-          <div className="relative inline-block">
+          <div className="relative inline-block mb-6">
             <motion.div
-              className="absolute -inset-4 rounded-full bg-gradient-to-r from-purple-500/30 via-cyan-400/20 to-pink-500/30 blur-2xl"
+              className="absolute -inset-8 rounded-full bg-gradient-to-r from-purple-500/30 via-blue-500/20 to-cyan-500/30 blur-3xl"
               animate={{
                 scale: [1, 1.1, 1],
-                rotate: [0, 5, 0],
+                rotate: [0, 180, 360],
               }}
               transition={{
-                duration: 4,
+                duration: 8,
                 repeat: Infinity,
-                ease: "easeInOut",
               }}
             />
-            <h2 className="relative z-10 text-5xl md:text-7xl font-extrabold tracking-tight bg-gradient-to-r from-white via-purple-200 to-cyan-200 bg-clip-text text-transparent">
-              Galactic Projects
+            <h2 className="relative z-10 text-5xl md:text-7xl font-bold bg-gradient-to-r from-white via-cyan-200 to-purple-200 bg-clip-text text-transparent tracking-tight">
+              Freelance Showcase
             </h2>
             <motion.div
-              className="absolute -top-2 -right-2 text-yellow-400"
+              className="absolute top-0 right-0 text-yellow-400"
               animate={{ rotate: 360 }}
-              transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+              transition={{ duration: 4, repeat: Infinity }}
             >
-              <Star size={24} fill="currentColor" />
+              <Star className="w-6 h-6" />
             </motion.div>
           </div>
-          <p className="mt-6 text-lg text-gray-300 max-w-2xl mx-auto">
-            Journey through the constellation of client projects across the digital universe
+          <p className="text-lg text-slate-300 max-w-2xl mx-auto leading-relaxed">
+            Journey through the cosmos of innovation with selected client projects delivering stellar impact across the digital universe
           </p>
         </motion.header>
 
         {/* Carousel Container */}
-        <div className="relative h-[600px] flex items-center justify-center">
-          <AnimatePresence mode="wait">
-            {items.map((card, index) => {
-              const position = getCardPosition(index);
-              const isActive = index === currentIndex;
-              
-              return (
-                <motion.div
-                  key={`${card.title}-${index}`}
-                  className="absolute w-80 md:w-96"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{
-                    x: position.x,
-                    y: position.y,
-                    z: position.z,
-                    scale: position.scale,
-                    opacity: position.opacity,
-                  }}
-                  transition={{
-                    duration: 0.8,
-                    ease: "easeInOut",
-                  }}
-                  style={{
-                    transformStyle: "preserve-3d",
-                  }}
-                >
-                  <div className={`relative rounded-3xl p-[2px] bg-gradient-to-br ${card.nebula} backdrop-blur-sm ${isActive ? 'shadow-2xl shadow-purple-500/20' : ''}`}>
-                    {/* Cosmic border animation */}
-                    {isActive && (
-                      <motion.div
-                        className="absolute inset-0 rounded-3xl bg-gradient-to-r from-transparent via-white/20 to-transparent"
-                        animate={{ rotate: 360 }}
-                        transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-                      />
-                    )}
-                    
-                    <div className="relative rounded-3xl bg-black/80 backdrop-blur-md border border-white/10 p-6 md:p-8">
-                      {/* Floating elements */}
-                      {isActive && (
-                        <>
-                          <motion.div
-                            className="absolute top-4 right-4 w-2 h-2 bg-cyan-400 rounded-full"
-                            animate={{
-                              y: [-5, 5, -5],
-                              opacity: [0.5, 1, 0.5],
-                            }}
-                            transition={{
-                              duration: 2,
-                              repeat: Infinity,
-                              ease: "easeInOut",
-                            }}
-                          />
-                          <motion.div
-                            className="absolute bottom-4 left-4 w-1 h-1 bg-purple-400 rounded-full"
-                            animate={{
-                              x: [-3, 3, -3],
-                              opacity: [0.3, 0.8, 0.3],
-                            }}
-                            transition={{
-                              duration: 3,
-                              repeat: Infinity,
-                              ease: "easeInOut",
-                              delay: 1,
-                            }}
-                          />
-                        </>
-                      )}
-
-                      {/* Header */}
-                      <div className="flex items-start justify-between gap-4 mb-6">
-                        <div>
-                          <h3 className="text-2xl md:text-3xl font-bold tracking-tight bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-                            {card.title}
-                          </h3>
-                          <p className="text-gray-400 mt-2 text-sm md:text-base">{card.subtitle}</p>
-                        </div>
-                        <Badge 
-                          variant="outline" 
-                          className={`shrink-0 bg-gradient-to-r ${card.accent} text-black border-0 font-semibold`}
+        <div className="relative max-w-4xl mx-auto">
+          {/* Main Card Stack */}
+          <div className="relative h-[600px] flex items-center justify-center perspective-1000">
+            <AnimatePresence mode="wait">
+              {items.map((card, index) => {
+                const isActive = index === currentIndex;
+                const offset = index - currentIndex;
+                
+                return (
+                  <motion.div
+                    key={card.title}
+                    className={`absolute w-full max-w-2xl ${isActive ? 'z-30' : offset === 1 || offset === -3 ? 'z-20' : offset === -1 || offset === 3 ? 'z-10' : 'z-0'}`}
+                    initial={false}
+                    animate={{
+                      x: `${offset * 60}px`,
+                      y: `${Math.abs(offset) * 20}px`,
+                      rotateY: `${offset * 25}deg`,
+                      rotateX: `${Math.abs(offset) * 10}deg`,
+                      scale: isActive ? 1 : 0.8 - Math.abs(offset) * 0.1,
+                      opacity: Math.abs(offset) > 2 ? 0 : 1 - Math.abs(offset) * 0.3,
+                    }}
+                    transition={{
+                      type: "spring",
+                      stiffness: 300,
+                      damping: 30,
+                    }}
+                  >
+                    <motion.div
+                      className={`relative rounded-3xl p-[2px] bg-gradient-to-br ${card.color} backdrop-blur-xl shadow-2xl transform-gpu`}
+                      whileHover={isActive ? { scale: 1.02, y: -10 } : {}}
+                      transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                    >
+                      {/* Cosmic Border Glow */}
+                      <div className={`absolute -inset-2 rounded-3xl bg-gradient-to-r ${card.accent} opacity-20 blur-xl animate-pulse`} />
+                      
+                      <div className="relative rounded-3xl bg-black/80 backdrop-blur-xl p-8 border border-white/10">
+                        {/* Floating Elements */}
+                        <motion.div
+                          className="absolute top-4 right-4 text-cyan-400"
+                          animate={{ rotate: 360 }}
+                          transition={{ duration: 6, repeat: Infinity }}
                         >
-                          PROJECT
-                        </Badge>
-                      </div>
-
-                      {/* Content */}
-                      <div className="space-y-4 text-sm md:text-base leading-relaxed">
-                        <div>
-                          <span className="font-semibold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">Challenge:</span>
-                          <p className="text-gray-300 mt-1">{card.challenge}</p>
-                        </div>
+                          <Orbit className="w-5 h-5 opacity-60" />
+                        </motion.div>
                         
-                        <div>
-                          <span className="font-semibold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">Solution:</span>
-                          <p className="text-gray-300 mt-1">{card.solution}</p>
-                        </div>
-                        
-                        <div>
-                          <span className="font-semibold bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">Impact:</span>
-                          <p className="text-gray-300 mt-1">{card.impact}</p>
+                        <motion.div
+                          className="absolute bottom-4 left-4 text-purple-400"
+                          animate={{ 
+                            scale: [1, 1.2, 1],
+                            opacity: [0.5, 1, 0.5] 
+                          }}
+                          transition={{ duration: 2, repeat: Infinity }}
+                        >
+                          <Zap className="w-4 h-4" />
+                        </motion.div>
+
+                        {/* Header */}
+                        <div className="flex items-start justify-between gap-4 mb-6">
+                          <div>
+                            <h3 className="text-2xl md:text-3xl font-bold text-white tracking-tight mb-2">
+                              {card.title}
+                            </h3>
+                            <p className="text-slate-300 text-lg leading-relaxed">{card.subtitle}</p>
+                          </div>
+                          <Badge 
+                            variant="secondary" 
+                            className="bg-gradient-to-r from-purple-500/20 to-blue-500/20 text-cyan-200 border-cyan-500/30 shrink-0"
+                          >
+                            Client Project
+                          </Badge>
                         </div>
 
-                        <div className="pt-3">
-                          <p className="font-semibold text-white mb-3">Technologies:</p>
-                          <div className="flex flex-wrap gap-2">
-                            {card.tech.map((tech) => (
-                              <Badge 
-                                key={tech} 
-                                variant="outline" 
-                                className="bg-white/5 text-gray-300 border-white/20 hover:bg-white/10 transition-colors"
-                              >
-                                {tech}
-                              </Badge>
-                            ))}
+                        {/* Content */}
+                        <div className="space-y-4 text-slate-200">
+                          <div>
+                            <span className="text-cyan-400 font-semibold">⚡ Challenge:</span>
+                            <p className="mt-1 leading-relaxed">{card.challenge}</p>
+                          </div>
+                          
+                          <div>
+                            <span className="text-purple-400 font-semibold">🚀 Solution:</span>
+                            <p className="mt-1 leading-relaxed">{card.solution}</p>
+                          </div>
+                          
+                          <div>
+                            <span className="text-emerald-400 font-semibold">💫 Impact:</span>
+                            <p className="mt-1 leading-relaxed">{card.impact}</p>
+                          </div>
+
+                          <div className="pt-4">
+                            <p className="text-yellow-400 font-semibold mb-3">🛸 Tech Stack:</p>
+                            <div className="flex flex-wrap gap-2">
+                              {card.tech.map((tech) => (
+                                <Badge 
+                                  key={tech} 
+                                  variant="outline" 
+                                  className="bg-slate-800/50 text-slate-200 border-slate-600 hover:bg-slate-700/50 transition-colors"
+                                >
+                                  {tech}
+                                </Badge>
+                              ))}
+                            </div>
+                          </div>
+
+                          <div className="pt-4 border-t border-slate-700">
+                            <span className="text-pink-400 font-semibold">🌌 Client Type:</span>
+                            <p className="mt-1 text-slate-300">{card.client}</p>
                           </div>
                         </div>
-
-                        <div className="pt-2 border-t border-white/10">
-                          <p className="font-semibold text-white">Client Type:</p>
-                          <p className="text-gray-400 mt-1">{card.client}</p>
-                        </div>
                       </div>
-                    </div>
-                  </div>
-                </motion.div>
-              );
-            })}
-          </AnimatePresence>
+                    </motion.div>
+                  </motion.div>
+                );
+              })}
+            </AnimatePresence>
+          </div>
 
           {/* Navigation */}
-          <button
-            onClick={prev}
-            className="absolute left-4 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-black/50 border border-white/20 text-white hover:bg-black/70 hover:border-white/40 transition-all backdrop-blur-sm"
-            aria-label="Previous project"
-          >
-            <ChevronLeft size={24} />
-          </button>
-          
-          <button
-            onClick={next}
-            className="absolute right-4 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-black/50 border border-white/20 text-white hover:bg-black/70 hover:border-white/40 transition-all backdrop-blur-sm"
-            aria-label="Next project"
-          >
-            <ChevronRight size={24} />
-          </button>
-        </div>
-
-        {/* Indicators */}
-        <div className="flex justify-center mt-12 gap-3">
-          {items.map((_, index) => (
+          <div className="flex items-center justify-center gap-8 mt-12">
             <motion.button
-              key={index}
-              onClick={() => setCurrentIndex(index)}
-              className={`relative w-3 h-3 rounded-full border transition-all duration-300 ${
-                index === currentIndex 
-                  ? 'bg-white border-white shadow-lg shadow-white/30' 
-                  : 'bg-transparent border-white/40 hover:border-white/70'
-              }`}
-              whileHover={{ scale: 1.2 }}
-              whileTap={{ scale: 0.9 }}
+              onClick={prevSlide}
+              className="p-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20 transition-all duration-300 group"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
             >
-              {index === currentIndex && (
-                <motion.div
-                  className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-400 to-cyan-400"
-                  layoutId="indicator"
-                  transition={{ duration: 0.3 }}
-                />
-              )}
+              <ChevronLeft className="w-6 h-6 group-hover:text-cyan-400 transition-colors" />
             </motion.button>
-          ))}
+
+            {/* Indicators */}
+            <div className="flex gap-3">
+              {items.map((_, index) => (
+                <motion.button
+                  key={index}
+                  onClick={() => goToSlide(index)}
+                  className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                    index === currentIndex 
+                      ? 'bg-gradient-to-r from-cyan-400 to-purple-400' 
+                      : 'bg-white/30 hover:bg-white/50'
+                  }`}
+                  whileHover={{ scale: 1.2 }}
+                  whileTap={{ scale: 0.9 }}
+                />
+              ))}
+            </div>
+
+            <motion.button
+              onClick={nextSlide}
+              className="p-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20 transition-all duration-300 group"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <ChevronRight className="w-6 h-6 group-hover:text-cyan-400 transition-colors" />
+            </motion.button>
+          </div>
         </div>
       </div>
+
+      <style jsx>{`
+        .perspective-1000 {
+          perspective: 1000px;
+        }
+        .bg-gradient-radial {
+          background: radial-gradient(circle, var(--tw-gradient-stops));
+        }
+        @keyframes shimmer {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(200%); }
+        }
+      `}</style>
     </section>
   );
 };
