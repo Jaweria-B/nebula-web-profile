@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { Star, Sparkles, Bot, Mail, Twitter, Mic, ArrowRight, Zap, Rocket, Atom } from 'lucide-react';
+import { Star, Sparkles, Bot, Mail, Twitter, Mic, ArrowRight, Zap, Rocket, Atom, Eye } from 'lucide-react';
 
 const ProductsSection = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -74,54 +73,24 @@ const ProductsSection = () => {
     }
   ];
 
-  const FloatingStars = ({ count = 50 }) => {
+  const GalaxyStars = ({ count = 400, className = "" }) => {
     const stars = [];
     for (let i = 0; i < count; i++) {
+      const size = Math.random() * 3 + 0.5;
+      const brightness = Math.random() * 0.8 + 0.2;
       stars.push(
         <div
           key={i}
-          className="absolute animate-pulse"
-          style={{
-            left: `${Math.random() * 100}%`,
-            top: `${Math.random() * 100}%`,
-            animationDelay: `${Math.random() * 3}s`,
-            animationDuration: `${2 + Math.random() * 4}s`
-          }}
-        >
-          <div 
-            className="w-1 h-1 bg-white rounded-full opacity-60"
-            style={{
-              filter: `hue-rotate(${Math.random() * 360}deg)`,
-              boxShadow: '0 0 2px rgba(255,255,255,0.3)'
-            }}
-          />
-        </div>
-      );
-    }
-    return (
-      <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        {stars}
-      </div>
-    );
-  };
-
-  const GalaxyStars = ({ count = 200 }) => {
-    const stars = [];
-    for (let i = 0; i < count; i++) {
-      const size = Math.random() * 2 + 0.5;
-      stars.push(
-        <div
-          key={i}
-          className="absolute bg-white rounded-full animate-pulse"
+          className={`absolute bg-white rounded-full ${className}`}
           style={{
             left: `${Math.random() * 100}%`,
             top: `${Math.random() * 100}%`,
             width: `${size}px`,
             height: `${size}px`,
-            opacity: Math.random() * 0.8 + 0.2,
+            opacity: brightness,
+            animation: `twinkle ${3 + Math.random() * 4}s ease-in-out infinite`,
             animationDelay: `${Math.random() * 3}s`,
-            animationDuration: `${2 + Math.random() * 4}s`,
-            boxShadow: `0 0 ${size * 2}px rgba(255,255,255,0.3)`
+            boxShadow: `0 0 ${size * 3}px rgba(255,255,255,${brightness * 0.5})`
           }}
         />
       );
@@ -133,223 +102,211 @@ const ProductsSection = () => {
     );
   };
 
-  const CosmicOrb = ({ size, color, delay, duration, left, top }) => (
+  const Galaxy = ({ size, left, top, rotation, colors, delay = 0 }) => (
     <div
-      className={`absolute rounded-full ${size} ${color} animate-pulse blur-3xl opacity-10`}
+      className="absolute pointer-events-none"
       style={{
         left: `${left}%`,
         top: `${top}%`,
-        animationDelay: `${delay}s`,
-        animationDuration: `${duration}s`
+        width: `${size}px`,
+        height: `${size}px`,
+        transform: `rotate(${rotation}deg)`,
+        animation: `galaxyRotate 30s linear infinite`,
+        animationDelay: `${delay}s`
       }}
-    />
+    >
+      <div 
+        className="w-full h-full rounded-full opacity-20"
+        style={{
+          background: `radial-gradient(ellipse 40% 20% at 50% 50%, ${colors[0]}, ${colors[1]}, transparent 70%)`
+        }}
+      />
+      <div 
+        className="absolute inset-0 w-full h-full rounded-full opacity-15"
+        style={{
+          background: `conic-gradient(from 0deg at 50% 50%, transparent 0deg, ${colors[2]} 45deg, transparent 90deg, ${colors[1]} 135deg, transparent 180deg, ${colors[0]} 225deg, transparent 270deg, ${colors[2]} 315deg, transparent 360deg)`,
+          filter: 'blur(2px)'
+        }}
+      />
+    </div>
   );
 
-  const cosmicOrbs = [
-    { size: "w-96 h-96", color: "bg-purple-600", delay: 0, duration: 8, left: 10, top: 20 },
-    { size: "w-80 h-80", color: "bg-blue-600", delay: 2, duration: 12, left: 80, top: 10 },
-    { size: "w-64 h-64", color: "bg-pink-600", delay: 4, duration: 10, left: 60, top: 70 },
-    { size: "w-72 h-72", color: "bg-cyan-600", delay: 1, duration: 15, left: 20, top: 80 },
-    { size: "w-56 h-56", color: "bg-violet-600", delay: 3, duration: 9, left: 90, top: 50 }
+  const galaxies = [
+    { size: 300, left: 10, top: 15, rotation: 45, colors: ['#6366f1', '#8b5cf6', '#a855f7'], delay: 0 },
+    { size: 250, left: 80, top: 25, rotation: -30, colors: ['#06b6d4', '#3b82f6', '#6366f1'], delay: 5 },
+    { size: 200, left: 60, top: 70, rotation: 90, colors: ['#ec4899', '#f43f5e', '#ef4444'], delay: 10 },
+    { size: 180, left: 25, top: 80, rotation: -60, colors: ['#10b981', '#059669', '#047857'], delay: 15 },
+    { size: 220, left: 85, top: 60, rotation: 120, colors: ['#f59e0b', '#d97706', '#b45309'], delay: 20 }
   ];
 
-  const shootingStars = [0, 1, 2].map((i) => (
+  const NebulaCloud = ({ size, left, top, colors, delay = 0 }) => (
     <div
-      key={i}
-      className="absolute w-px h-px bg-white opacity-60"
+      className="absolute pointer-events-none opacity-10"
       style={{
-        left: `${Math.random() * 100}%`,
-        top: `${Math.random() * 50}%`,
-        animation: `shooting-star 3s linear infinite ${i * 2}s`,
-        boxShadow: '0 0 6px 2px rgba(255,255,255,0.3)'
+        left: `${left}%`,
+        top: `${top}%`,
+        width: `${size}px`,
+        height: `${size * 0.6}px`,
+        animation: `nebulaDrift 25s ease-in-out infinite`,
+        animationDelay: `${delay}s`
       }}
-    />
-  ));
+    >
+      <div 
+        className="w-full h-full rounded-full blur-3xl"
+        style={{
+          background: `radial-gradient(ellipse 80% 60% at 50% 50%, ${colors[0]}, ${colors[1]}, transparent 70%)`
+        }}
+      />
+    </div>
+  );
 
-  const stats = [
-    { value: "3", label: "Products", color: "purple", icon: Bot },
-    { value: "15+", label: "Technologies", color: "cyan", icon: Zap },
-    { value: "∞", label: "Possibilities", color: "pink", icon: Sparkles }
+  const nebulaClouds = [
+    { size: 400, left: 5, top: 10, colors: ['rgba(139, 92, 246, 0.3)', 'rgba(168, 85, 247, 0.2)'], delay: 0 },
+    { size: 350, left: 70, top: 20, colors: ['rgba(6, 182, 212, 0.3)', 'rgba(59, 130, 246, 0.2)'], delay: 8 },
+    { size: 300, left: 15, top: 75, colors: ['rgba(236, 72, 153, 0.3)', 'rgba(244, 63, 94, 0.2)'], delay: 16 },
+    { size: 280, left: 80, top: 65, colors: ['rgba(16, 185, 129, 0.3)', 'rgba(5, 150, 105, 0.2)'], delay: 12 }
   ];
 
   return (
     <section 
       id="products" 
-      className="relative py-20 overflow-hidden bg-black"
+      className="relative py-32 overflow-hidden"
       ref={setSectionRef}
       style={{
-        background: 'radial-gradient(ellipse at center, #0f0f23 0%, #000000 100%)',
-        position: 'relative'
+        background: 'linear-gradient(180deg, #0f0f23 0%, #1a1a3e 50%, #0f0f23 100%)',
+        minHeight: '100vh'
       }}
     >
-      {/* Galaxy Background with Stars */}
+      {/* Enhanced Galaxy Background */}
       <div className="absolute inset-0">
-        {/* Star field */}
-        <GalaxyStars count={300} />
+        {/* Multiple Star Layers */}
+        <GalaxyStars count={500} className="animate-pulse" />
+        <GalaxyStars count={200} className="animate-ping opacity-30" />
         
-        {/* Nebula clouds */}
-        {cosmicOrbs.map((orb, index) => (
-          <CosmicOrb key={index} {...orb} />
+        {/* Spiral Galaxies */}
+        {galaxies.map((galaxy, index) => (
+          <Galaxy key={`galaxy-${index}`} {...galaxy} />
         ))}
         
-        {/* Additional cosmic dust */}
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-10 left-20 w-32 h-32 bg-purple-500 rounded-full blur-3xl animate-pulse" style={{animationDelay: '1s'}} />
-          <div className="absolute top-40 right-32 w-24 h-24 bg-blue-500 rounded-full blur-3xl animate-pulse" style={{animationDelay: '2s'}} />
-          <div className="absolute bottom-20 left-1/3 w-40 h-40 bg-pink-500 rounded-full blur-3xl animate-pulse" style={{animationDelay: '3s'}} />
-          <div className="absolute bottom-40 right-20 w-28 h-28 bg-cyan-500 rounded-full blur-3xl animate-pulse" style={{animationDelay: '0.5s'}} />
+        {/* Nebula Clouds */}
+        {nebulaClouds.map((nebula, index) => (
+          <NebulaCloud key={`nebula-${index}`} {...nebula} />
+        ))}
+        
+        {/* Cosmic Dust Particles */}
+        <div className="absolute inset-0">
+          {Array.from({length: 50}).map((_, i) => (
+            <div
+              key={`dust-${i}`}
+              className="absolute w-1 h-1 bg-white rounded-full opacity-20"
+              style={{
+                left: `${Math.random() * 100}%`,
+                top: `${Math.random() * 100}%`,
+                animation: `cosmicFloat ${8 + Math.random() * 12}s ease-in-out infinite`,
+                animationDelay: `${Math.random() * 5}s`
+              }}
+            />
+          ))}
         </div>
       </div>
 
-      {/* Floating Stars */}
-      <FloatingStars count={100} />
-
-      {/* Shooting Stars */}
-      <div className="absolute inset-0">
-        {shootingStars}
-      </div>
-
-      {/* Mouse Trail Effect - Contained within section */}
+      {/* Gentle Mouse Trail */}
       {sectionRef && (
         <div
-          className="absolute w-4 h-4 pointer-events-none z-30 mix-blend-screen"
+          className="absolute w-6 h-6 pointer-events-none z-30 opacity-60"
           style={{
-            left: mousePosition.x - 8,
-            top: mousePosition.y - 8,
-            background: 'radial-gradient(circle, rgba(147, 51, 234, 0.6) 0%, transparent 70%)',
+            left: mousePosition.x - 12,
+            top: mousePosition.y - 12,
+            background: 'radial-gradient(circle, rgba(147, 51, 234, 0.4) 0%, rgba(59, 130, 246, 0.2) 50%, transparent 70%)',
             borderRadius: '50%',
-            transition: 'all 0.1s ease-out'
+            transition: 'all 0.3s ease-out',
+            filter: 'blur(2px)'
           }}
         />
       )}
 
       <div className="container mx-auto px-6 relative z-10">
-        {/* Majestic Header */}
-        <div className="text-center mb-20 relative">
+        {/* Elegant Header */}
+        <div className="text-center mb-24 relative">
           {/* Constellation Badge */}
-          <div className="inline-flex items-center gap-3 px-6 py-3 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 mb-8 group hover:bg-white/10 transition-all duration-500">
+          <div className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 mb-12 group hover:bg-white/8 transition-all duration-700 hover:scale-105">
             <div className="relative">
-              <Sparkles className="w-5 h-5 text-purple-300 animate-spin" style={{animationDuration: '8s'}} />
-              <div className="absolute inset-0 bg-purple-300 rounded-full blur-sm opacity-50 animate-pulse" />
+              <Sparkles className="w-6 h-6 text-purple-300" style={{animation: 'gentleSpin 12s linear infinite'}} />
+              <div className="absolute inset-0 bg-purple-300 rounded-full blur-sm opacity-40" style={{animation: 'gentlePulse 3s ease-in-out infinite'}} />
             </div>
-            <span className="text-sm font-medium bg-gradient-to-r from-purple-200 to-cyan-200 bg-clip-text text-transparent">
+            <span className="text-lg font-medium bg-gradient-to-r from-purple-200 via-cyan-200 to-pink-200 bg-clip-text text-transparent">
               My Product Universe
             </span>
-            <Sparkles className="w-4 h-4 text-cyan-300 animate-pulse" />
+            <Sparkles className="w-5 h-5 text-cyan-300" style={{animation: 'gentlePulse 2s ease-in-out infinite'}} />
           </div>
           
           {/* Main Title */}
-          <h2 className="text-6xl md:text-7xl lg:text-8xl font-black mb-8 relative">
+          <h2 className="text-6xl md:text-7xl lg:text-8xl font-black mb-12 relative leading-tight">
             <span 
-              className="bg-gradient-to-r from-purple-200 via-pink-200 to-cyan-200 bg-clip-text text-transparent animate-pulse"
+              className="bg-gradient-to-r from-purple-200 via-pink-200 to-cyan-200 bg-clip-text text-transparent block mb-4"
               style={{
-                textShadow: '0 0 50px rgba(147, 51, 234, 0.3)',
-                filter: 'drop-shadow(0 0 20px rgba(147, 51, 234, 0.4))'
+                animation: 'titleGlow 4s ease-in-out infinite alternate'
               }}
             >
               AI-Powered
             </span>
-            <br />
             <span 
-              className="bg-gradient-to-r from-cyan-200 via-blue-200 to-purple-200 bg-clip-text text-transparent glow-pulse-animation"
+              className="bg-gradient-to-r from-cyan-200 via-blue-200 to-purple-200 bg-clip-text text-transparent block"
+              style={{
+                animation: 'titleGlow 4s ease-in-out infinite alternate 2s'
+              }}
             >
               Solutions
             </span>
             
             {/* Orbital Elements */}
-            <div className="absolute -top-8 -right-8 animate-spin orbital-spin">
-              <Atom className="w-12 h-12 text-purple-300 opacity-30" />
+            <div className="absolute -top-8 -right-8 opacity-30" style={{animation: 'gentleOrbit 25s linear infinite'}}>
+              <Atom className="w-12 h-12 text-purple-300" />
             </div>
-            <div className="absolute -bottom-4 -left-6 animate-bounce" style={{animationDelay: '1s'}}>
-              <Rocket className="w-10 h-10 text-cyan-300 opacity-40" />
+            <div className="absolute -bottom-8 -left-8 opacity-40" style={{animation: 'gentleFloat 6s ease-in-out infinite'}}>
+              <Rocket className="w-10 h-10 text-cyan-300" />
             </div>
           </h2>
           
-          <p className="text-lg md:text-xl text-slate-300 max-w-4xl mx-auto leading-relaxed mb-12 fade-in-up-animation" style={{animationDelay: '0.5s'}}>
-            Explore my constellation of intelligent tools designed to automate, enhance, 
+          <p className="text-xl md:text-2xl text-slate-300 max-w-5xl mx-auto leading-relaxed opacity-90" style={{animation: 'fadeInUp 1s ease-out 0.5s both'}}>
+            Discover my constellation of intelligent tools designed to automate, enhance, 
             and revolutionize your digital experience with cutting-edge AI technology.
           </p>
-
-          {/* Cosmic Stats */}
-          <div className="flex justify-center gap-12 mt-12">
-            {stats.map((stat, index) => {
-              const IconComponent = stat.icon;
-              const colorClasses = {
-                purple: 'text-purple-300',
-                cyan: 'text-cyan-300', 
-                pink: 'text-pink-300'
-              };
-              
-              return (
-                <div 
-                  key={stat.label}
-                  className="text-center group cursor-pointer transform hover:scale-110 transition-all duration-500 fade-in-up-animation"
-                  style={{
-                    animationDelay: `${index * 0.2}s`,
-                    opacity: 0
-                  }}
-                >
-                  <div className="relative mb-2">
-                    <div 
-                      className="text-3xl font-bold mb-1"
-                      style={{
-                        background: `linear-gradient(45deg, ${stat.color === 'purple' ? '#a855f7, #ec4899' : stat.color === 'cyan' ? '#06b6d4, #3b82f6' : '#ec4899, #f97316'})`,
-                        WebkitBackgroundClip: 'text',
-                        WebkitTextFillColor: 'transparent'
-                      }}
-                    >
-                      {stat.value}
-                    </div>
-                    <IconComponent className={`w-5 h-5 mx-auto ${colorClasses[stat.color]} opacity-60 group-hover:opacity-100 transition-opacity duration-300`} />
-                  </div>
-                  <div className="text-sm text-slate-400 group-hover:text-slate-300 transition-colors duration-300">
-                    {stat.label}
-                  </div>
-                </div>
-              );
-            })}
-          </div>
         </div>
 
-        {/* Cosmic Products Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+        {/* Enhanced Products Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 max-w-7xl mx-auto mb-20">
           {products.map((product, index) => {
             const IconComponent = product.icon;
             const isHovered = hoveredCard === index;
             
             const cardColors = [
               {
-                glow: 'bg-gradient-to-r from-purple-600/20 via-pink-600/20 to-purple-600/20',
-                bg: 'bg-gradient-to-br from-purple-600/20 to-pink-600/20',
-                text: 'text-purple-100',
-                icon: 'text-purple-300',
-                accent: 'text-purple-400',
-                button: 'from-purple-600/20 to-pink-600/20 hover:from-purple-600/30 hover:to-pink-600/30 border-purple-500/20',
-                buttonText: 'text-purple-200',
-                buttonIcon: 'text-purple-300',
-                feature: 'bg-gradient-to-r from-purple-400 to-pink-400'
+                primary: '#8b5cf6',
+                secondary: '#ec4899',
+                accent: 'purple',
+                glow: 'rgba(139, 92, 246, 0.3)',
+                textColor: 'text-purple-100',
+                iconColor: 'text-purple-300',
+                featureColor: 'from-purple-400 to-pink-400'
               },
               {
-                glow: 'bg-gradient-to-r from-cyan-600/20 via-blue-600/20 to-cyan-600/20',
-                bg: 'bg-gradient-to-br from-cyan-600/20 to-blue-600/20',
-                text: 'text-cyan-100',
-                icon: 'text-cyan-300',
-                accent: 'text-cyan-400',
-                button: 'from-cyan-600/20 to-blue-600/20 hover:from-cyan-600/30 hover:to-blue-600/30 border-cyan-500/20',
-                buttonText: 'text-cyan-200',
-                buttonIcon: 'text-cyan-300',
-                feature: 'bg-gradient-to-r from-cyan-400 to-blue-400'
+                primary: '#06b6d4',
+                secondary: '#3b82f6',
+                accent: 'cyan',
+                glow: 'rgba(6, 182, 212, 0.3)',
+                textColor: 'text-cyan-100',
+                iconColor: 'text-cyan-300',
+                featureColor: 'from-cyan-400 to-blue-400'
               },
               {
-                glow: 'bg-gradient-to-r from-violet-600/20 via-indigo-600/20 to-violet-600/20',
-                bg: 'bg-gradient-to-br from-violet-600/20 to-indigo-600/20',
-                text: 'text-violet-100',
-                icon: 'text-violet-300',
-                accent: 'text-violet-400',
-                button: 'from-violet-600/20 to-indigo-600/20 hover:from-violet-600/30 hover:to-indigo-600/30 border-violet-500/20',
-                buttonText: 'text-violet-200',
-                buttonIcon: 'text-violet-300',
-                feature: 'bg-gradient-to-r from-violet-400 to-indigo-400'
+                primary: '#a855f7',
+                secondary: '#6366f1',
+                accent: 'violet',
+                glow: 'rgba(168, 85, 247, 0.3)',
+                textColor: 'text-violet-100',
+                iconColor: 'text-violet-300',
+                featureColor: 'from-violet-400 to-indigo-400'
               }
             ];
             
@@ -358,115 +315,154 @@ const ProductsSection = () => {
             return (
               <div
                 key={product.title}
-                className="group relative float-in-animation"
+                className="group relative"
                 style={{
-                  animationDelay: `${index * 0.3}s`,
-                  opacity: 0
+                  animation: `cardFloat 1.5s ease-out ${index * 0.3}s both`,
+                  transform: isHovered ? 'translateY(-10px) scale(1.02)' : 'translateY(0) scale(1)',
+                  transition: 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)'
                 }}
                 onMouseEnter={() => setHoveredCard(index)}
                 onMouseLeave={() => setHoveredCard(null)}
               >
-                {/* Cosmic Glow */}
-                <div className={`absolute -inset-1 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 ${colors.glow} animate-pulse blur-xl`} />
+                {/* Soft Glow Effect */}
+                <div 
+                  className="absolute -inset-2 rounded-3xl opacity-0 group-hover:opacity-100 transition-all duration-1000 blur-xl"
+                  style={{
+                    background: `radial-gradient(circle, ${colors.glow} 0%, transparent 70%)`,
+                    animation: isHovered ? 'gentlePulse 3s ease-in-out infinite' : 'none'
+                  }}
+                />
                 
                 {/* Main Card */}
-                <div className="relative h-full rounded-3xl bg-gradient-to-br from-slate-900/60 to-slate-800/60 backdrop-blur-xl border border-white/10 group-hover:border-white/20 transition-all duration-700 transform group-hover:scale-[1.02] group-hover:-translate-y-2 overflow-hidden">
+                <div className="relative h-full rounded-3xl bg-gradient-to-br from-slate-900/40 to-slate-800/40 backdrop-blur-xl border border-white/10 group-hover:border-white/20 transition-all duration-700 overflow-hidden">
                   
-                  {/* Card Background Pattern */}
-                  <div className="absolute inset-0 opacity-10">
+                  {/* Animated Background Pattern */}
+                  <div className="absolute inset-0 opacity-5">
                     <div 
                       className="absolute inset-0"
                       style={{
-                        backgroundImage: `radial-gradient(circle at 25% 25%, rgba(147, 51, 234, 0.1) 0%, transparent 50%), 
-                                         radial-gradient(circle at 75% 75%, rgba(59, 130, 246, 0.1) 0%, transparent 50%)`
+                        backgroundImage: `radial-gradient(circle at 30% 30%, ${colors.primary}40 0%, transparent 50%), 
+                                         radial-gradient(circle at 70% 70%, ${colors.secondary}40 0%, transparent 50%)`,
+                        animation: 'backgroundShift 15s ease-in-out infinite'
                       }}
                     />
                   </div>
 
-                  {/* Constellation Header */}
+                  {/* Header Section */}
                   <div className="relative p-8 border-b border-white/5">
                     <div className="flex items-start justify-between mb-6">
                       <div className="flex items-center gap-4">
-                        <div className={`relative p-4 rounded-2xl ${colors.bg} backdrop-blur-sm group-hover:scale-110 transition-transform duration-500`}>
-                          <IconComponent className={`w-8 h-8 ${colors.icon}`} />
-                          <div className={`absolute inset-0 rounded-2xl ${colors.icon.replace('text-', 'bg-').replace('-300', '-400')} opacity-20 blur-lg animate-pulse`} />
+                        <div 
+                          className="relative p-4 rounded-2xl backdrop-blur-sm transition-all duration-500"
+                          style={{
+                            background: `linear-gradient(135deg, ${colors.primary}20, ${colors.secondary}20)`,
+                            transform: isHovered ? 'scale(1.1) rotate(5deg)' : 'scale(1) rotate(0deg)'
+                          }}
+                        >
+                          <IconComponent className={`w-8 h-8 ${colors.iconColor} transition-all duration-500`} />
+                          <div 
+                            className="absolute inset-0 rounded-2xl opacity-30 blur-lg transition-all duration-500"
+                            style={{
+                              background: colors.primary,
+                              animation: isHovered ? 'gentlePulse 2s ease-in-out infinite' : 'none'
+                            }}
+                          />
                         </div>
                         <div>
-                          <h3 className={`text-2xl font-bold mb-1 ${colors.text} group-hover:animate-pulse`}>
+                          <h3 className={`text-2xl font-bold mb-1 ${colors.textColor} transition-all duration-500`}>
                             {product.title}
                           </h3>
-                          <p className="text-sm text-slate-400 font-medium">
+                          <p className="text-sm text-slate-400 font-medium opacity-90">
                             {product.subtitle}
                           </p>
                         </div>
                       </div>
                       
                       <div className="text-right">
-                        <div className={`text-xs ${colors.icon} mb-1`}>
+                        <div className={`text-xs ${colors.iconColor} mb-2 opacity-80`}>
                           {product.constellation}
                         </div>
-                        <div className="flex items-center gap-1">
-                          <Star className="w-3 h-3 text-yellow-300 animate-pulse" />
+                        <div className="flex items-center gap-1 justify-end">
+                          <Star className="w-3 h-3 text-yellow-400" style={{animation: 'gentlePulse 2s ease-in-out infinite'}} />
                           <span className="text-xs text-slate-400">{product.starCount}</span>
                         </div>
                       </div>
                     </div>
 
-                    <p className="text-slate-300 leading-relaxed">
+                    <p className="text-slate-300 leading-relaxed opacity-90 transition-all duration-500">
                       {product.description}
                     </p>
                   </div>
 
-                  {/* Features Nebula */}
+                  {/* Features Section */}
                   <div className="p-8">
-                    <h4 className="text-sm font-semibold text-slate-200 flex items-center gap-2 mb-4">
-                      <Sparkles className={`w-4 h-4 ${colors.accent} animate-pulse`} />
+                    <h4 className="text-sm font-semibold text-slate-200 flex items-center gap-2 mb-6">
+                      <Sparkles className={`w-4 h-4 ${colors.iconColor} opacity-80`} style={{animation: 'gentlePulse 2s ease-in-out infinite'}} />
                       Cosmic Features
                     </h4>
                     
-                    <div className="space-y-3 mb-8">
+                    <div className="space-y-4 mb-8">
                       {product.keyFeatures.slice(0, 4).map((feature, featureIndex) => (
                         <div 
                           key={featureIndex}
-                          className="flex items-start gap-3 text-sm text-slate-400 group/feature hover:text-slate-300 transition-colors duration-300 slide-in-right-animation"
+                          className="flex items-start gap-3 text-sm text-slate-400 group/feature hover:text-slate-300 transition-all duration-500"
                           style={{
-                            animationDelay: `${featureIndex * 0.1}s`,
-                            opacity: isHovered ? 1 : 0.7
+                            animation: `slideInRight 0.6s ease-out ${featureIndex * 0.1}s both`,
+                            opacity: isHovered ? 1 : 0.8,
+                            transform: isHovered ? 'translateX(5px)' : 'translateX(0)'
                           }}
                         >
-                          <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${colors.feature} group-hover/feature:animate-pulse`} />
-                          <span>{feature}</span>
+                          <div 
+                            className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 bg-gradient-to-r ${colors.featureColor} transition-all duration-300`}
+                            style={{
+                              boxShadow: isHovered ? `0 0 8px ${colors.glow}` : 'none',
+                              animation: 'gentlePulse 3s ease-in-out infinite'
+                            }}
+                          />
+                          <span className="transition-all duration-300">{feature}</span>
                         </div>
                       ))}
                       {product.keyFeatures.length > 4 && (
-                        <div className="text-sm text-slate-500 italic flex items-center gap-2">
+                        <div className="text-sm text-slate-500 italic flex items-center gap-2 mt-4 opacity-70">
                           <Zap className="w-3 h-3" />
-                          +{product.keyFeatures.length - 4} more quantum features...
+                          +{product.keyFeatures.length - 4} more features...
                         </div>
                       )}
                     </div>
 
-                    {/* Cosmic CTA */}
-                    <Link 
-                      to="#connect"
-                      className={`group/btn relative w-full inline-flex items-center justify-center gap-2 py-4 px-6 rounded-2xl 
-                        bg-gradient-to-r ${colors.button} 
-                        border backdrop-blur-sm transition-all duration-500 transform hover:scale-105 hover:-translate-y-1 overflow-hidden`}
+                    {/* CTA Button */}
+                    <a 
+                      href="#connect"
+                      className="group/btn relative w-full inline-flex items-center justify-center gap-3 py-4 px-6 rounded-2xl border backdrop-blur-sm transition-all duration-700 overflow-hidden"
+                      style={{
+                        background: `linear-gradient(135deg, ${colors.primary}15, ${colors.secondary}15)`,
+                        borderColor: `${colors.primary}30`,
+                        transform: isHovered ? 'translateY(-2px)' : 'translateY(0)'
+                      }}
                     >
-                      <div className="absolute inset-0 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-500">
-                        <div className={`absolute inset-0 bg-gradient-to-r ${colors.button.split('hover:')[0]} animate-pulse`} />
-                      </div>
+                      <div 
+                        className="absolute inset-0 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-500"
+                        style={{
+                          background: `linear-gradient(135deg, ${colors.primary}25, ${colors.secondary}25)`
+                        }}
+                      />
                       
-                      <span className={`font-semibold ${colors.buttonText} relative z-10`}>
+                      <span className={`font-semibold ${colors.textColor} relative z-10 transition-all duration-300`}>
                         Want to Know More?
                       </span>
-                      <ArrowRight className={`w-5 h-5 ${colors.buttonIcon} group-hover/btn:translate-x-1 transition-transform duration-300 relative z-10`} />
-                    </Link>
+                      <ArrowRight className={`w-5 h-5 ${colors.iconColor} group-hover/btn:translate-x-1 transition-transform duration-300 relative z-10`} />
+                    </a>
                   </div>
 
-                  {/* Floating Cosmic Elements */}
-                  <div className="absolute top-4 right-4 opacity-20 group-hover:opacity-60 transition-all duration-500 transform group-hover:rotate-12">
-                    <Bot className={`w-6 h-6 ${colors.icon} animate-pulse`} />
+                  {/* Floating Bot Icon */}
+                  <div 
+                    className="absolute top-4 right-4 opacity-20 group-hover:opacity-60 transition-all duration-700"
+                    style={{
+                      transform: isHovered ? 'rotate(15deg) scale(1.1)' : 'rotate(0deg) scale(1)',
+                      animation: 'gentleFloat 4s ease-in-out infinite'
+                    }}
+                  >
+                    <Bot className={`w-6 h-6 ${colors.iconColor}`} />
                   </div>
                 </div>
               </div>
@@ -474,107 +470,102 @@ const ProductsSection = () => {
           })}
         </div>
 
-        {/* Grand Finale CTA */}
-        <div className="text-center mt-20 relative">
+        {/* Enhanced CTA */}
+        <div className="text-center relative">
           <div className="mb-8">
-            <p className="text-xl text-slate-300 mb-6 animate-pulse">
+            <p className="text-2xl text-slate-300 mb-8 opacity-90" style={{animation: 'fadeInUp 1s ease-out 1s both'}}>
               Ready to explore the infinite cosmos of AI-powered possibilities?
             </p>
-            <Link 
-              to="#connect"
-              className="group relative inline-flex items-center gap-3 px-12 py-5 bg-gradient-to-r from-purple-600/20 via-pink-600/20 to-cyan-600/20 hover:from-purple-600/30 hover:via-pink-600/30 hover:to-cyan-600/30 backdrop-blur-xl border border-white/20 hover:border-white/40 rounded-2xl transition-all duration-700 transform hover:scale-105 hover:-translate-y-2 overflow-hidden"
+            <a 
+              href="/products"
+              className="group relative inline-flex items-center gap-4 px-16 py-6 bg-gradient-to-r from-purple-600/15 via-pink-600/15 to-cyan-600/15 hover:from-purple-600/25 hover:via-pink-600/25 hover:to-cyan-600/25 backdrop-blur-xl border border-white/20 hover:border-white/40 rounded-3xl transition-all duration-700 transform hover:scale-105 hover:-translate-y-3 overflow-hidden"
+              style={{animation: 'fadeInUp 1s ease-out 1.2s both'}}
             >
-              <div className="absolute inset-0 bg-gradient-to-r from-purple-600/5 via-pink-600/5 to-cyan-600/5 group-hover:from-purple-600/10 group-hover:via-pink-600/10 group-hover:to-cyan-600/10 transition-all duration-500" />
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-600/5 via-pink-600/5 to-cyan-600/5 group-hover:from-purple-600/15 group-hover:via-pink-600/15 group-hover:to-cyan-600/15 transition-all duration-700" />
               
-              <span className="text-xl font-bold bg-gradient-to-r from-purple-200 to-cyan-200 bg-clip-text text-transparent relative z-10">
-                Connect With the Universe
+              <Eye className="w-7 h-7 text-purple-300 group-hover:scale-110 transition-transform duration-500 relative z-10" />
+              <span className="text-2xl font-bold bg-gradient-to-r from-purple-200 to-cyan-200 bg-clip-text text-transparent relative z-10">
+                View Products in Detail
               </span>
               <div className="relative z-10">
-                <ArrowRight className="w-6 h-6 text-purple-300 group-hover:translate-x-2 transition-transform duration-500" />
-                <div className="absolute inset-0 bg-purple-300 rounded-full blur-sm opacity-30 animate-pulse" />
+                <ArrowRight className="w-7 h-7 text-purple-300 group-hover:translate-x-3 transition-transform duration-500" />
+                <div className="absolute inset-0 bg-purple-300 rounded-full blur-sm opacity-30" style={{animation: 'gentlePulse 2s ease-in-out infinite'}} />
               </div>
-            </Link>
+            </a>
           </div>
         </div>
       </div>
 
       <style jsx>{`
-        @keyframes shooting-star {
-          0% {
-            transform: translateX(-100px) translateY(0);
-            opacity: 0;
-          }
-          50% {
-            opacity: 1;
-          }
-          100% {
-            transform: translateX(300px) translateY(-150px);
-            opacity: 0;
-          }
+        @keyframes twinkle {
+          0%, 100% { opacity: 0.2; transform: scale(1); }
+          50% { opacity: 1; transform: scale(1.2); }
         }
         
-        .float-in-animation {
-          animation: float-in 1s ease-out forwards;
+        @keyframes galaxyRotate {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
         }
         
-        @keyframes float-in {
-          0% {
-            opacity: 0;
-            transform: translateY(50px) scale(0.8);
-          }
-          100% {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-          }
+        @keyframes nebulaDrift {
+          0%, 100% { transform: translateX(0) translateY(0); }
+          50% { transform: translateX(20px) translateY(-10px); }
         }
         
-        .fade-in-up-animation {
-          animation: fade-in-up 0.8s ease-out forwards;
+        @keyframes cosmicFloat {
+          0%, 100% { transform: translateY(0px) rotate(0deg); opacity: 0.2; }
+          50% { transform: translateY(-20px) rotate(180deg); opacity: 0.8; }
         }
         
-        @keyframes fade-in-up {
-          0% {
-            opacity: 0;
-            transform: translateY(30px);
-          }
-          100% {
-            opacity: 1;
-            transform: translateY(0);
-          }
+        @keyframes cardFloat {
+          0% { opacity: 0; transform: translateY(50px) scale(0.9); }
+          100% { opacity: 1; transform: translateY(0) scale(1); }
         }
         
-        .slide-in-right-animation {
-          animation: slide-in-right 0.5s ease-out forwards;
+        @keyframes fadeInUp {
+          0% { opacity: 0; transform: translateY(30px); }
+          100% { opacity: 1; transform: translateY(0); }
         }
         
-        @keyframes slide-in-right {
-          0% {
-            opacity: 0;
-            transform: translateX(-20px);
-          }
-          100% {
-            opacity: 1;
-            transform: translateX(0);
-          }
+        @keyframes slideInRight {
+          0% { opacity: 0; transform: translateX(-20px); }
+          100% { opacity: 1; transform: translateX(0); }
         }
         
-        .glow-pulse-animation {
-          animation: glow-pulse 2s ease-in-out infinite alternate;
-        }
-        
-        @keyframes glow-pulse {
-          0% {
+        @keyframes titleGlow {
+          0% { 
             text-shadow: 0 0 20px rgba(147, 51, 234, 0.5);
             filter: drop-shadow(0 0 20px rgba(147, 51, 234, 0.3));
           }
-          100% {
+          100% { 
             text-shadow: 0 0 40px rgba(59, 130, 246, 0.8);
             filter: drop-shadow(0 0 30px rgba(59, 130, 246, 0.5));
           }
         }
         
-        .orbital-spin {
-          animation-duration: 20s;
+        @keyframes gentlePulse {
+          0%, 100% { opacity: 0.6; }
+          50% { opacity: 1; }
+        }
+        
+        @keyframes gentleSpin {
+          0% { transform: rotate(0deg); }
+          100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes gentleOrbit {
+          0% { transform: rotate(0deg) translateX(20px) rotate(0deg); }
+          100% { transform: rotate(360deg) translateX(20px) rotate(-360deg); }
+        }
+        
+        @keyframes gentleFloat {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes backgroundShift {
+          0%, 100% { transform: translate(0, 0); }
+          50% { transform: translate(10px, -10px); }
         }
       `}</style>
     </section>
