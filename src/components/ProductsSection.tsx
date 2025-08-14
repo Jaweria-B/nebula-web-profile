@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Star, Zap, Bot, Mail, Twitter, Mic } from 'lucide-react';
 
 const ProductsSection = () => {
@@ -160,9 +161,12 @@ const ProductsSection = () => {
 
                   {/* CTA Button */}
                   <div className="mt-8 pt-6 border-t border-white/10">
-                    <button className={`w-full py-3 px-6 rounded-xl bg-gradient-to-r ${product.gradient} text-white font-medium transition-all duration-300 hover:shadow-lg hover:shadow-${product.glowColor}-500/25 transform hover:scale-[1.02]`}>
+                    <Link 
+                      to="/products"
+                      className={`w-full inline-block text-center py-3 px-6 rounded-xl bg-gradient-to-r ${product.gradient} text-white font-medium transition-all duration-300 hover:shadow-lg hover:shadow-${product.glowColor}-500/25 transform hover:scale-[1.02]`}
+                    >
                       Explore {product.title}
-                    </button>
+                    </Link>
                   </div>
 
                   {/* Floating Elements */}
@@ -180,9 +184,12 @@ const ProductsSection = () => {
           <p className="text-gray-400 mb-6">
             Ready to transform your workflow with AI-powered solutions?
           </p>
-          <button className="px-8 py-4 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white font-semibold rounded-xl hover:shadow-xl hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105">
+          <Link 
+            to="/products"
+            className="inline-block px-8 py-4 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500 text-white font-semibold rounded-xl hover:shadow-xl hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105"
+          >
             View All Products
-          </button>
+          </Link>
         </div>
       </div>
     </section>
