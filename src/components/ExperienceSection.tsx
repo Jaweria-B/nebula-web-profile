@@ -123,14 +123,13 @@ const ExperienceSection = () => {
 
         {/* Experience Timeline - Mobile First Design */}
         <div className="relative max-w-6xl mx-auto">
-          {/* Central Timeline Line - Properly sized */}
+          {/* Central Timeline Line - Full height with animation */}
           <div 
-            className="absolute left-4 md:left-1/2 md:transform md:-translate-x-1/2 w-0.5 md:w-1 bg-gradient-to-b from-blue-500 via-purple-500 to-pink-500 rounded-full"
-            style={{ 
-              height: `${(experiences.length - 1) * 280 + 200}px`,
-              maxHeight: `${experiences.length * 300}px`
-            }}
-          ></div>
+            className="absolute left-4 md:left-1/2 md:transform md:-translate-x-1/2 w-0.5 md:w-1 rounded-full overflow-hidden"
+            style={{ height: '100%', top: 0, bottom: 0 }}
+          >
+            <div className="w-full h-full bg-gradient-to-b from-blue-500 via-purple-500 to-pink-500 animate-[line-draw_2s_ease-out_forwards] origin-top scale-y-0"></div>
+          </div>
           
           {/* Experience Cards */}
           <div className="space-y-8 md:space-y-16">

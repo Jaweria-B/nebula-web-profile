@@ -136,6 +136,11 @@
   100% { transform: translateX(200px) translateY(200px) rotate(45deg); opacity: 0; }
 }
 
+@keyframes line-draw {
+  0% { transform: scaleY(0); }
+  100% { transform: scaleY(1); }
+}
+
 .star {
   position: absolute;
   background: white;

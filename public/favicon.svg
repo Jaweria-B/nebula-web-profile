@@ -1,0 +1,33 @@
+<svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <!-- Gradient for the J -->
+    <linearGradient id="jGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8B5CF6;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#06B6D4;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#EC4899;stop-opacity:1" />
+    </linearGradient>
+    
+    <!-- Background gradient -->
+    <radialGradient id="bgGradient" cx="50%" cy="50%" r="70%">
+      <stop offset="0%" style="stop-color:#1F2937;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#111827;stop-opacity:1" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Background circle -->
+  <circle cx="16" cy="16" r="16" fill="url(#bgGradient)"/>
+  
+  <!-- Subtle border -->
+  <circle cx="16" cy="16" r="15.5" fill="none" stroke="url(#jGradient)" stroke-width="1" opacity="0.3"/>
+  
+  <!-- Letter J -->
+  <path d="M20 8 L20 18 Q20 22 16 22 Q12 22 12 18 L12 16 L15 16 L15 18 Q15 19 16 19 Q17 19 17 18 L17 8 L20 8 Z" 
+        fill="url(#jGradient)" 
+        stroke="none"/>
+  
+  <!-- Subtle highlight on J -->
+  <path d="M17.5 8 L17.5 12" 
+        stroke="rgba(255,255,255,0.4)" 
+        stroke-width="0.5" 
+        stroke-linecap="round"/>
+</svg>
