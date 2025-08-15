@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Star, Sparkles, Bot, Mail, Twitter, Mic, ArrowRight, Zap, Rocket, Atom } from 'lucide-react';
+import { Star, Sparkles, Bot, Mail, Twitter, Mic, ArrowRight, Zap, Atom } from 'lucide-react';
 
 const ProductsSection = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -102,75 +102,10 @@ const ProductsSection = () => {
     );
   };
 
-  const Galaxy = ({ size, left, top, rotation, colors, delay = 0 }) => (
-    <div
-      className="absolute pointer-events-none"
-      style={{
-        left: `${left}%`,
-        top: `${top}%`,
-        width: `${size}px`,
-        height: `${size}px`,
-        transform: `rotate(${rotation}deg)`,
-        animation: `galaxyRotate 30s linear infinite`,
-        animationDelay: `${delay}s`
-      }}
-    >
-      <div 
-        className="w-full h-full rounded-full opacity-20"
-        style={{
-          background: `radial-gradient(ellipse 40% 20% at 50% 50%, ${colors[0]}, ${colors[1]}, transparent 70%)`
-        }}
-      />
-      <div 
-        className="absolute inset-0 w-full h-full rounded-full opacity-15"
-        style={{
-          background: `conic-gradient(from 0deg at 50% 50%, transparent 0deg, ${colors[2]} 45deg, transparent 90deg, ${colors[1]} 135deg, transparent 180deg, ${colors[0]} 225deg, transparent 270deg, ${colors[2]} 315deg, transparent 360deg)`,
-          filter: 'blur(2px)'
-        }}
-      />
-    </div>
-  );
-
-  const galaxies = [
-    { size: 300, left: 10, top: 15, rotation: 45, colors: ['#6366f1', '#8b5cf6', '#a855f7'], delay: 0 },
-    { size: 250, left: 80, top: 25, rotation: -30, colors: ['#06b6d4', '#3b82f6', '#6366f1'], delay: 5 },
-    { size: 200, left: 60, top: 70, rotation: 90, colors: ['#ec4899', '#f43f5e', '#ef4444'], delay: 10 },
-    { size: 180, left: 25, top: 80, rotation: -60, colors: ['#10b981', '#059669', '#047857'], delay: 15 },
-    { size: 220, left: 85, top: 60, rotation: 120, colors: ['#f59e0b', '#d97706', '#b45309'], delay: 20 }
-  ];
-
-  const NebulaCloud = ({ size, left, top, colors, delay = 0 }) => (
-    <div
-      className="absolute pointer-events-none opacity-10"
-      style={{
-        left: `${left}%`,
-        top: `${top}%`,
-        width: `${size}px`,
-        height: `${size * 0.6}px`,
-        animation: `nebulaDrift 25s ease-in-out infinite`,
-        animationDelay: `${delay}s`
-      }}
-    >
-      <div 
-        className="w-full h-full rounded-full blur-3xl"
-        style={{
-          background: `radial-gradient(ellipse 80% 60% at 50% 50%, ${colors[0]}, ${colors[1]}, transparent 70%)`
-        }}
-      />
-    </div>
-  );
-
-  const nebulaClouds = [
-    { size: 400, left: 5, top: 10, colors: ['rgba(139, 92, 246, 0.3)', 'rgba(168, 85, 247, 0.2)'], delay: 0 },
-    { size: 350, left: 70, top: 20, colors: ['rgba(6, 182, 212, 0.3)', 'rgba(59, 130, 246, 0.2)'], delay: 8 },
-    { size: 300, left: 15, top: 75, colors: ['rgba(236, 72, 153, 0.3)', 'rgba(244, 63, 94, 0.2)'], delay: 16 },
-    { size: 280, left: 80, top: 65, colors: ['rgba(16, 185, 129, 0.3)', 'rgba(5, 150, 105, 0.2)'], delay: 12 }
-  ];
-
   return (
     <section 
       id="products" 
-      className="relative py-32 overflow-hidden bg-background"
+      className="relative py-32 overflow-hidden bg-gray-950"
       ref={setSectionRef}
     >
       {/* Enhanced Galaxy Background */}
@@ -178,30 +113,6 @@ const ProductsSection = () => {
         {/* Multiple Star Layers */}
         <GalaxyStars count={500} className="animate-pulse" />
         <GalaxyStars count={200} className="animate-ping opacity-30" />
-        
-        {/* Spiral Galaxies */}
-        {galaxies.map((galaxy, index) => (
-          <Galaxy key={`galaxy-${index}`} {...galaxy} />
-        ))}
-        
-        {/* More Galaxy Spirals */}
-        <div className="absolute inset-0">
-          {Array.from({length: 8}).map((_, i) => (
-            <div
-              key={`spiral-${i}`}
-              className="absolute w-32 h-32 opacity-10"
-              style={{
-                left: `${10 + (i * 12)}%`,
-                top: `${15 + (i % 3) * 25}%`,
-                background: `conic-gradient(from ${i * 45}deg, transparent, hsl(var(--primary)) 10%, transparent 20%, hsl(var(--secondary)) 30%, transparent 40%)`,
-                borderRadius: '50%',
-                animation: `galaxyRotate ${20 + i * 3}s linear infinite`,
-                animationDelay: `${i * 2}s`,
-                filter: 'blur(1px)'
-              }}
-            />
-          ))}
-        </div>
         
         {/* Cosmic Dust Particles */}
         <div className="absolute inset-0">
@@ -265,9 +176,6 @@ const ProductsSection = () => {
             <div className="absolute -top-8 -right-8 opacity-30" style={{animation: 'gentleOrbit 25s linear infinite'}}>
               <Atom className="w-12 h-12 text-purple-300" />
             </div>
-            <div className="absolute -bottom-8 -left-8 opacity-40" style={{animation: 'gentleFloat 6s ease-in-out infinite'}}>
-              <Rocket className="w-10 h-10 text-cyan-300" />
-            </div>
           </h2>
           
           <p className="text-xl md:text-2xl text-slate-300 max-w-5xl mx-auto leading-relaxed opacity-90" style={{animation: 'fadeInUp 1s ease-out 0.5s both'}}>
@@ -329,18 +237,6 @@ const ProductsSection = () => {
                 {/* Main Card */}
                 <div className="relative h-full rounded-3xl bg-gradient-to-br from-slate-900/40 to-slate-800/40 backdrop-blur-xl border border-white/10 group-hover:border-white/20 transition-all duration-700 overflow-hidden">
                   
-                  {/* Animated Background Pattern */}
-                  <div className="absolute inset-0 opacity-5">
-                    <div 
-                      className="absolute inset-0"
-                      style={{
-                        backgroundImage: `radial-gradient(circle at 30% 30%, ${colors.primary}40 0%, transparent 50%), 
-                                         radial-gradient(circle at 70% 70%, ${colors.secondary}40 0%, transparent 50%)`,
-                        animation: 'backgroundShift 15s ease-in-out infinite'
-                      }}
-                    />
-                  </div>
-
                   {/* Header Section */}
                   <div className="relative p-8 border-b border-white/5">
                     <div className="flex items-start justify-between mb-6">
@@ -353,13 +249,6 @@ const ProductsSection = () => {
                           }}
                         >
                           <IconComponent className={`w-8 h-8 ${colors.iconColor} transition-all duration-500`} />
-                          <div 
-                            className="absolute inset-0 rounded-2xl opacity-30 blur-lg transition-all duration-500"
-                            style={{
-                              background: colors.primary,
-                              animation: isHovered ? 'gentlePulse 2s ease-in-out infinite' : 'none'
-                            }}
-                          />
                         </div>
                         <div>
                           <h3 className={`text-2xl font-bold mb-1 ${colors.textColor} transition-all duration-500`}>
@@ -489,19 +378,23 @@ const ProductsSection = () => {
       </div>
 
       <style>{`
+        .text-gradient {
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          background-clip: text;
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-size: 200% 200%;
+          animation: gradientShift 3s ease-in-out infinite;
+        }
+
+        @keyframes gradientShift {
+          0%, 100% { background-position: 0% 50%; }
+          50% { background-position: 100% 50%; }
+        }
+
         @keyframes twinkle {
           0%, 100% { opacity: 0.2; transform: scale(1); }
           50% { opacity: 1; transform: scale(1.2); }
-        }
-        
-        @keyframes galaxyRotate {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
-        }
-        
-        @keyframes nebulaDrift {
-          0%, 100% { transform: translateX(0) translateY(0); }
-          50% { transform: translateX(20px) translateY(-10px); }
         }
         
         @keyframes cosmicFloat {
@@ -553,11 +446,6 @@ const ProductsSection = () => {
         @keyframes gentleFloat {
           0%, 100% { transform: translateY(0px); }
           50% { transform: translateY(-10px); }
-        }
-        
-        @keyframes backgroundShift {
-          0%, 100% { transform: translate(0, 0); }
-          50% { transform: translate(10px, -10px); }
         }
       `}</style>
     </section>
