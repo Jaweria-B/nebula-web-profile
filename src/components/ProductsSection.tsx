@@ -170,7 +170,7 @@ const ProductsSection = () => {
   return (
     <section 
       id="products" 
-      className="relative py-32 overflow-hidden bg-gradient-to-b from-background via-background/95 to-background"
+      className="relative py-32 overflow-hidden bg-background"
       ref={setSectionRef}
     >
       {/* Enhanced Galaxy Background */}
@@ -245,7 +245,7 @@ const ProductsSection = () => {
               <div className="absolute inset-0 bg-purple-300 rounded-full blur-sm opacity-40" style={{animation: 'gentlePulse 3s ease-in-out infinite'}} />
             </div>
             <span className="text-lg font-medium text-gradient">
-              My Product Universe
+              AI Solutions • My Product Universe
             </span>
             <Sparkles className="w-5 h-5 text-cyan-300" style={{animation: 'gentlePulse 2s ease-in-out infinite'}} />
           </div>
@@ -253,20 +253,12 @@ const ProductsSection = () => {
           {/* Main Title */}
           <h2 className="text-6xl md:text-7xl lg:text-8xl font-black mb-12 relative leading-tight">
             <span 
-              className="text-gradient block mb-4"
+              className="text-gradient block"
               style={{
                 animation: 'titleGlow 4s ease-in-out infinite alternate'
               }}
             >
               My Product Universe
-            </span>
-            <span 
-              className="text-gradient block"
-              style={{
-                animation: 'titleGlow 4s ease-in-out infinite alternate 2s'
-              }}
-            >
-              AI Solutions
             </span>
             
             {/* Orbital Elements */}
@@ -334,15 +326,6 @@ const ProductsSection = () => {
                 onMouseEnter={() => setHoveredCard(index)}
                 onMouseLeave={() => setHoveredCard(null)}
               >
-                {/* Soft Glow Effect */}
-                <div 
-                  className="absolute -inset-2 rounded-3xl opacity-0 group-hover:opacity-100 transition-all duration-1000 blur-xl"
-                  style={{
-                    background: `radial-gradient(circle, ${colors.glow} 0%, transparent 70%)`,
-                    animation: isHovered ? 'gentlePulse 3s ease-in-out infinite' : 'none'
-                  }}
-                />
-                
                 {/* Main Card */}
                 <div className="relative h-full rounded-3xl bg-gradient-to-br from-slate-900/40 to-slate-800/40 backdrop-blur-xl border border-white/10 group-hover:border-white/20 transition-all duration-700 overflow-hidden">
                   
@@ -493,8 +476,7 @@ const ProductsSection = () => {
             >
               <div className="absolute inset-0 bg-gradient-to-r from-purple-600/5 via-pink-600/5 to-cyan-600/5 group-hover:from-purple-600/15 group-hover:via-pink-600/15 group-hover:to-cyan-600/15 transition-all duration-700" />
               
-              <Rocket className="w-7 h-7 text-purple-300 group-hover:scale-110 transition-transform duration-500 relative z-10" />
-              <span className="text-2xl font-bold bg-gradient-to-r from-purple-200 to-cyan-200 bg-clip-text text-transparent relative z-10">
+              <span className="text-2xl font-bold text-gradient relative z-10">
                 View Products in Detail
               </span>
               <div className="relative z-10">
