@@ -106,7 +106,7 @@ const ProductsSection = () => {
     <section 
       id="products" 
       className="relative py-32 overflow-hidden"
-      style={{ background: 'linear-gradient(180deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)' }}
+      style={{ background: 'linear-gradient(180deg, #0a0f1c 0%, #1a1f2e 50%, #0a0f1c 100%)' }}
       ref={setSectionRef}
     >
       {/* Enhanced Galaxy Background */}
@@ -309,7 +309,9 @@ const ProductsSection = () => {
 
                     {/* CTA Button */}
                     <a 
-                      href="#connect"
+                      href={product.title === "EmailCraft" ? "http://emailcraft.uinfo.org/" : "#connect"}
+                      target={product.title === "EmailCraft" ? "_blank" : "_self"}
+                      rel={product.title === "EmailCraft" ? "noopener noreferrer" : ""}
                       className="group/btn relative w-full inline-flex items-center justify-center gap-3 py-4 px-6 rounded-2xl border backdrop-blur-sm transition-all duration-700 overflow-hidden"
                       style={{
                         background: `linear-gradient(135deg, ${colors.primary}15, ${colors.secondary}15)`,
@@ -325,7 +327,7 @@ const ProductsSection = () => {
                       />
                       
                       <span className={`font-semibold ${colors.textColor} relative z-10 transition-all duration-300`}>
-                        Want to Know More?
+                        {product.title === "EmailCraft" ? "Try it Yourself" : "Want to Know More?"}
                       </span>
                       <ArrowRight className={`w-5 h-5 ${colors.iconColor} group-hover/btn:translate-x-1 transition-transform duration-300 relative z-10`} />
                     </a>
