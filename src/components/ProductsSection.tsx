@@ -105,7 +105,8 @@ const ProductsSection = () => {
   return (
     <section 
       id="products" 
-      className="relative py-32 overflow-hidden bg-gray-950"
+      className="relative py-32 overflow-hidden"
+      style={{ background: 'linear-gradient(180deg, #0f172a 0%, #1e293b 50%, #0f172a 100%)' }}
       ref={setSectionRef}
     >
       {/* Enhanced Galaxy Background */}
@@ -304,12 +305,6 @@ const ProductsSection = () => {
                           <span className="transition-all duration-300">{feature}</span>
                         </div>
                       ))}
-                      {product.keyFeatures.length > 4 && (
-                        <div className="text-sm text-slate-500 italic flex items-center gap-2 mt-4 opacity-70">
-                          <Zap className="w-3 h-3" />
-                          +{product.keyFeatures.length - 4} more features...
-                        </div>
-                      )}
                     </div>
 
                     {/* CTA Button */}
