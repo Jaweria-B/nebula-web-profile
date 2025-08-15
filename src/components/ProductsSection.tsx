@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Star, Sparkles, Bot, Mail, Twitter, Mic, ArrowRight, Zap, Rocket, Atom, Eye } from 'lucide-react';
+import { Star, Sparkles, Bot, Mail, Twitter, Mic, ArrowRight, Zap, Rocket, Atom } from 'lucide-react';
 
 const ProductsSection = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -170,12 +170,8 @@ const ProductsSection = () => {
   return (
     <section 
       id="products" 
-      className="relative py-32 overflow-hidden"
+      className="relative py-32 overflow-hidden bg-gradient-to-b from-background via-background/95 to-background"
       ref={setSectionRef}
-      style={{
-        background: 'linear-gradient(180deg, #0f0f23 0%, #1a1a3e 50%, #0f0f23 100%)',
-        minHeight: '100vh'
-      }}
     >
       {/* Enhanced Galaxy Background */}
       <div className="absolute inset-0">
@@ -188,10 +184,24 @@ const ProductsSection = () => {
           <Galaxy key={`galaxy-${index}`} {...galaxy} />
         ))}
         
-        {/* Nebula Clouds */}
-        {nebulaClouds.map((nebula, index) => (
-          <NebulaCloud key={`nebula-${index}`} {...nebula} />
-        ))}
+        {/* More Galaxy Spirals */}
+        <div className="absolute inset-0">
+          {Array.from({length: 8}).map((_, i) => (
+            <div
+              key={`spiral-${i}`}
+              className="absolute w-32 h-32 opacity-10"
+              style={{
+                left: `${10 + (i * 12)}%`,
+                top: `${15 + (i % 3) * 25}%`,
+                background: `conic-gradient(from ${i * 45}deg, transparent, hsl(var(--primary)) 10%, transparent 20%, hsl(var(--secondary)) 30%, transparent 40%)`,
+                borderRadius: '50%',
+                animation: `galaxyRotate ${20 + i * 3}s linear infinite`,
+                animationDelay: `${i * 2}s`,
+                filter: 'blur(1px)'
+              }}
+            />
+          ))}
+        </div>
         
         {/* Cosmic Dust Particles */}
         <div className="absolute inset-0">
@@ -234,7 +244,7 @@ const ProductsSection = () => {
               <Sparkles className="w-6 h-6 text-purple-300" style={{animation: 'gentleSpin 12s linear infinite'}} />
               <div className="absolute inset-0 bg-purple-300 rounded-full blur-sm opacity-40" style={{animation: 'gentlePulse 3s ease-in-out infinite'}} />
             </div>
-            <span className="text-lg font-medium bg-gradient-to-r from-purple-200 via-cyan-200 to-pink-200 bg-clip-text text-transparent">
+            <span className="text-lg font-medium text-gradient">
               My Product Universe
             </span>
             <Sparkles className="w-5 h-5 text-cyan-300" style={{animation: 'gentlePulse 2s ease-in-out infinite'}} />
@@ -243,20 +253,20 @@ const ProductsSection = () => {
           {/* Main Title */}
           <h2 className="text-6xl md:text-7xl lg:text-8xl font-black mb-12 relative leading-tight">
             <span 
-              className="bg-gradient-to-r from-purple-200 via-pink-200 to-cyan-200 bg-clip-text text-transparent block mb-4"
+              className="text-gradient block mb-4"
               style={{
                 animation: 'titleGlow 4s ease-in-out infinite alternate'
               }}
             >
-              AI-Powered
+              My Product Universe
             </span>
             <span 
-              className="bg-gradient-to-r from-cyan-200 via-blue-200 to-purple-200 bg-clip-text text-transparent block"
+              className="text-gradient block"
               style={{
                 animation: 'titleGlow 4s ease-in-out infinite alternate 2s'
               }}
             >
-              Solutions
+              AI Solutions
             </span>
             
             {/* Orbital Elements */}
@@ -402,7 +412,7 @@ const ProductsSection = () => {
                     </h4>
                     
                     <div className="space-y-4 mb-8">
-                      {product.keyFeatures.slice(0, 4).map((feature, featureIndex) => (
+                      {product.keyFeatures.map((feature, featureIndex) => (
                         <div 
                           key={featureIndex}
                           className="flex items-start gap-3 text-sm text-slate-400 group/feature hover:text-slate-300 transition-all duration-500"
@@ -483,7 +493,7 @@ const ProductsSection = () => {
             >
               <div className="absolute inset-0 bg-gradient-to-r from-purple-600/5 via-pink-600/5 to-cyan-600/5 group-hover:from-purple-600/15 group-hover:via-pink-600/15 group-hover:to-cyan-600/15 transition-all duration-700" />
               
-              <Eye className="w-7 h-7 text-purple-300 group-hover:scale-110 transition-transform duration-500 relative z-10" />
+              <Rocket className="w-7 h-7 text-purple-300 group-hover:scale-110 transition-transform duration-500 relative z-10" />
               <span className="text-2xl font-bold bg-gradient-to-r from-purple-200 to-cyan-200 bg-clip-text text-transparent relative z-10">
                 View Products in Detail
               </span>
@@ -496,7 +506,7 @@ const ProductsSection = () => {
         </div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         @keyframes twinkle {
           0%, 100% { opacity: 0.2; transform: scale(1); }
           50% { opacity: 1; transform: scale(1.2); }
