@@ -50,7 +50,7 @@ const steps = [
   },
 ];
 
-// Floating particles component
+// Floating particles component (unchanged logic)
 const FloatingParticles = () => {
   const particles = Array.from({ length: 50 }, (_, i) => ({
     id: i,
@@ -91,7 +91,7 @@ const FloatingParticles = () => {
   );
 };
 
-// Animated stars background
+// Animated stars background (unchanged logic)
 const AnimatedStars = () => {
   const stars = Array.from({ length: 100 }, (_, i) => ({
     id: i,
@@ -145,7 +145,7 @@ const MyProcessSection: React.FC = () => {
   }, []);
 
   return (
-    <section id="process" className="py-32 relative overflow-hidden bg-gradient-to-b from-slate-900 via-purple-900/20 to-slate-900">
+    <section id="process" className="py-20 sm:py-32 relative overflow-hidden bg-gradient-to-b from-slate-900 via-purple-900/20 to-slate-900">
       {/* Animated background elements */}
       <motion.div 
         style={{ y: backgroundY }}
@@ -160,46 +160,50 @@ const MyProcessSection: React.FC = () => {
         style={{ y: starsY }}
         className="absolute inset-0 opacity-30"
       >
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-gradient-radial from-purple-600/30 via-blue-600/20 to-transparent blur-3xl animate-pulse" />
-        <div className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-gradient-radial from-pink-600/30 via-purple-600/20 to-transparent blur-3xl animate-pulse delay-1000" />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-gradient-conic from-blue-600/10 via-purple-600/10 via-pink-600/10 to-blue-600/10 blur-3xl animate-spin-slow" />
+        {/* Use large decorations only on sm+ to avoid heavy painting on small devices */}
+        <div className="hidden sm:block absolute top-1/4 left-1/4 w-96 h-96 rounded-full bg-gradient-radial from-purple-600/30 via-blue-600/20 to-transparent blur-3xl animate-pulse" />
+        <div className="hidden sm:block absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-gradient-radial from-pink-600/30 via-purple-600/20 to-transparent blur-3xl animate-pulse delay-1000" />
+        <div className="hidden sm:block absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full bg-gradient-conic from-blue-600/10 via-purple-600/10 via-pink-600/10 to-blue-600/10 blur-3xl animate-spin-slow" />
+
+        {/* lightweight mobile accent so small screens still feel designed */}
+        <div className="sm:hidden absolute top-6 left-1/2 -translate-x-1/2 w-40 h-40 rounded-full bg-gradient-radial from-purple-600/20 to-transparent blur-lg opacity-60" />
       </motion.div>
 
-      <div className="container mx-auto px-6 relative z-10">
+      <div className="container mx-auto px-4 sm:px-6 relative z-10">
         {/* Header with cosmic effects */}
         <motion.header 
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="text-center max-w-4xl mx-auto mb-20"
+          className="text-center max-w-3xl mx-auto mb-12 sm:mb-20"
         >
           <motion.div
             animate={{ rotate: 360 }}
             transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-            className="inline-block mb-6"
+            className="inline-block mb-4 sm:mb-6"
           >
-            <Stars className="w-12 h-12 text-purple-400" />
+            <Stars className="w-8 h-8 sm:w-12 sm:h-12 text-purple-400" />
           </motion.div>
           
-          <h2 className="text-7xl font-black bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mb-6 relative">
+          <h2 className="text-4xl sm:text-6xl lg:text-7xl font-black bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mb-4 sm:mb-6 relative">
             My Process
             <motion.div
-              animate={{ scale: [1, 1.2, 1], opacity: [0.5, 1, 0.5] }}
+              animate={{ scale: [1, 1.08, 1], opacity: [0.6, 1, 0.6] }}
               transition={{ duration: 2, repeat: Infinity }}
-              className="absolute -inset-4 bg-gradient-to-r from-blue-600/20 via-purple-600/20 to-pink-600/20 blur-xl -z-10 rounded-full"
+              className="absolute -inset-3 sm:-inset-4 bg-gradient-to-r from-blue-600/20 via-purple-600/20 to-pink-600/20 blur-xl -z-10 rounded-full"
             />
           </h2>
           
-          <p className="text-gray-300 text-xl leading-relaxed">
+          <p className="text-gray-300 text-base sm:text-xl leading-relaxed">
             Journey through the cosmos of development, from conception to stellar deployment
           </p>
         </motion.header>
 
         {/* Main process visualization */}
         <div className="max-w-4xl mx-auto">
-          {/* Stacked cards container */}
-          <div className="relative h-[600px] flex items-center justify-center">
+          {/* Stacked cards container: reduced height on mobile */}
+          <div className="relative h-[420px] sm:h-[600px] flex items-center justify-center">
             {steps.map((step, index) => {
               const isActive = index === activeCard;
               const distanceFromActive = Math.abs(index - activeCard);
@@ -234,7 +238,7 @@ const MyProcessSection: React.FC = () => {
                       scale: isActive ? 1.02 : 0.98,
                       rotateX: -2,
                     }}
-                    className={`group relative w-[500px] h-[400px] rounded-3xl p-[2px] bg-gradient-to-br ${
+                    className={`group relative w-[90vw] max-w-[500px] sm:w-[500px] h-[360px] sm:h-[400px] rounded-3xl p-[2px] bg-gradient-to-br ${
                       isActive ? 'from-white/40 via-purple-500/60 to-pink-500/40' : 'from-white/10 via-gray-500/20 to-transparent'
                     } backdrop-blur-xl ${isActive ? step.glow + ' shadow-2xl' : 'shadow-lg'}`}
                     style={{
@@ -256,31 +260,31 @@ const MyProcessSection: React.FC = () => {
                       />
                     </div>
 
-                    <div className="relative w-full h-full rounded-3xl bg-slate-900/95 backdrop-blur-xl p-8 overflow-hidden flex flex-col justify-between">
+                    <div className="relative w-full h-full rounded-3xl bg-slate-900/95 backdrop-blur-xl p-6 sm:p-8 overflow-hidden flex flex-col justify-between">
                       {/* Nebula background */}
                       <div className={`absolute inset-0 bg-gradient-to-br ${step.nebula} opacity-40`} />
                       
                       {/* Content */}
                       <div className="relative z-10 flex-1 flex flex-col">
                         {/* Step number and icon */}
-                        <div className="flex items-start justify-between mb-6">
+                        <div className="flex items-start justify-between mb-4 sm:mb-6">
                           <motion.div
                             animate={{ 
                               rotate: isActive ? 360 : 0,
-                              scale: isActive ? 1.1 : 1,
+                              scale: isActive ? 1.08 : 1,
                             }}
                             transition={{ duration: 1 }}
-                            className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${step.color} flex items-center justify-center shadow-lg ${step.glow}`}
+                            className={`w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-gradient-to-br ${step.color} flex items-center justify-center shadow-lg ${step.glow}`}
                           >
-                            <step.Icon className="w-10 h-10 text-white" />
+                            <step.Icon className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
                           </motion.div>
                           
                           <motion.span
                             animate={{ 
-                              scale: isActive ? 1.1 : 0.9,
-                              opacity: isActive ? 0.3 : 0.15,
+                              scale: isActive ? 1.05 : 0.95,
+                              opacity: isActive ? 0.25 : 0.12,
                             }}
-                            className={`text-9xl font-black bg-gradient-to-br ${step.color} bg-clip-text text-transparent`}
+                            className={`text-4xl sm:text-9xl font-black bg-gradient-to-br ${step.color} bg-clip-text text-transparent`}
                           >
                             {step.num}
                           </motion.span>
@@ -290,20 +294,20 @@ const MyProcessSection: React.FC = () => {
                         <div className="flex-1 flex flex-col justify-center">
                           <motion.h3 
                             animate={{ 
-                              y: isActive ? 0 : 10,
-                              opacity: isActive ? 1 : 0.8,
+                              y: isActive ? 0 : 6,
+                              opacity: isActive ? 1 : 0.9,
                             }}
-                            className="text-4xl font-bold text-white mb-4 group-hover:text-purple-300 transition-colors"
+                            className="text-xl sm:text-4xl font-bold text-white mb-2 sm:mb-4 group-hover:text-purple-300 transition-colors"
                           >
                             {step.title}
                           </motion.h3>
                           
                           <motion.p 
                             animate={{ 
-                              opacity: isActive ? 1 : 0.7,
-                              y: isActive ? 0 : 5,
+                              opacity: isActive ? 1 : 0.85,
+                              y: isActive ? 0 : 4,
                             }}
-                            className="text-gray-300 text-xl leading-relaxed"
+                            className="text-gray-300 text-sm sm:text-xl leading-relaxed"
                           >
                             {step.desc}
                           </motion.p>
@@ -315,7 +319,7 @@ const MyProcessSection: React.FC = () => {
                             initial={{ width: 0 }}
                             animate={{ width: "100%" }}
                             transition={{ duration: 1.5, delay: 0.3 }}
-                            className={`absolute bottom-0 left-0 h-2 bg-gradient-to-r ${step.color} rounded-b-3xl`}
+                            className={`absolute bottom-0 left-0 h-1 sm:h-2 bg-gradient-to-r ${step.color} rounded-b-3xl`}
                           />
                         )}
                       </div>
@@ -325,25 +329,25 @@ const MyProcessSection: React.FC = () => {
                         <>
                           <motion.div
                             animate={{ 
-                              y: [0, -15, 0],
+                              y: [0, -12, 0],
                               rotate: [0, 180, 360],
-                              scale: [1, 1.2, 1],
+                              scale: [1, 1.14, 1],
                             }}
                             transition={{ 
                               duration: 6,
                               repeat: Infinity,
                               ease: "easeInOut"
                             }}
-                            className="absolute -top-6 -right-6"
+                            className="absolute -top-6 -right-6 hidden sm:block"
                           >
                             <Sparkles className="w-8 h-8 text-purple-400 opacity-80" />
                           </motion.div>
 
                           <motion.div
                             animate={{ 
-                              y: [0, 15, 0],
+                              y: [0, 12, 0],
                               x: [0, 8, 0],
-                              scale: [1, 1.5, 1],
+                              scale: [1, 1.3, 1],
                             }}
                             transition={{ 
                               duration: 5,
@@ -353,7 +357,7 @@ const MyProcessSection: React.FC = () => {
                             }}
                             className="absolute -bottom-3 -left-3"
                           >
-                            <div className={`w-4 h-4 rounded-full bg-gradient-to-r ${step.color} opacity-80 shadow-lg`} />
+                            <div className={`w-3 h-3 sm:w-4 sm:h-4 rounded-full bg-gradient-to-r ${step.color} opacity-80 shadow-lg`} />
                           </motion.div>
                         </>
                       )}
@@ -371,12 +375,12 @@ const MyProcessSection: React.FC = () => {
                       <motion.div
                         animate={{ rotate: 360 }}
                         transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
-                        className="absolute inset-[-20px] rounded-3xl border-2 border-dashed border-purple-500/40"
+                        className="absolute inset-[-10px] sm:inset-[-20px] rounded-3xl border-2 border-dashed border-purple-500/40"
                       />
                       <motion.div
                         animate={{ rotate: -360 }}
                         transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
-                        className="absolute inset-[-40px] rounded-3xl border border-dotted border-pink-500/30"
+                        className="absolute inset-[-20px] sm:inset-[-40px] rounded-3xl border border-dotted border-pink-500/30"
                       />
                     </motion.div>
                   )}
@@ -389,17 +393,17 @@ const MyProcessSection: React.FC = () => {
           <motion.div 
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            className="flex justify-center space-x-3 mt-16"
+            className="flex justify-center space-x-3 mt-12 sm:mt-16"
           >
             {steps.map((_, index) => (
               <motion.button
                 key={index}
                 onClick={() => setActiveCard(index)}
                 animate={{
-                  scale: index === activeCard ? 1.5 : 1,
-                  opacity: index === activeCard ? 1 : 0.5,
+                  scale: index === activeCard ? 1.4 : 1,
+                  opacity: index === activeCard ? 1 : 0.6,
                 }}
-                whileHover={{ scale: 1.3 }}
+                whileHover={{ scale: 1.2 }}
                 className={`w-3 h-3 rounded-full ${
                   index === activeCard 
                     ? `bg-gradient-to-r ${steps[index].color}` 
