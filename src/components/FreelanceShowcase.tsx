@@ -127,7 +127,7 @@ const FreelanceShowcase: React.FC = () => {
   };
 
   return (
-    <section id="freelance" className="relative py-24 min-h-screen bg-black overflow-hidden">
+    <section id="freelance" className="relative py-28 min-h-screen bg-black overflow-hidden">
       {/* Cosmic Background */}
       <div className="absolute inset-0">
         {/* Nebula Background */}
@@ -192,7 +192,7 @@ const FreelanceShowcase: React.FC = () => {
       <div className="container mx-auto px-6 relative z-10">
         {/* Header */}
         <motion.header 
-          className="mb-16 text-center"
+          className="mb-16 text-center relative z-20"
           initial={{ opacity: 0, y: -30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
@@ -226,8 +226,11 @@ const FreelanceShowcase: React.FC = () => {
           </p>
         </motion.header>
 
-        {/* Carousel Container */}
-        <div className="relative h-[600px] flex items-center justify-center">
+        {/* Spacer above carousel so cards don't overlap header */}
+        <div className="h-8 sm:h-12 lg:h-16" />
+
+        {/* Carousel Container - added vertical padding to create breathing room */}
+        <div className="relative py-8 sm:py-12 h-[600px] flex items-center justify-center z-10">
           <AnimatePresence mode="wait">
             {items.map((card, index) => {
               const position = getCardPosition(index);
@@ -303,12 +306,7 @@ const FreelanceShowcase: React.FC = () => {
                           </h3>
                           <p className="text-gray-400 mt-2 text-sm md:text-base">{card.subtitle}</p>
                         </div>
-                        <Badge 
-                          variant="outline" 
-                          className={`shrink-0 bg-gradient-to-r ${card.accent} text-black border-0 font-semibold`}
-                        >
-                          PROJECT
-                        </Badge>
+                        <Badge variant="gradient" className={`shrink-0 bg-gradient-to-r ${card.accent} text-black font-semibold`}>PROJECT</Badge>
                       </div>
 
                       {/* Content */}
@@ -372,6 +370,9 @@ const FreelanceShowcase: React.FC = () => {
             <ChevronRight size={24} />
           </button>
         </div>
+
+        {/* Spacer below carousel to avoid overlap with following content */}
+        <div className="h-8 sm:h-12 lg:h-16" />
 
         {/* Indicators */}
         <div className="flex justify-center mt-12 gap-3">
