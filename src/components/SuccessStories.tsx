@@ -154,14 +154,14 @@ const SuccessStories: React.FC = () => {
 
         {/* Carousel Container */}
         <div 
-          className="relative py-8 sm:py-12 h-[800px] flex items-center justify-center z-10"
+          className="relative py-8 sm:py-12 h-[850px] flex items-center justify-center z-10"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
           <AnimatePresence mode="wait">
             <motion.div
               key={currentIndex}
-              className="relative w-full max-w-3xl"
+              className="relative w-full max-w-5xl"
               initial={{ opacity: 0, scale: 0.9, rotateY: 90 }}
               animate={{ opacity: 1, scale: 1, rotateY: 0 }}
               exit={{ opacity: 0, scale: 0.9, rotateY: -90 }}
@@ -211,7 +211,7 @@ const SuccessStories: React.FC = () => {
                     <motion.img
                       src={testimonials[currentIndex].image}
                       alt={testimonials[currentIndex].alt}
-                      className="w-full h-[500px] object-contain rounded-2xl shadow-lg border border-white/10 bg-black/20"
+                      className="w-full h-[550px] object-contain rounded-2xl shadow-lg border border-white/10 bg-black/20"
                       initial={{ scale: 0.95, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
                       transition={{ duration: 0.5, delay: 0.2 }}
