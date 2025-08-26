@@ -306,7 +306,7 @@ const FreelanceShowcase: React.FC = () => {
                           </h3>
                           <p className="text-gray-400 mt-2 text-sm md:text-base">{card.subtitle}</p>
                         </div>
-                        <Badge variant="gradient" className={`shrink-0 bg-gradient-to-r ${card.accent} text-black font-semibold`}>PROJECT</Badge>
+                        <Badge variant="secondary" className={`shrink-0 bg-gradient-to-r ${card.accent} text-black font-semibold`}>PROJECT</Badge>
                       </div>
 
                       {/* Content */}

@@ -10,6 +10,7 @@ import DynamicCosmicElements from '../components/DynamicCosmicElements';
 import MyProcessSection from '../components/MyProcessSection';
 import FreelanceShowcase from '../components/FreelanceShowcase';
 import ProductsSection from '../components/ProductsSection';
+import SuccessStories from '../components/SuccessStories';
 
 const Index = () => {
   useEffect(() => {
@@ -73,8 +74,8 @@ const Index = () => {
       {/* Hackathons Section */}
       <HackathonSection />
 
-      {/* Testimonials Section */}
-      <TestimonialSlider />
+      {/* Success Stories Section */}
+      <SuccessStories />
 
       {/* Experience Section */}
       <ExperienceSection />
