@@ -29,29 +29,36 @@ const SuccessStories: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [stars] = useState(generateStars(120));
   const [autoplay, setAutoplay] = useState(true);
+  const [isHovered, setIsHovered] = useState(false);
 
-  // Auto-advance carousel
+  // Auto-advance carousel with hover pause
   useEffect(() => {
-    if (!autoplay) return;
+    if (!autoplay || isHovered) return;
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % testimonials.length);
-    }, 5000);
+    }, 5000); // 5 second delay
     return () => clearInterval(interval);
-  }, [autoplay]);
+  }, [autoplay, isHovered]);
 
   const next = () => {
     setCurrentIndex((prev) => (prev + 1) % testimonials.length);
     setAutoplay(false);
+    // Resume autoplay after 10 seconds of user interaction
+    setTimeout(() => setAutoplay(true), 10000);
   };
 
   const prev = () => {
     setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
     setAutoplay(false);
+    // Resume autoplay after 10 seconds of user interaction
+    setTimeout(() => setAutoplay(true), 10000);
   };
 
   const goToSlide = (index: number) => {
     setCurrentIndex(index);
     setAutoplay(false);
+    // Resume autoplay after 10 seconds of user interaction
+    setTimeout(() => setAutoplay(true), 10000);
   };
 
   return (
@@ -146,11 +153,15 @@ const SuccessStories: React.FC = () => {
         </motion.header>
 
         {/* Carousel Container */}
-        <div className="relative py-8 sm:py-12 h-[700px] flex items-center justify-center z-10">
+        <div 
+          className="relative py-8 sm:py-12 h-[800px] flex items-center justify-center z-10"
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+        >
           <AnimatePresence mode="wait">
             <motion.div
               key={currentIndex}
-              className="relative w-full max-w-4xl"
+              className="relative w-full max-w-3xl"
               initial={{ opacity: 0, scale: 0.9, rotateY: 90 }}
               animate={{ opacity: 1, scale: 1, rotateY: 0 }}
               exit={{ opacity: 0, scale: 0.9, rotateY: -90 }}
@@ -167,7 +178,7 @@ const SuccessStories: React.FC = () => {
                   transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
                 />
                 
-                <div className="relative rounded-3xl bg-black/90 backdrop-blur-md border border-white/10 p-6 md:p-8 overflow-hidden">
+                <div className="relative rounded-3xl bg-black/90 backdrop-blur-md border border-white/10 p-4 md:p-6 overflow-hidden">
                   {/* Floating elements */}
                   <motion.div
                     className="absolute top-4 right-4 w-2 h-2 bg-cyan-400 rounded-full"
@@ -195,12 +206,12 @@ const SuccessStories: React.FC = () => {
                     }}
                   />
 
-                  {/* Testimonial Image */}
+                  {/* Testimonial Image with fixed height */}
                   <div className="relative">
                     <motion.img
                       src={testimonials[currentIndex].image}
                       alt={testimonials[currentIndex].alt}
-                      className="w-full h-auto rounded-2xl shadow-lg border border-white/10"
+                      className="w-full h-[500px] object-contain rounded-2xl shadow-lg border border-white/10 bg-black/20"
                       initial={{ scale: 0.95, opacity: 0 }}
                       animate={{ scale: 1, opacity: 1 }}
                       transition={{ duration: 0.5, delay: 0.2 }}
