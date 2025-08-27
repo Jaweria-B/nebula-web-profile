@@ -147,7 +147,7 @@ const SuccessStories: React.FC = () => {
           </p>
           <div className="mt-4 flex items-center justify-center gap-2 text-purple-300">
             <Star size={20} fill="currentColor" />
-            <span className="font-semibold text-xl">44 Lessons Taught</span>
+            <span className="font-semibold text-xl">43 Lessons Taught</span>
             <Star size={20} fill="currentColor" />
           </div>
         </motion.header>
@@ -161,7 +161,7 @@ const SuccessStories: React.FC = () => {
           <AnimatePresence mode="wait">
             <motion.div
               key={currentIndex}
-              className="relative w-full max-w-5xl"
+              className="relative w-full max-w-2xl mx-auto"
               initial={{ opacity: 0, scale: 0.9, rotateY: 90 }}
               animate={{ opacity: 1, scale: 1, rotateY: 0 }}
               exit={{ opacity: 0, scale: 0.9, rotateY: -90 }}
@@ -276,7 +276,7 @@ const SuccessStories: React.FC = () => {
           transition={{ duration: 1, delay: 0.5 }}
         >
           <div className="text-center p-6 rounded-2xl bg-gradient-to-br from-purple-900/30 to-blue-900/30 border border-white/10 backdrop-blur-sm">
-            <div className="text-3xl font-bold text-white mb-2">44</div>
+            <div className="text-3xl font-bold text-white mb-2">43</div>
             <div className="text-gray-300">Lessons Taught</div>
           </div>
           <div className="text-center p-6 rounded-2xl bg-gradient-to-br from-cyan-900/30 to-emerald-900/30 border border-white/10 backdrop-blur-sm">
