@@ -3,14 +3,14 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight, Star, Award } from "lucide-react";
 
 const testimonials = [
-  { id: 1, image: "/lovable-uploads/d534620d-bf36-48c8-8780-7aa3409b178a.png", alt: "Student testimonial 1" },
-  { id: 2, image: "/lovable-uploads/7362898f-0f2b-4a14-8cf9-1a3c4b3fdf05.png", alt: "Student testimonial 2" },
-  { id: 3, image: "/lovable-uploads/eb74bcd6-3ab3-489d-a2e5-0f239693f816.png", alt: "Student testimonial 3" },
-  { id: 4, image: "/lovable-uploads/bde0a00b-c265-418e-9af6-51c18e1f3fb5.png", alt: "Student testimonial 4" },
-  { id: 5, image: "/lovable-uploads/7d881e12-2d49-4b5a-8376-953cdafb36f0.png", alt: "Student testimonial 5" },
-  { id: 6, image: "/lovable-uploads/bffb7d4f-4f95-4b5c-97d1-28d722f2f39f.png", alt: "Student testimonial 6" },
-  { id: 7, image: "/lovable-uploads/e5e08d8f-234d-44a1-ae15-98e1e97416a9.png", alt: "Student testimonial 7" },
-  { id: 8, image: "/lovable-uploads/dc6e28c7-339f-4939-b716-2853968de81d.png", alt: "Student testimonial 8" },
+  { id: 8, image: "/lovable-uploads/d534620d-bf36-48c8-8780-7aa3409b178a.png", alt: "Student testimonial 8" },
+  { id: 7, image: "/lovable-uploads/7362898f-0f2b-4a14-8cf9-1a3c4b3fdf05.png", alt: "Student testimonial 7" },
+  { id: 6, image: "/lovable-uploads/eb74bcd6-3ab3-489d-a2e5-0f239693f816.png", alt: "Student testimonial 6" },
+  { id: 5, image: "/lovable-uploads/bde0a00b-c265-418e-9af6-51c18e1f3fb5.png", alt: "Student testimonial 5" },
+  { id: 4, image: "/lovable-uploads/7d881e12-2d49-4b5a-8376-953cdafb36f0.png", alt: "Student testimonial 4" },
+  { id: 3, image: "/lovable-uploads/bffb7d4f-4f95-4b5c-97d1-28d722f2f39f.png", alt: "Student testimonial 3" },
+  { id: 2, image: "/lovable-uploads/e5e08d8f-234d-44a1-ae15-98e1e97416a9.png", alt: "Student testimonial 2" },
+  { id: 1 image: "/lovable-uploads/dc6e28c7-339f-4939-b716-2853968de81d.png", alt: "Student testimonial 1" },
 ];
 
 // Generate random stars
