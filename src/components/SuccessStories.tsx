@@ -10,7 +10,7 @@ const testimonials = [
   { id: 4, image: "/lovable-uploads/7d881e12-2d49-4b5a-8376-953cdafb36f0.png", alt: "Student testimonial 4" },
   { id: 3, image: "/lovable-uploads/bffb7d4f-4f95-4b5c-97d1-28d722f2f39f.png", alt: "Student testimonial 3" },
   { id: 2, image: "/lovable-uploads/e5e08d8f-234d-44a1-ae15-98e1e97416a9.png", alt: "Student testimonial 2" },
-  { id: 1 image: "/lovable-uploads/dc6e28c7-339f-4939-b716-2853968de81d.png", alt: "Student testimonial 1" },
+  { id: 1, image: "/lovable-uploads/dc6e28c7-339f-4939-b716-2853968de81d.png", alt: "Student testimonial 1" },
 ];
 
 // Generate random stars
