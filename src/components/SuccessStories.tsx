@@ -154,7 +154,7 @@ const SuccessStories: React.FC = () => {
 
         {/* Carousel Container */}
         <div 
-          className="relative py-8 sm:py-12 h-[850px] flex items-center justify-center z-10"
+          className="relative py-4 lg:py-0 flex items-center justify-center z-10"
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
         >
@@ -225,10 +225,10 @@ const SuccessStories: React.FC = () => {
             </motion.div>
           </AnimatePresence>
 
-          {/* Navigation */}
+          {/* Navigation - Hidden on small screens, positioned closer to image */}
           <button
             onClick={prev}
-            className="absolute left-4 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-black/50 border border-white/20 text-white hover:bg-black/70 hover:border-white/40 transition-all backdrop-blur-sm hover:scale-110"
+            className="absolute left-2 lg:left-8 xl:left-16 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-black/50 border border-white/20 text-white hover:bg-black/70 hover:border-white/40 transition-all backdrop-blur-sm hover:scale-110 hidden md:block"
             aria-label="Previous testimonial"
           >
             <ChevronLeft size={24} />
@@ -236,7 +236,7 @@ const SuccessStories: React.FC = () => {
           
           <button
             onClick={next}
-            className="absolute right-4 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-black/50 border border-white/20 text-white hover:bg-black/70 hover:border-white/40 transition-all backdrop-blur-sm hover:scale-110"
+            className="absolute right-2 lg:right-8 xl:right-16 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-black/50 border border-white/20 text-white hover:bg-black/70 hover:border-white/40 transition-all backdrop-blur-sm hover:scale-110 hidden md:block"
             aria-label="Next testimonial"
           >
             <ChevronRight size={24} />
@@ -244,7 +244,7 @@ const SuccessStories: React.FC = () => {
         </div>
 
         {/* Indicators */}
-        <div className="flex justify-center mt-12 gap-2 flex-wrap">
+        <div className="flex justify-center mt-8 lg:mt-12 gap-2 flex-wrap">
           {testimonials.map((_, index) => (
             <motion.button
               key={index}
