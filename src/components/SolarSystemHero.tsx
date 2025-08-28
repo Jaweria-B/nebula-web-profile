@@ -725,3 +725,9 @@ const SolarSystemHero = () => {
           height: 1px;
           background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
         }
+      `}</style>
+    </div>
+  );
+};
+
+export default SolarSystemHero;
