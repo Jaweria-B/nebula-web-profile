@@ -22,7 +22,7 @@ const SolarSystemHero = () => {
   }, []);
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center overflow-hidden pb-20">
+    <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
       {/* Animated Stars */}
       {stars.map((star) => (
         <div
