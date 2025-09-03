@@ -158,13 +158,13 @@ const SolarSystemHero = () => {
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <button className="px-8 py-4 bg-white/5 border border-white/10 rounded-full text-white font-semibold hover:bg-white/10 transition-all duration-200 shadow-sm backdrop-blur-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-white/20">
+          <button className="px-8 py-4 bg-gradient-to-r from-indigo-500/60 via-indigo-600/50 to-purple-600/50 rounded-full text-white font-semibold hover:from-indigo-600/70 hover:to-purple-700/65 transition-transform duration-200 transform hover:-translate-y-0.5 shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300/40">
             Explore My Universe
           </button>
           
-          <Link to="/services" className="px-8 py-4 bg-white/5 border border-white/10 rounded-full text-white font-semibold hover:bg-white/10 transition-all duration-200 shadow-sm backdrop-blur-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-white/20">
+          <Link to="/services" className="px-8 py-4 bg-gradient-to-r from-purple-500/55 via-purple-600/45 to-pink-600/45 rounded-full text-white font-semibold hover:from-purple-600/65 hover:to-pink-700/60 transition-transform duration-200 transform hover:-translate-y-0.5 shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-300/40">
             View Services
-          </Link>        
+          </Link>    
           <button className="px-8 py-4 glass-effect rounded-full text-white font-semibold hover:bg-white/10 transition-all duration-300">
             Connect with Me
           </button>
