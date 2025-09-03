@@ -202,7 +202,32 @@ const SolarSystemHero = () => {
           </div>
         </div>
 
-        {/* Products Grid */}
+        {/* Constellation Badge */}
+          <div className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 mb-12 group hover:bg-white/8 transition-all duration-700 hover:scale-105">
+            <div className="relative">
+              <Sparkles className="w-6 h-6 text-purple-300" style={{animation: 'gentleSpin 12s linear infinite'}} />
+              <div className="absolute inset-0 bg-purple-300 rounded-full blur-sm opacity-40" style={{animation: 'gentlePulse 3s ease-in-out infinite'}} />
+            </div>
+            <span className="text-lg font-medium text-gradient">
+              AI Solutions • My Product Universe
+            </span>
+            <Sparkles className="w-5 h-5 text-cyan-300" style={{animation: 'gentlePulse 2s ease-in-out infinite'}} />
+          </div>
+          
+          {/* Main Title */}
+          <h1 className="text-5xl lg:text-7xl font-bold mb-6 text-center">
+            <span className="bg-gradient-to-r from-white via-blue-200 to-purple-300 bg-clip-text text-transparent">
+              My Product Universe
+            </span>
+          </h1>
+          
+          <p className="text-xl md:text-2xl text-slate-300 max-w-5xl mx-auto leading-relaxed opacity-90" style={{animation: 'fadeInUp 1s ease-out 0.5s both'}}>
+            Discover my constellation of intelligent tools designed to automate, enhance, 
+            and revolutionize your digital experience with cutting-edge AI technology.
+          </p>
+        </div>
+
+        {/* Enhanced Products Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 max-w-7xl mx-auto mb-20">
           {products.map((product, index) => {
             const IconComponent = product.icon;
@@ -245,6 +270,7 @@ const SolarSystemHero = () => {
                 key={product.title}
                 className="group relative"
                 style={{
+                  animation: `cardFloat 1.5s ease-out ${index * 0.3}s both`,
                   transform: isHovered ? 'translateY(-10px) scale(1.02)' : 'translateY(0) scale(1)',
                   transition: 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)'
                 }}
@@ -276,38 +302,88 @@ const SolarSystemHero = () => {
                           </p>
                         </div>
                       </div>
+                      
+                      <div className="text-right">
+                        <div className={`text-xs ${colors.iconColor} mb-2 opacity-80`}>
+                          {product.constellation}
+                        </div>
+                        <div className="flex items-center gap-1 justify-end">
+                          <Star className="w-3 h-3 text-yellow-400" style={{animation: 'gentlePulse 2s ease-in-out infinite'}} />
+                          <span className="text-xs text-slate-400">{product.starCount}</span>
+                        </div>
+                      </div>
                     </div>
-                    
-                    <p className="text-slate-300 leading-relaxed mb-6">
+
+                    <p className="text-slate-300 leading-relaxed opacity-90 transition-all duration-500">
                       {product.description}
                     </p>
-                    
-                    {/* Key Features */}
-                    <div className="space-y-3">
-                      <h4 className="text-sm font-semibold text-slate-200 uppercase tracking-wide opacity-70">Key Features</h4>
-                      <div className="grid grid-cols-1 gap-2">
-                        {product.keyFeatures.slice(0, 3).map((feature, idx) => (
-                          <div key={idx} className="flex items-center gap-3">
-                            <div className={`w-2 h-2 rounded-full bg-gradient-to-r ${colors.featureColor} flex-shrink-0`} />
-                            <span className="text-sm text-slate-300">{feature}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
                   </div>
-                  
-                  {/* Action Section */}
+
+                  {/* Features Section */}
                   <div className="p-8">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs text-slate-400 uppercase tracking-wide">Constellation:</span>
-                        <span className={`text-sm font-medium ${colors.textColor}`}>{product.constellation}</span>
-                      </div>
-                      <Link to="/products" className={`group/btn inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r ${colors.featureColor} text-white font-medium text-sm transition-all duration-300 hover:scale-105 hover:shadow-lg`}>
-                        Explore
-                        <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover/btn:translate-x-1" />
-                      </Link>
+                    <h4 className="text-sm font-semibold text-slate-200 flex items-center gap-2 mb-6">
+                      <Sparkles className={`w-4 h-4 ${colors.iconColor} opacity-80`} style={{animation: 'gentlePulse 2s ease-in-out infinite'}} />
+                      Cosmic Features
+                    </h4>
+                    
+                    <div className="space-y-4 mb-8">
+                      {product.keyFeatures.map((feature, featureIndex) => (
+                        <div 
+                          key={featureIndex}
+                          className="flex items-start gap-3 text-sm text-slate-400 group/feature hover:text-slate-300 transition-all duration-500"
+                          style={{
+                            animation: `slideInRight 0.6s ease-out ${featureIndex * 0.1}s both`,
+                            opacity: isHovered ? 1 : 0.8,
+                            transform: isHovered ? 'translateX(5px)' : 'translateX(0)'
+                          }}
+                        >
+                          <div 
+                            className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 bg-gradient-to-r ${colors.featureColor} transition-all duration-300`}
+                            style={{
+                              boxShadow: isHovered ? `0 0 8px ${colors.glow}` : 'none',
+                              animation: 'gentlePulse 3s ease-in-out infinite'
+                            }}
+                          />
+                          <span className="transition-all duration-300">{feature}</span>
+                        </div>
+                      ))}
                     </div>
+
+                    {/* CTA Button */}
+                    <a 
+                      href={product.title === "EmailCraft" ? "http://emailcraft.uinfo.org/" : "#connect"}
+                      target={product.title === "EmailCraft" ? "_blank" : "_self"}
+                      rel={product.title === "EmailCraft" ? "noopener noreferrer" : ""}
+                      className="group/btn relative w-full inline-flex items-center justify-center gap-3 py-4 px-6 rounded-2xl border backdrop-blur-sm transition-all duration-700 overflow-hidden"
+                      style={{
+                        background: `linear-gradient(135deg, ${colors.primary}15, ${colors.secondary}15)`,
+                        borderColor: `${colors.primary}30`,
+                        transform: isHovered ? 'translateY(-2px)' : 'translateY(0)'
+                      }}
+                    >
+                      <div 
+                        className="absolute inset-0 opacity-0 group-hover/btn:opacity-100 transition-opacity duration-500"
+                        style={{
+                          background: `linear-gradient(135deg, ${colors.primary}25, ${colors.secondary}25)`
+                        }}
+                      />
+                      
+                      <span className={`font-semibold ${colors.textColor} relative z-10 transition-all duration-300`}>
+                        {product.title === "EmailCraft" ? "Try it Yourself" : "Want to Know More?"}
+                      </span>
+                      <ArrowRight className={`w-5 h-5 ${colors.iconColor} group-hover/btn:translate-x-1 transition-transform duration-300 relative z-10`} />
+                    </a>
+                  </div>
+
+                  {/* Floating Bot Icon */}
+                  <div 
+                    className="absolute top-4 right-4 opacity-20 group-hover:opacity-60 transition-all duration-700"
+                    style={{
+                      transform: isHovered ? 'rotate(15deg) scale(1.1)' : 'rotate(0deg) scale(1)',
+                      animation: 'gentleFloat 4s ease-in-out infinite'
+                    }}
+                  >
+                    <Bot className={`w-6 h-6 ${colors.iconColor}`} />
                   </div>
                 </div>
               </div>
@@ -315,14 +391,29 @@ const SolarSystemHero = () => {
           })}
         </div>
 
-        {/* Final CTA */}
-        <div className="text-center">
-          <Link to="/products" className="inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full text-white font-semibold hover:from-purple-700 hover:to-pink-700 transition-all duration-300 transform hover:scale-105">
-            <Zap className="w-5 h-5" />
-            View All Products
-            <ArrowRight className="w-5 h-5" />
-          </Link>
-        </div>
+        {/* Enhanced CTA */}
+        <div className="text-center relative">
+          <div className="mb-8">
+            <p className="text-2xl text-slate-300 mb-8 opacity-90" style={{animation: 'fadeInUp 1s ease-out 1s both'}}>
+              Ready to explore the infinite cosmos of AI-powered possibilities?
+            </p>
+            <a 
+              href="/products"
+              className="group relative inline-flex items-center gap-4 px-16 py-6 bg-gradient-to-r from-purple-600/15 via-pink-600/15 to-cyan-600/15 hover:from-purple-600/25 hover:via-pink-600/25 hover:to-cyan-600/25 backdrop-blur-xl border border-white/20 hover:border-white/40 rounded-3xl transition-all duration-700 transform hover:scale-105 hover:-translate-y-3 overflow-hidden"
+              style={{animation: 'fadeInUp 1s ease-out 1.2s both'}}
+            >
+              <div className="absolute inset-0 bg-gradient-to-r from-purple-600/5 via-pink-600/5 to-cyan-600/5 group-hover:from-purple-600/15 group-hover:via-pink-600/15 group-hover:to-cyan-600/15 transition-all duration-700" />
+              
+              <span className="text-2xl font-bold text-gradient relative z-10">
+                View Products in Detail
+              </span>
+              <div className="relative z-10">
+                <ArrowRight className="w-7 h-7 text-purple-300 group-hover:translate-x-3 transition-transform duration-500" />
+                <div className="absolute inset-0 bg-purple-300 rounded-full blur-sm opacity-30" style={{animation: 'gentlePulse 2s ease-in-out infinite'}} />
+              </div>
+            </a>
+          </div>
+        
       </div>
 
       {/* Constellation Lines */}
