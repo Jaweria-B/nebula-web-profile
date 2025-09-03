@@ -172,32 +172,28 @@ const ContactPortal: React.FC = () => {
           ))}
         </div>
 
-        {/* Second row - centered 2 items */}
-        <div className="max-w-6xl mx-auto mb-12">
-          <div className="flex justify-center">
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 w-full max-w-2xl">
-              {secondRow.map((method) => (
-                <div
-                  key={method.id}
-                  role="button"
-                  tabIndex={0}
-                  onClick={() => openLink(method.action)}
-                  onKeyDown={(e) => (e.key === 'Enter' ? openLink(method.action) : null)}
-                  className={`glass-effect rounded-2xl p-6 cursor-pointer transition-all duration-300 hover:scale-105 group relative overflow-hidden text-center`}
-                >
-                  <div className={`absolute inset-0 bg-gradient-to-br ${method.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300 rounded-2xl`} />
-                  <div className="relative z-10">
-                    <div className={`inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r ${method.color} rounded-full mb-4 mx-auto group-hover:scale-110 transition-transform duration-300`}>
-                      {method.icon}
-                    </div>
-                    <h3 className="text-lg font-bold text-white mb-1">{method.title}</h3>
-                    <p className="text-blue-400 text-sm mb-2">{method.subtitle}</p>
-                    <p className="text-gray-400 text-xs leading-relaxed">{method.description}</p>
-                  </div>
+        {/* Second row - 2 items with equal width */}
+        <div className="grid grid-cols-2 gap-6 max-w-4xl mx-auto mb-12">
+          {secondRow.map((method) => (
+            <div
+              key={method.id}
+              role="button"
+              tabIndex={0}
+              onClick={() => openLink(method.action)}
+              onKeyDown={(e) => (e.key === 'Enter' ? openLink(method.action) : null)}
+              className={`glass-effect rounded-2xl p-6 cursor-pointer transition-all duration-300 hover:scale-105 group relative overflow-hidden text-center`}
+            >
+              <div className={`absolute inset-0 bg-gradient-to-br ${method.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300 rounded-2xl`} />
+              <div className="relative z-10">
+                <div className={`inline-flex items-center justify-center w-16 h-16 bg-gradient-to-r ${method.color} rounded-full mb-4 mx-auto group-hover:scale-110 transition-transform duration-300`}>
+                  {method.icon}
                 </div>
-              ))}
+                <h3 className="text-lg font-bold text-white mb-1">{method.title}</h3>
+                <p className="text-blue-400 text-sm mb-2">{method.subtitle}</p>
+                <p className="text-gray-400 text-xs leading-relaxed">{method.description}</p>
+              </div>
             </div>
-          </div>
+          ))}
         </div>
 
         {/* Quick Action Buttons */}

@@ -163,21 +163,11 @@ const ProductsSection = () => {
           </div>
           
           {/* Main Title */}
-          <h2 className="text-6xl md:text-7xl lg:text-8xl font-black mb-12 relative leading-tight">
-            <span 
-              className="text-gradient block"
-              style={{
-                animation: 'titleGlow 4s ease-in-out infinite alternate'
-              }}
-            >
+          <h1 className="text-5xl lg:text-7xl font-bold mb-6 text-center">
+            <span className="bg-gradient-to-r from-white via-blue-200 to-purple-300 bg-clip-text text-transparent">
               My Product Universe
             </span>
-            
-            {/* Orbital Elements */}
-            <div className="absolute -top-8 -right-8 opacity-30" style={{animation: 'gentleOrbit 25s linear infinite'}}>
-              <Atom className="w-12 h-12 text-purple-300" />
-            </div>
-          </h2>
+          </h1>
           
           <p className="text-xl md:text-2xl text-slate-300 max-w-5xl mx-auto leading-relaxed opacity-90" style={{animation: 'fadeInUp 1s ease-out 0.5s both'}}>
             Discover my constellation of intelligent tools designed to automate, enhance, 

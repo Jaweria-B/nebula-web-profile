@@ -186,14 +186,11 @@ const MyProcessSection: React.FC = () => {
             <Stars className="w-8 h-8 sm:w-12 sm:h-12 text-purple-400" />
           </motion.div>
           
-          <h2 className="text-4xl sm:text-6xl lg:text-7xl font-black bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mb-4 sm:mb-6 relative">
-            My Process
-            <motion.div
-              animate={{ scale: [1, 1.08, 1], opacity: [0.6, 1, 0.6] }}
-              transition={{ duration: 2, repeat: Infinity }}
-              className="absolute -inset-3 sm:-inset-4 bg-gradient-to-r from-blue-600/20 via-purple-600/20 to-pink-600/20 blur-xl -z-10 rounded-full"
-            />
-          </h2>
+          <h1 className="text-5xl lg:text-7xl font-bold mb-6 text-center">
+            <span className="bg-gradient-to-r from-white via-blue-200 to-purple-300 bg-clip-text text-transparent">
+              My Process
+            </span>
+          </h1>
           
           <p className="text-gray-300 text-base sm:text-xl leading-relaxed">
             Journey through the cosmos of development, from conception to stellar deployment
