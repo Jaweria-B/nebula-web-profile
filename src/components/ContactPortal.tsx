@@ -13,7 +13,7 @@ import {
   Globe
 } from 'lucide-react';
 
-const DISCORD_INVITE = 'https://discord.gg/your-invite'; // replace with your actual invite
+const DISCORD_INVITE = 'https://discordapp.com/users/1036991829138223104'; 
 
 const DiscordIcon = (props: React.SVGProps<SVGSVGElement>) => (
   <svg viewBox="0 0 245 240" {...props} xmlns="http://www.w3.org/2000/svg" fill="currentColor">
@@ -92,8 +92,8 @@ const ContactPortal: React.FC = () => {
       id: 'blog',
       icon: <Globe className="w-6 h-6" />,
       title: 'Big Bang Blog',
-      subtitle: 'Articles & demos',
-      description: 'Read project case studies, tutorials and ideas',
+      subtitle: 'Essays, Stories & Reflections',
+      description: 'Spark your curiosity — read, reflect, write',
       action: 'https://www.bigbangblog.pk/',
       color: 'from-pink-500 to-rose-500'
     }
