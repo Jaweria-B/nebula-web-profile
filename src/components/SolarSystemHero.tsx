@@ -165,9 +165,14 @@ const SolarSystemHero = () => {
           <Link to="/services" className="px-8 py-4 bg-gradient-to-r from-purple-500/55 via-purple-600/45 to-pink-600/45 rounded-full text-white font-semibold hover:from-purple-600/65 hover:to-pink-700/60 transition-transform duration-200 transform hover:-translate-y-0.5 shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-300/40">
             View Services
           </Link>    
-          <button className="px-8 py-4 glass-effect rounded-full text-white font-semibold hover:bg-white/10 transition-all duration-300">
-            Connect with Me
-          </button>
+         <button
+          onClick={() => {
+            document.getElementById("connect")?.scrollIntoView({ behavior: "smooth" });
+          }}
+          className="px-8 py-4 glass-effect rounded-full text-white font-semibold hover:bg-white/10 transition-all duration-300"
+        >
+          Connect with Me
+        </button>
         </div>
       </div>
 
