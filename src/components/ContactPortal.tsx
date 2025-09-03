@@ -93,7 +93,7 @@ const ContactPortal: React.FC = () => {
       icon: <Globe className="w-6 h-6" />,
       title: 'Big Bang Blog',
       subtitle: 'Essays, Stories & Reflections',
-      description: 'Spark your curiosity — read, reflect, write',
+      description: 'Spark your curiosity — read, reflect, write. Want to contribute? Reach out.',
       action: 'https://www.bigbangblog.pk/',
       color: 'from-pink-500 to-rose-500'
     }
@@ -138,7 +138,7 @@ const ContactPortal: React.FC = () => {
   }
 
   return (
-    <section className="py-20 relative">
+    <section id="connect" className="py-20 relative">
       <div className="container mx-auto px-6">
         <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold text-gradient mb-4">Let's Connect</h2>
