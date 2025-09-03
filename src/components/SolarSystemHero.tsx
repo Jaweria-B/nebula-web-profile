@@ -7,7 +7,7 @@ const SolarSystemHero = () => {
 
   const products = [
     {
-      title: "EmailCraft",
+      title: "EmailCurator",
       subtitle: "AI-Powered Email Generation Platform",
       description: "Transform your thoughts into perfectly crafted emails with multiple AI providers. Professional quality results with intelligent personalization.",
       keyFeatures: [
@@ -174,7 +174,7 @@ const SolarSystemHero = () => {
       <div className="relative z-30 mt-32 container mx-auto px-6">
         {/* Products Header */}
         <div className="text-center mb-24 flex flex-col items-center">
-          <div className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 mb-12 group hover:bg-white/8 transition-all duration-700 hover:scale-105">
+          <div className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 group hover:bg-white/8 transition-all duration-700 hover:scale-105">
             <div className="relative">
               <Sparkles className="w-6 h-6 text-purple-300" style={{animation: 'gentleSpin 12s linear infinite'}} />
               <div className="absolute inset-0 bg-purple-300 rounded-full blur-sm opacity-40" style={{animation: 'gentlePulse 3s ease-in-out infinite'}} />
@@ -200,12 +200,12 @@ const SolarSystemHero = () => {
               <Star size={24} fill="currentColor" />
             </div>
           </div>
-        </div>
-          
           <p className="text-xl md:text-2xl text-slate-300 max-w-5xl mx-auto leading-relaxed opacity-90" style={{animation: 'fadeInUp 1s ease-out 0.5s both'}}>
             Discover my constellation of intelligent tools designed to automate, enhance, 
             and revolutionize your digital experience with cutting-edge AI technology.
           </p>
+        </div>
+    
         </div>
 
         {/* Enhanced Products Grid */}
