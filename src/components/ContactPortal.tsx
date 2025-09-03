@@ -190,7 +190,7 @@ const ContactPortal: React.FC = () => {
                 </div>
                 <h3 className="text-lg font-bold text-white mb-1">{method.title}</h3>
                 <p className="text-blue-400 text-sm mb-2">{method.subtitle}</p>
-                <p className="text-gray-400 text-xs leading-relaxed">{method.description}</p>
+                <p className="text-gray-400 text-xs leading-relaxed px-10">{method.description}</p>
               </div>
             </div>
           ))}
