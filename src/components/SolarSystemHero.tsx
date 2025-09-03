@@ -74,7 +74,7 @@ const SolarSystemHero = () => {
   }, []);
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center overflow-hidden flex-col gap-4">
+    <div className="relative min-h-screen flex items-center justify-center overflow-hidden flex-col gap-8">
       {/* Animated Stars */}
       {stars.map((star) => (
         <div
@@ -158,12 +158,14 @@ const SolarSystemHero = () => {
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <button className="px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full text-white font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 transform hover:scale-105 nebula-glow">
+          <button className="px-8 py-4 bg-indigo-600/85 rounded-full text-white font-semibold hover:bg-indigo-700/95 transition-transform duration-200 transform hover:-translate-y-0.5 shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300/50">
             Explore My Universe
           </button>
-          <Link to="/services" className="px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full text-white font-semibold hover:from-purple-700 hover:to-pink-700 transition-all duration-300 transform hover:scale-105 nebula-glow">
+        
+          <Link to="/services" className="px-8 py-4 bg-purple-600/80 rounded-full text-white font-semibold hover:bg-purple-700/95 transition-transform duration-200 transform hover:-translate-y-0.5 shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-300/50">
             View Services
           </Link>
+        
           <button className="px-8 py-4 glass-effect rounded-full text-white font-semibold hover:bg-white/10 transition-all duration-300">
             Connect with Me
           </button>
