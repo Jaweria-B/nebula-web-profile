@@ -173,14 +173,14 @@ const SolarSystemHero = () => {
       {/* Products Section */}
       <div className="relative z-30 mt-32 container mx-auto px-6">
         {/* Products Header */}
-        <div className="text-center mb-24 relative">
+        <div className="text-center mb-24 flex flex-col items-center">
           <div className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 mb-12 group hover:bg-white/8 transition-all duration-700 hover:scale-105">
             <div className="relative">
               <Sparkles className="w-6 h-6 text-purple-300" style={{animation: 'gentleSpin 12s linear infinite'}} />
               <div className="absolute inset-0 bg-purple-300 rounded-full blur-sm opacity-40" style={{animation: 'gentlePulse 3s ease-in-out infinite'}} />
             </div>
             <span className="text-lg font-medium text-gradient">
-              AI Solutions • My Product Universe
+              AI Solutions 
             </span>
             <Sparkles className="w-5 h-5 text-cyan-300" style={{animation: 'gentlePulse 2s ease-in-out infinite'}} />
           </div>
