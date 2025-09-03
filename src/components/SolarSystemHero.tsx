@@ -74,7 +74,7 @@ const SolarSystemHero = () => {
   }, []);
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center overflow-hidden flex-col gap-8">
+    <div className="relative min-h-screen flex items-center justify-center overflow-hidden flex-col gap-12 py-10">
       {/* Animated Stars */}
       {stars.map((star) => (
         <div
@@ -158,14 +158,13 @@ const SolarSystemHero = () => {
         </p>
         
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-          <button className="px-8 py-4 bg-indigo-600/85 rounded-full text-white font-semibold hover:bg-indigo-700/95 transition-transform duration-200 transform hover:-translate-y-0.5 shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300/50">
+          <button className="px-8 py-4 bg-white/5 border border-white/10 rounded-full text-white font-semibold hover:bg-white/10 transition-all duration-200 shadow-sm backdrop-blur-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-white/20">
             Explore My Universe
           </button>
-        
-          <Link to="/services" className="px-8 py-4 bg-purple-600/80 rounded-full text-white font-semibold hover:bg-purple-700/95 transition-transform duration-200 transform hover:-translate-y-0.5 shadow-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-300/50">
+          
+          <Link to="/services" className="px-8 py-4 bg-white/5 border border-white/10 rounded-full text-white font-semibold hover:bg-white/10 transition-all duration-200 shadow-sm backdrop-blur-sm focus:outline-none focus-visible:ring-2 focus-visible:ring-white/20">
             View Services
-          </Link>
-        
+          </Link>        
           <button className="px-8 py-4 glass-effect rounded-full text-white font-semibold hover:bg-white/10 transition-all duration-300">
             Connect with Me
           </button>
@@ -175,7 +174,7 @@ const SolarSystemHero = () => {
       {/* Products Section */}
       <div className="relative z-30 mt-32 container mx-auto px-6">
         {/* Products Header */}
-        <div className="text-center mb-24 flex flex-col items-center">
+        <div className="text-center mb-24 flex flex-col items-center gap-4">
           <div className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 group hover:bg-white/8 transition-all duration-700 hover:scale-105">
             <div className="relative">
               <Sparkles className="w-6 h-6 text-purple-300" style={{animation: 'gentleSpin 12s linear infinite'}} />
@@ -211,7 +210,7 @@ const SolarSystemHero = () => {
         </div>
 
         {/* Enhanced Products Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 max-w-7xl mx-auto mb-20">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 max-w-7xl mx-auto mb-20 px-6">
           {products.map((product, index) => {
             const IconComponent = product.icon;
             const isHovered = hoveredCard === index;
