@@ -93,7 +93,8 @@ const ContactPortal: React.FC = () => {
       icon: <Globe className="w-6 h-6" />,
       title: 'Big Bang Blog',
       subtitle: 'Essays, Stories & Reflections',
-      description: 'Spark your curiosity — read, reflect, write. Want to contribute? Reach out.',
+      description: 'Spark your curiosity — read, reflect, write.',
+      subdescription: 'Want to contribute? Reach out.',
       action: 'https://www.bigbangblog.pk/',
       color: 'from-pink-500 to-rose-500'
     }
@@ -190,7 +191,10 @@ const ContactPortal: React.FC = () => {
                 </div>
                 <h3 className="text-lg font-bold text-white mb-1">{method.title}</h3>
                 <p className="text-blue-400 text-sm mb-2">{method.subtitle}</p>
-                <p className="text-gray-400 text-xs leading-relaxed md:px-15">{method.description}</p>
+                <p className="text-gray-400 text-xs leading-relaxed">{method.description}</p>
+                { method.subdescription &&
+                <p className="text-gray-400 text-xs leading-relaxed">{method.subdescription}</p>
+                }
               </div>
             </div>
           ))}
