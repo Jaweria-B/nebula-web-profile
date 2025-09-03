@@ -201,25 +201,6 @@ const SolarSystemHero = () => {
             </div>
           </div>
         </div>
-
-        {/* Constellation Badge */}
-          <div className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-white/5 backdrop-blur-xl border border-white/10 mb-12 group hover:bg-white/8 transition-all duration-700 hover:scale-105">
-            <div className="relative">
-              <Sparkles className="w-6 h-6 text-purple-300" style={{animation: 'gentleSpin 12s linear infinite'}} />
-              <div className="absolute inset-0 bg-purple-300 rounded-full blur-sm opacity-40" style={{animation: 'gentlePulse 3s ease-in-out infinite'}} />
-            </div>
-            <span className="text-lg font-medium text-gradient">
-              AI Solutions • My Product Universe
-            </span>
-            <Sparkles className="w-5 h-5 text-cyan-300" style={{animation: 'gentlePulse 2s ease-in-out infinite'}} />
-          </div>
-          
-          {/* Main Title */}
-          <h1 className="text-5xl lg:text-7xl font-bold mb-6 text-center">
-            <span className="bg-gradient-to-r from-white via-blue-200 to-purple-300 bg-clip-text text-transparent">
-              My Product Universe
-            </span>
-          </h1>
           
           <p className="text-xl md:text-2xl text-slate-300 max-w-5xl mx-auto leading-relaxed opacity-90" style={{animation: 'fadeInUp 1s ease-out 0.5s both'}}>
             Discover my constellation of intelligent tools designed to automate, enhance, 
