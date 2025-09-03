@@ -24,7 +24,7 @@ const DiscordIcon = (props: React.SVGProps<SVGSVGElement>) => (
 
 const ContactPortal: React.FC = () => {
   // THE email you specified
-  const OWNER_EMAIL = 'javeriab.codes@gmail.com';
+  const OWNER_EMAIL = 'jaweriab.codes@gmail.com';
 
   const [activeMethod, setActiveMethod] = useState<string | null>(null);
   const [showScheduler, setShowScheduler] = useState(false);
@@ -173,7 +173,7 @@ const ContactPortal: React.FC = () => {
         </div>
 
         {/* Second row - 2 items with equal width */}
-        <div className="grid grid-cols-2 gap-6 max-w-4xl mx-auto mb-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 max-w-4xl mx-auto mb-12">
           {secondRow.map((method) => (
             <div
               key={method.id}
@@ -190,7 +190,7 @@ const ContactPortal: React.FC = () => {
                 </div>
                 <h3 className="text-lg font-bold text-white mb-1">{method.title}</h3>
                 <p className="text-blue-400 text-sm mb-2">{method.subtitle}</p>
-                <p className="text-gray-400 text-xs leading-relaxed px-10">{method.description}</p>
+                <p className="text-gray-400 text-xs leading-relaxed md:px-15">{method.description}</p>
               </div>
             </div>
           ))}
