@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { PhoneCall, Lightbulb, Code2, ShieldCheck, Rocket, Stars, Sparkles } from "lucide-react";
+import { PhoneCall, Lightbulb, Code2, ShieldCheck, Rocket, Stars, Sparkles, Star } from "lucide-react";
 
 const steps = [
   {
@@ -186,11 +186,21 @@ const MyProcessSection: React.FC = () => {
             <Stars className="w-8 h-8 sm:w-12 sm:h-12 text-purple-400" />
           </motion.div>
           
-          <h1 className="text-5xl lg:text-7xl font-bold mb-6 text-center">
-            <span className="bg-gradient-to-r from-white via-blue-200 to-purple-300 bg-clip-text text-transparent">
-              My Process
-            </span>
-          </h1>
+          <div className="relative inline-block">
+            <h1 className="text-5xl lg:text-7xl font-bold mb-6 text-center">
+              <span className="bg-gradient-to-r from-white via-blue-200 to-purple-300 bg-clip-text text-transparent">
+                My Process
+              </span>
+            </h1>
+            <div
+              className="absolute -top-2 -right-2 text-yellow-400"
+              style={{
+                animation: 'spin 20s linear infinite'
+              }}
+            >
+              <Star size={24} fill="currentColor" />
+            </div>
+          </div>
           
           <p className="text-gray-300 text-base sm:text-xl leading-relaxed">
             Journey through the cosmos of development, from conception to stellar deployment

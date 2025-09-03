@@ -27,11 +27,8 @@ const Index = () => {
       {/* Dynamic Cosmic Elements */}
       <DynamicCosmicElements />
       
-      {/* Hero Section */}
+      {/* Solar System Hero with Products */}
       <SolarSystemHero />
-      
-      {/* Products Section */}
-      <ProductsSection />
       
       {/* About Section */}
       <section id="about" className="py-20 relative z-10">
