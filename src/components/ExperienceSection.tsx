@@ -243,12 +243,12 @@ const ExperienceSection = () => {
             </div>
             <div className="text-center glass-effect p-3 md:p-6 rounded-lg md:rounded-xl hover:scale-105 transition-transform duration-300 animate-[bounce-in_0.6s_ease-out]" style={{ animationDelay: '0.6s', animationFillMode: 'both' }}>
               <Users className="w-6 md:w-8 h-6 md:h-8 text-purple-500 mx-auto mb-1 md:mb-2" />
-              <div className="text-xl md:text-3xl font-bold text-white">100+</div>
+              <div className="text-xl md:text-3xl font-bold text-white">300+</div>
               <div className="text-gray-400 text-xs md:text-sm">Students Mentored</div>
             </div>
             <div className="text-center glass-effect p-3 md:p-6 rounded-lg md:rounded-xl hover:scale-105 transition-transform duration-300 animate-[bounce-in_0.6s_ease-out]" style={{ animationDelay: '0.8s', animationFillMode: 'both' }}>
               <Code className="w-6 md:w-8 h-6 md:h-8 text-pink-500 mx-auto mb-1 md:mb-2" />
-              <div className="text-xl md:text-3xl font-bold text-white">50+</div>
+              <div className="text-xl md:text-3xl font-bold text-white">70+</div>
               <div className="text-gray-400 text-xs md:text-sm">Projects Delivered</div>
             </div>
           </div>

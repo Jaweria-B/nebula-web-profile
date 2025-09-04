@@ -181,7 +181,7 @@ const ServicesSection = () => {
             <div className="text-gray-400">Response Time</div>
           </div>
           <div className="text-center glass-effect p-6 rounded-xl">
-            <div className="text-3xl font-bold text-white">50+</div>
+            <div className="text-3xl font-bold text-white">70+</div>
             <div className="text-gray-400">Projects Completed</div>
           </div>
           <div className="text-center glass-effect p-6 rounded-xl">

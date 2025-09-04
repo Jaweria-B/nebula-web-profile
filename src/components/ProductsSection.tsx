@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Star, Sparkles, Bot, Mail, Twitter, Mic, ArrowRight, Zap, Atom } from 'lucide-react';
+import { Star, Sparkles, Bot, Mail, Twitter, Mic, ArrowRight, Zap, Atom, Rocket } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const ProductsSection = () => {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -163,11 +164,28 @@ const ProductsSection = () => {
           </div>
           
           {/* Main Title */}
-          <h1 className="text-5xl lg:text-7xl font-bold mb-6 text-center">
-            <span className="bg-gradient-to-r from-white via-blue-200 to-purple-300 bg-clip-text text-transparent">
-              My Product Universe
-            </span>
-          </h1>
+          <div className="relative inline-block">
+            <h1 className="text-5xl lg:text-7xl font-bold mb-6 text-center">
+              <span className="bg-gradient-to-r from-white via-blue-200 to-purple-300 bg-clip-text text-transparent">
+                My Product Universe
+              </span>
+            </h1>
+            <motion.div
+              className="absolute -top-2 -right-8 text-yellow-400"
+              animate={{ 
+                rotate: 360,
+                y: [0, -10, 0],
+                x: [0, 5, 0]
+              }}
+              transition={{ 
+                rotate: { duration: 20, repeat: Infinity, ease: "linear" },
+                y: { duration: 3, repeat: Infinity, ease: "easeInOut" },
+                x: { duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }
+              }}
+            >
+              <Rocket size={32} fill="currentColor" />
+            </motion.div>
+          </div>
           
           <p className="text-xl md:text-2xl text-slate-300 max-w-5xl mx-auto leading-relaxed opacity-90" style={{animation: 'fadeInUp 1s ease-out 0.5s both'}}>
             Discover my constellation of intelligent tools designed to automate, enhance, 

@@ -39,12 +39,12 @@ const Index = () => {
               I'm a passionate software engineer and freelancer with 3+ years of experience in crafting 
               digital experiences that span across Web Development, Machine Learning, and AI Agents. 
               My journey has taken me from mentoring at Stanford Code in Place to leading tech teams 
-              and delivering 50+ successful projects.
+              and delivering 70+ successful projects.
             </p>
             <div className="glass-effect rounded-2xl p-8 nebula-glow">
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div className="text-center transform hover:scale-105 transition-transform duration-300">
-                  <div className="text-4xl font-bold text-blue-400 mb-2">50+</div>
+                  <div className="text-4xl font-bold text-blue-400 mb-2">70+</div>
                   <div className="text-gray-300">Projects Completed</div>
                 </div>
                 <div className="text-center transform hover:scale-105 transition-transform duration-300">
@@ -52,7 +52,7 @@ const Index = () => {
                   <div className="text-gray-300">Companies & Roles</div>
                 </div>
                 <div className="text-center transform hover:scale-105 transition-transform duration-300">
-                  <div className="text-4xl font-bold text-purple-400 mb-2">100+</div>
+                  <div className="text-4xl font-bold text-purple-400 mb-2">300+</div>
                   <div className="text-gray-300">Students Mentored</div>
                 </div>
               </div>

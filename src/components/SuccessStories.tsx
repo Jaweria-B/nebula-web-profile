@@ -280,7 +280,7 @@ const SuccessStories: React.FC = () => {
             <div className="text-gray-300">Lessons Taught</div>
           </div>
           <div className="text-center p-6 rounded-2xl bg-gradient-to-br from-cyan-900/30 to-emerald-900/30 border border-white/10 backdrop-blur-sm">
-            <div className="text-3xl font-bold text-white mb-2">100+</div>
+            <div className="text-3xl font-bold text-white mb-2">50+</div>
             <div className="text-gray-300">Students Mentored</div>
           </div>
           <div className="text-center p-6 rounded-2xl bg-gradient-to-br from-pink-900/30 to-purple-900/30 border border-white/10 backdrop-blur-sm">
