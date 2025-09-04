@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, Mic, Twitter, Star, Sparkles, Bot, ArrowRight, Zap, Atom, Rocket } from 'lucide-react';
+import { Mail, Mic, Twitter, Star, Sparkles, Bot, ArrowRight, Zap, Atom } from 'lucide-react';
+import { Rocket } from 'lucide-react';
 const SolarSystemHero = () => {
   const [stars, setStars] = useState<Array<{ id: number; left: string; top: string; size: string; delay: string }>>([]);
   const [hoveredCard, setHoveredCard] = useState(null);
