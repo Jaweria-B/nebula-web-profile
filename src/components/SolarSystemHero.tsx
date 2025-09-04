@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Mail, Mic, Twitter, Star, Sparkles, Bot, ArrowRight, Zap, Atom } from 'lucide-react';
+import { Mail, Mic, Twitter, Star, Sparkles, Bot, ArrowRight, Zap, Atom, Rocket } from 'lucide-react';
 const SolarSystemHero = () => {
   const [stars, setStars] = useState<Array<{ id: number; left: string; top: string; size: string; delay: string }>>([]);
   const [hoveredCard, setHoveredCard] = useState(null);
@@ -198,12 +198,12 @@ const SolarSystemHero = () => {
               </span>
             </h2>
             <div
-              className="absolute -top-2 -right-2 text-yellow-400"
+              className="absolute -top-2 -right-2 text-blue-400"
               style={{
-                animation: 'spin 20s linear infinite'
+                animation: 'spin 15s linear infinite'
               }}
             >
-              <Star size={24} fill="currentColor" />
+              <Rocket size={24} fill="currentColor" />
             </div>
           </div>
           <p className="text-xl md:text-2xl text-slate-300 max-w-5xl mx-auto leading-relaxed opacity-90" style={{animation: 'fadeInUp 1s ease-out 0.5s both'}}>

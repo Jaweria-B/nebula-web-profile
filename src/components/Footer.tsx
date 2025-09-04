@@ -1,7 +1,14 @@
 
 import React from 'react';
-import { Github, Linkedin, Mail, Heart, Rocket, Star, MessageCircle, Globe } from 'lucide-react';
+import { Github, Linkedin, Mail, Heart, Rocket, Star, Globe } from 'lucide-react';
 import { Link } from 'react-router-dom';
+
+const DiscordIcon = (props: React.SVGProps<SVGSVGElement>) => (
+  <svg viewBox="0 0 245 240" {...props} xmlns="http://www.w3.org/2000/svg" fill="currentColor">
+    <path d="M104.4 104.8c-5.7 0-10.2 5-10.2 11.1 0 6.1 4.6 11.1 10.2 11.1 5.7 0 10.3-5 10.2-11.1 0-6.1-4.6-11.1-10.2-11.1zm36.3 0c-5.7 0-10.2 5-10.2 11.1 0 6.1 4.6 11.1 10.2 11.1 5.7 0 10.3-5 10.2-11.1 0-6.1-4.6-11.1-10.2-11.1z" />
+    <path d="M189.5 20H55.5C33.6 20 16 36.8 16 59.3v121.4c0 22.5 17.6 39.3 39.5 39.3h107.7l-5.1-17.6 12.4 10.9 11.1 9.7 19.9 17.4V59.3C229.9 36.8 212.3 20 190.5 20zM161.7 170.7s-8.1-9.6-14.9-18.2c29.6-8.3 41-26.7 41-26.7-9.4 6.3-18.3 10.5-26.6 13.5-11.6 4.2-22.7 6.9-33.3 8.6-21 3.5-40.2 2.7-57.1-.1-12.6-2-23.4-4.9-32.4-8.6-3.3-1.2-6.9-2.6-10.5-4.2-0.4-0.2-0.7-0.4-1-0.6-0.2-0.1-0.3-0.2-0.5-0.3 0 0 11.2 18.3 40.1 26.6-6.5 8.5-14.9 18.6-14.9 18.6-49.2-1.6-67.8-33.9-67.8-33.9 0-72.1 32.2-130.6 32.2-130.6C57.6 22.4 82.6 21 82.6 21l3.2 3.8c-53.5 15.5-78.2 38.9-78.2 38.9s14.9-8.3 40.2-18.1c0 0 25.3-10.7 53.6-14.4 0 0 3.9-0.8 10.4-1.7 19.4-3.4 44.5-4.9 73.7 1.6 0 0 32.2 7.4 63.1 29.2 0 0-18.7 32.7-67.7 34.3z" />
+  </svg>
+);
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -63,12 +70,12 @@ const Footer = () => {
                 <Mail className="w-5 h-5" />
               </a>
               <a 
-                href="https://discord.gg/your-discord"
+                href="https://discordapp.com/users/1036991829138223104"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-12 h-12 glass-effect rounded-full flex items-center justify-center text-purple-400 hover:text-white hover:bg-purple-500/20 transition-all duration-300 hover:scale-110"
+                className="w-12 h-12 glass-effect rounded-full flex items-center justify-center text-indigo-300 hover:text-white hover:bg-indigo-500/20 transition-all duration-300 hover:scale-110"
               >
-                <MessageCircle className="w-5 h-5" />
+                <DiscordIcon className="w-5 h-5" />
               </a>
               <a 
                 href="https://www.bigbangblog.pk/"
@@ -131,33 +138,34 @@ const Footer = () => {
             </div>
             <div className="flex items-center gap-2">
               <Rocket className="w-5 h-5 text-blue-400" />
-              <span className="text-white font-semibold">50+ Projects Delivered</span>
+              <span className="text-white font-semibold">70+ Projects Delivered</span>
             </div>
             <div className="flex items-center gap-2">
               <Heart className="w-5 h-5 text-red-400" />
-              <span className="text-white font-semibold">100% Client Satisfaction</span>
+              <span className="text-white font-semibold">200+ Students Mentored</span>
             </div>
           </div>
         </div>
 
         {/* Bottom Section */}
-        <div className="flex flex-col md:flex-row items-center justify-between pt-8 border-t border-white/10">
-          <div className="flex items-center gap-2 text-gray-400 mb-4 md:mb-0">
+        <div className="flex flex-col lg:flex-row items-center justify-between pt-8 border-t border-white/10 gap-4">
+          <div className="flex items-center gap-2 text-gray-400 text-center lg:text-left">
             <span>© {currentYear} Jaweria Batool. Crafted with</span>
             <Heart className="w-4 h-4 text-red-400 animate-pulse" />
             <span>and stellar code.</span>
           </div>
           
-          <div className="flex items-center gap-6 text-sm text-gray-400">
+          <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6 text-sm text-gray-400 text-center">
             <span className="hover:text-blue-400 cursor-pointer transition-colors duration-300">
               Privacy Policy
             </span>
             <span className="hover:text-blue-400 cursor-pointer transition-colors duration-300">
               Terms of Service  
             </span>
-            <span className="flex items-center gap-1">
-              <span>Made with React & Tailwind</span>
-              <Rocket className="w-4 h-4 text-blue-400" />
+            <span className="flex items-center gap-1 text-blue-300/80">
+              <Star className="w-4 h-4 text-yellow-400" />
+              <span>"Code is poetry written for machines to dance"</span>
+              <Star className="w-4 h-4 text-yellow-400" />
             </span>
           </div>
         </div>

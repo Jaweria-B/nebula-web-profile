@@ -50,7 +50,7 @@ const experiences: Experience[] = [
     position: "Frontend Developer",
     duration: "Jun 2024 - Aug 2024", 
     location: "Remote",
-    type: "Internship",
+    type: "Development",
     description: [
       "Built responsive web interfaces using JavaScript frameworks",
       "Implemented UI/UX improvements for enhanced user experience",

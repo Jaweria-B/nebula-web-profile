@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { PhoneCall, Lightbulb, Code2, ShieldCheck, Rocket, Stars, Sparkles, Star } from "lucide-react";
+import { PhoneCall, Lightbulb, Code2, ShieldCheck, Rocket, Stars, Sparkles, Star, Zap } from "lucide-react";
 
 const steps = [
   {
@@ -193,12 +193,12 @@ const MyProcessSection: React.FC = () => {
               </span>
             </h1>
             <div
-              className="absolute -top-2 -right-2 text-yellow-400"
+              className="absolute -top-2 -right-2 text-purple-400"
               style={{
-                animation: 'spin 20s linear infinite'
+                animation: 'bounce 2s ease-in-out infinite'
               }}
             >
-              <Star size={24} fill="currentColor" />
+              <Zap size={24} fill="currentColor" />
             </div>
           </div>
           
