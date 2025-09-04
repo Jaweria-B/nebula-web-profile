@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Github, Linkedin, Mail, Heart, Rocket, Star } from 'lucide-react';
+import { Github, Linkedin, Mail, Heart, Rocket, Star, MessageCircle, Globe } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Footer = () => {
@@ -61,6 +61,22 @@ const Footer = () => {
                 className="w-12 h-12 glass-effect rounded-full flex items-center justify-center text-green-400 hover:text-white hover:bg-green-500/20 transition-all duration-300 hover:scale-110"
               >
                 <Mail className="w-5 h-5" />
+              </a>
+              <a 
+                href="https://discord.gg/your-discord"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-12 h-12 glass-effect rounded-full flex items-center justify-center text-purple-400 hover:text-white hover:bg-purple-500/20 transition-all duration-300 hover:scale-110"
+              >
+                <MessageCircle className="w-5 h-5" />
+              </a>
+              <a 
+                href="https://www.bigbangblog.pk/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-12 h-12 glass-effect rounded-full flex items-center justify-center text-pink-400 hover:text-white hover:bg-pink-500/20 transition-all duration-300 hover:scale-110"
+              >
+                <Globe className="w-5 h-5" />
               </a>
             </div>
           </div>

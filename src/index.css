@@ -256,6 +256,38 @@
   background: #facc15; 
   --orbit-radius: 200px;
   animation: orbit 70s linear infinite;
+  position: relative;
+}
+
+.saturn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 32px;
+  height: 32px;
+  border: 2px solid rgba(250, 204, 21, 0.6);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: ring-rotate 15s linear infinite;
+}
+
+.saturn::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 26px;
+  height: 26px;
+  border: 1px solid rgba(250, 204, 21, 0.4);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  animation: ring-rotate 10s linear infinite reverse;
+}
+
+@keyframes ring-rotate {
+  0% { transform: translate(-50%, -50%) rotate(0deg) scaleY(0.3); }
+  100% { transform: translate(-50%, -50%) rotate(360deg) scaleY(0.3); }
 }
 
 .uranus { 
