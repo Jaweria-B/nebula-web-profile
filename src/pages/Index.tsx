@@ -11,6 +11,7 @@ import MyProcessSection from '../components/MyProcessSection';
 import FreelanceShowcase from '../components/FreelanceShowcase';
 import ProductsSection from '../components/ProductsSection';
 import SuccessStories from '../components/SuccessStories';
+import ReviewsSection from '../components/ReviewsSection';
 
 const Index = () => {
   useEffect(() => {
@@ -73,6 +74,9 @@ const Index = () => {
 
       {/* Success Stories Section */}
       <SuccessStories />
+
+      {/* Approved reviews from the /feedback page (hidden until there are some) */}
+      <ReviewsSection />
 
       {/* Experience Section */}
       <ExperienceSection />
