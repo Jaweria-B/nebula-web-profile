@@ -23,7 +23,7 @@ the homepage. Answers are saved to a Google Sheet you own. Only rows you tick as
 
 ## 2. Connect the website (Vercel)
 
-1. In Vercel, open the **jaweria-batool** project > **Settings > Environment Variables**.
+1. In Vercel, open the **nebula-web-profile** project > **Settings > Environment Variables**.
 2. Add `VITE_FEEDBACK_ENDPOINT` with the `/exec` URL you copied, for all environments.
 3. Go to **Deployments**, open the latest one and click **Redeploy**.
 
