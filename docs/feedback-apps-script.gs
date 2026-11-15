@@ -35,7 +35,7 @@ function getSheet_() {
   if (!sheet) {
     sheet = ss.insertSheet(SHEET_NAME);
     sheet.appendRow(["Timestamp", "Name", "Role", "Rating", "Message", "Session type", "Approved"]);
-    sheet.getRange("G2:G").insertCheckboxes();
+    sheet.setFrozenRows(1);
   }
   return sheet;
 }
@@ -59,18 +59,36 @@ function doPost(e) {
 function saveFeedback_(p) {
   const clean = (v, max) => String(v || "").trim().slice(0, max);
   const rating = Math.max(1, Math.min(5, parseInt(p.rating, 10) || 0));
-  const sheet = getSheet_();
-  sheet.appendRow([
-    new Date(),
-    clean(p.name, 100),
-    clean(p.role, 150),
-    rating,
-    clean(p.message, 2000),
-    clean(p.sessionType, 50),
-    false,
-  ]);
-  sheet.getRange(sheet.getLastRow(), 7).insertCheckboxes();
+  const lock = LockService.getScriptLock();
+  lock.waitLock(10000);
+  try {
+    const sheet = getSheet_();
+    const row = nextEmptyRow_(sheet);
+    sheet.getRange(row, 1, 1, 7).setValues([[
+      new Date(),
+      clean(p.name, 100),
+      clean(p.role, 150),
+      rating,
+      clean(p.message, 2000),
+      clean(p.sessionType, 50),
+      false,
+    ]]);
+    sheet.getRange(row, 7).insertCheckboxes();
+  } finally {
+    lock.releaseLock();
+  }
   return { ok: true };
+}
+
+// The row just below the last answer. Empty rows that only hold an unticked
+// checkbox don't count, so new answers never land far down the sheet.
+function nextEmptyRow_(sheet) {
+  const last = sheet.getLastRow();
+  if (last < 2) return 2;
+  const stamps = sheet.getRange(1, 1, last, 1).getValues();
+  let row = last;
+  while (row > 1 && stamps[row - 1][0] === "") row--;
+  return row + 1;
 }
 
 // Returns only the approved reviews, newest first, for the website.
@@ -87,7 +105,7 @@ function doGet() {
 function approvedReviews_() {
   const rows = getSheet_().getDataRange().getValues().slice(1);
   const reviews = rows
-    .filter((r) => r[6] === true)
+    .filter((r) => r[6] === true && String(r[4]).trim() !== "")
     .reverse()
     .map((r) => ({
       name: String(r[1]),
