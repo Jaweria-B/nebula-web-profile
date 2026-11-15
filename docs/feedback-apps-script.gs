@@ -7,6 +7,10 @@
  * Timestamp | Name | Role | Rating | Message | Session type | Approved
  */
 const SHEET_NAME = "Feedback";
+// Only needed if this script was NOT created from the sheet's
+// Extensions > Apps Script menu: paste the sheet's ID here (the long code in
+// the sheet's address between /d/ and /edit).
+const SHEET_ID = "";
 
 // ---- Automatic feedback emails (optional) ----
 // Your website's feedback page:
@@ -18,7 +22,15 @@ const SESSION_TYPES = ["Mentoring", "Collaboration", "Consultation"];
 const YOUR_NAME = "Jaweria";
 
 function getSheet_() {
-  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const ss =
+    SpreadsheetApp.getActiveSpreadsheet() ||
+    (SHEET_ID ? SpreadsheetApp.openById(SHEET_ID) : null);
+  if (!ss) {
+    throw new Error(
+      "This script isn't linked to a Google Sheet. Create it from the sheet " +
+        "(Extensions > Apps Script) or set SHEET_ID at the top."
+    );
+  }
   let sheet = ss.getSheetByName(SHEET_NAME);
   if (!sheet) {
     sheet = ss.insertSheet(SHEET_NAME);
@@ -28,9 +40,23 @@ function getSheet_() {
   return sheet;
 }
 
+function json_(obj) {
+  return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(
+    ContentService.MimeType.JSON
+  );
+}
+
 // Saves a new feedback submission. New rows start unapproved.
 function doPost(e) {
-  const p = (e && e.parameter) || {};
+  try {
+    return json_(saveFeedback_((e && e.parameter) || {}));
+  } catch (err) {
+    console.error(err);
+    return json_({ ok: false, error: String(err && err.message ? err.message : err) });
+  }
+}
+
+function saveFeedback_(p) {
   const clean = (v, max) => String(v || "").trim().slice(0, max);
   const rating = Math.max(1, Math.min(5, parseInt(p.rating, 10) || 0));
   const sheet = getSheet_();
@@ -44,12 +70,21 @@ function doPost(e) {
     false,
   ]);
   sheet.getRange(sheet.getLastRow(), 7).insertCheckboxes();
-  return ContentService.createTextOutput(JSON.stringify({ ok: true }))
-    .setMimeType(ContentService.MimeType.JSON);
+  return { ok: true };
 }
 
 // Returns only the approved reviews, newest first, for the website.
+// Open the /exec URL in a browser to check the setup: it should show
+// {"reviews":[...]} or an error explaining what's wrong.
 function doGet() {
+  try {
+    return json_({ reviews: approvedReviews_() });
+  } catch (err) {
+    return json_({ reviews: [], error: String(err && err.message ? err.message : err) });
+  }
+}
+
+function approvedReviews_() {
   const rows = getSheet_().getDataRange().getValues().slice(1);
   const reviews = rows
     .filter((r) => r[6] === true)
@@ -61,8 +96,7 @@ function doGet() {
       message: String(r[4]),
       sessionType: String(r[5]),
     }));
-  return ContentService.createTextOutput(JSON.stringify({ reviews }))
-    .setMimeType(ContentService.MimeType.JSON);
+  return reviews;
 }
 
 // Runs every 15 minutes (after you run setupTrigger once). Finds tagged

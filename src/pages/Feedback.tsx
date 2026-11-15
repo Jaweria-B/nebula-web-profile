@@ -274,13 +274,23 @@ export default function FeedbackPage() {
         message: message.trim(),
         sessionType,
       });
-      // Apps Script doesn't send CORS headers for POST, so the response is
-      // opaque; a network failure still throws and is handled below.
-      await fetch(FEEDBACK_ENDPOINT, { method: "POST", mode: "no-cors", body });
+      // A form-encoded POST is a "simple" request, and Apps Script's reply
+      // (after its redirect) is readable, so we can confirm it was saved.
+      const res = await fetch(FEEDBACK_ENDPOINT, { method: "POST", body });
+      const data = (await res.json().catch(() => null)) as {
+        ok?: boolean;
+        error?: string;
+      } | null;
+      if (!data?.ok) {
+        throw new Error(data?.error || `Unexpected response (${res.status})`);
+      }
       setSent(true);
       window.scrollTo({ top: 0, behavior: "smooth" });
-    } catch {
-      setError("Something went wrong sending your feedback. Please try again.");
+    } catch (err) {
+      console.error("Feedback was not saved:", err);
+      setError(
+        "Sorry, your feedback couldn't be saved. Please try again in a moment.",
+      );
     } finally {
       setSending(false);
     }
