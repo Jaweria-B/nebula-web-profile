@@ -60,3 +60,17 @@ open the form with that rating already chosen.
 - Session types: `SESSION_TYPES` in `src/lib/feedback.ts`.
 - If you edit the Apps Script later, use **Deploy > Manage deployments > Edit >
   New version** so the same URL keeps working.
+
+## If answers don't reach the sheet
+
+1. Open your `/exec` URL in a browser. It should show `{"reviews":[]}`.
+   - If it shows a Google sign-in page or "access denied", edit the deployment
+     and set **Who has access** to **Anyone**.
+   - If it shows an error about the script not being linked to a sheet, the
+     script was created at script.google.com instead of from the sheet. Paste
+     the sheet's ID (the long code in its address between `/d/` and `/edit`)
+     into `SHEET_ID` at the top of the script, then deploy a new version.
+2. Look in the **Feedback** tab of the sheet, not **Sheet1**.
+3. In the Apps Script editor, open **Executions** to see any `doPost` errors.
+4. If the website says the form "isn't connected yet", `VITE_FEEDBACK_ENDPOINT`
+   is missing in Vercel or the site wasn't redeployed after adding it.
