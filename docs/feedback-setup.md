@@ -70,7 +70,10 @@ open the form with that rating already chosen.
      script was created at script.google.com instead of from the sheet. Paste
      the sheet's ID (the long code in its address between `/d/` and `/edit`)
      into `SHEET_ID` at the top of the script, then deploy a new version.
-2. Look in the **Feedback** tab of the sheet, not **Sheet1**.
+2. Look in the **Feedback** tab of the sheet, not **Sheet1**. If the tab looks
+   empty, click cell A1 and press Ctrl+Down (Cmd+Down on a Mac) to jump to the
+   last answer. Earlier versions of the script saved answers below row 1000;
+   delete the empty rows above them to bring them to the top.
 3. In the Apps Script editor, open **Executions** to see any `doPost` errors.
 4. If the website says the form "isn't connected yet", `VITE_FEEDBACK_ENDPOINT`
    is missing in Vercel or the site wasn't redeployed after adding it.
