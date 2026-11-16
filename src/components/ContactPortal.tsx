@@ -12,6 +12,7 @@ import {
   Rocket,
   Globe
 } from 'lucide-react';
+import { FEEDBACK_ENDPOINT, SESSION_TYPES } from '@/lib/feedback';
 
 const DISCORD_INVITE = 'https://discordapp.com/users/1036991829138223104'; 
 
@@ -28,15 +29,20 @@ const ContactPortal: React.FC = () => {
 
   const [activeMethod, setActiveMethod] = useState<string | null>(null);
   const [showScheduler, setShowScheduler] = useState(false);
-  const [scheduleForm, setScheduleForm] = useState({
+  const emptySchedule = {
     name: '',
     email: '',
+    role: '',
+    sessionType: 'Mentoring',
     date: '',
     time: '',
     duration: '15-30 min',
     message: ''
-  });
-  const [sentConfirm, setSentConfirm] = useState(false);
+  };
+  const [scheduleForm, setScheduleForm] = useState(emptySchedule);
+  const [sentConfirm, setSentConfirm] = useState<string | null>(null);
+  const [scheduleError, setScheduleError] = useState('');
+  const [scheduleSending, setScheduleSending] = useState(false);
 
   // first row: 4 items; second row: 2 items
   const firstRow = [
@@ -71,8 +77,8 @@ const ContactPortal: React.FC = () => {
       id: 'calendar',
       icon: <Calendar className="w-6 h-6" />,
       title: 'Schedule Call',
-      subtitle: '15-30 min consultation',
-      description: 'Book a free consultation call (I will reply with a confirmed time)',
+      subtitle: 'Mentoring, collaboration or consultation',
+      description: 'Book a free call. I will confirm by email with a calendar invite',
       action: 'schedule',
       color: 'from-green-500 to-emerald-500'
     }
@@ -115,27 +121,52 @@ const ContactPortal: React.FC = () => {
     setScheduleForm((s) => ({ ...s, [e.target.name]: e.target.value }));
   }
 
-  function submitSchedule(e?: React.FormEvent) {
+  function finishSchedule(message: string) {
+    setSentConfirm(message);
+    setShowScheduler(false);
+    setScheduleForm(emptySchedule);
+    setTimeout(() => setSentConfirm(null), 6000);
+  }
+
+  // Fallback when the booking backend isn't reachable: open an email instead,
+  // so no request is lost.
+  function emailSchedule() {
+    const f = scheduleForm;
+    const subject = encodeURIComponent(`${f.sessionType} request`);
+    const body = encodeURIComponent(
+      `Hi Jaweria,\n\nI'd like to schedule a ${f.duration} ${f.sessionType.toLowerCase()} session.\n\nName: ${f.name}\nEmail: ${f.email}\nRole: ${f.role}\nPreferred Date: ${f.date}\nPreferred Time: ${f.time}\nMessage: ${f.message}\n\nPlease confirm a slot that works for you.\n\nThanks!`
+    );
+    window.open(`mailto:${OWNER_EMAIL}?subject=${subject}&body=${body}`, '_blank', 'noopener,noreferrer');
+    finishSchedule('Scheduling request opened in your email app. Please send it to complete.');
+  }
+
+  async function submitSchedule(e?: React.FormEvent) {
     if (e) e.preventDefault();
-    // minimal validation
-    if (!scheduleForm.name || !scheduleForm.email || !scheduleForm.date || !scheduleForm.time) {
-      alert('Please fill name, email, date and time so I can confirm the call.');
+    const f = scheduleForm;
+    if (!f.name.trim() || !f.email.trim() || !f.date || !f.time) {
+      setScheduleError('Please fill in your name, email, date and time.');
       return;
     }
+    setScheduleError('');
+    if (!FEEDBACK_ENDPOINT) return emailSchedule();
 
-    const subject = encodeURIComponent('Schedule Call Request');
-    const body = encodeURIComponent(
-      `Hi Jaweria,\n\nI'd like to schedule a ${scheduleForm.duration} consultation.\n\nName: ${scheduleForm.name}\nEmail: ${scheduleForm.email}\nPreferred Date: ${scheduleForm.date}\nPreferred Time: ${scheduleForm.time}\nMessage: ${scheduleForm.message}\n\nPlease confirm a slot that works for you.\n\nThanks!`
-    );
-
-    const mailto = `mailto:${OWNER_EMAIL}?subject=${subject}&body=${body}`;
-    window.open(mailto, '_blank', 'noopener,noreferrer');
-
-    setSentConfirm(true);
-    setShowScheduler(false);
-    // reset form
-    setScheduleForm({ name: '', email: '', date: '', time: '', duration: '15-30 min', message: '' });
-    setTimeout(() => setSentConfirm(false), 4000);
+    setScheduleSending(true);
+    try {
+      const body = new URLSearchParams({
+        kind: 'booking',
+        ...f,
+        tz: Intl.DateTimeFormat().resolvedOptions().timeZone || ''
+      });
+      const res = await fetch(FEEDBACK_ENDPOINT, { method: 'POST', body });
+      const data = (await res.json().catch(() => null)) as { ok?: boolean; error?: string } | null;
+      if (!data?.ok) throw new Error(data?.error || `Unexpected response (${res.status})`);
+      finishSchedule("Request sent! I'll confirm by email with a calendar invite.");
+    } catch (err) {
+      console.error('Booking request was not saved:', err);
+      setScheduleError("Sorry, that didn't go through. Please try again, or email me directly.");
+    } finally {
+      setScheduleSending(false);
+    }
   }
 
   return (
@@ -300,8 +331,8 @@ const ContactPortal: React.FC = () => {
             onSubmit={submitSchedule}
             className="relative z-70 w-full max-w-xl bg-slate-900/95 border border-white/10 rounded-2xl p-6 md:p-8 shadow-2xl"
           >
-            <h3 className="text-xl font-semibold mb-2">Request a 15–30 min call</h3>
-            <p className="text-sm text-gray-400 mb-4">Fill the details below and I'll confirm a slot via email.</p>
+            <h3 className="text-xl font-semibold mb-2">Request a session</h3>
+            <p className="text-sm text-gray-400 mb-4">Pick a time that suits you. I'll confirm by email and send a calendar invite with the meeting link.</p>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
               <input
@@ -313,12 +344,20 @@ const ContactPortal: React.FC = () => {
                 required
               />
               <input
+                type="email"
                 name="email"
                 value={scheduleForm.email}
                 onChange={handleScheduleChange}
                 placeholder="Your email"
                 className="px-3 py-2 rounded-md bg-black/60 border border-white/10 text-white"
                 required
+              />
+              <input
+                name="role"
+                value={scheduleForm.role}
+                onChange={handleScheduleChange}
+                placeholder="Your role, e.g. Student or Developer at Acme"
+                className="px-3 py-2 rounded-md bg-black/60 border border-white/10 text-white md:col-span-2"
               />
               <input
                 type="date"
@@ -338,7 +377,18 @@ const ContactPortal: React.FC = () => {
               />
             </div>
 
-            <div className="mt-3">
+            <div className="mt-3 grid grid-cols-1 md:grid-cols-2 gap-3">
+              <select
+                name="sessionType"
+                value={scheduleForm.sessionType}
+                onChange={handleScheduleChange}
+                aria-label="Session type"
+                className="w-full px-3 py-2 rounded-md bg-black/60 border border-white/10 text-white"
+              >
+                {SESSION_TYPES.map((t) => (
+                  <option key={t}>{t}</option>
+                ))}
+              </select>
               <select
                 name="duration"
                 value={scheduleForm.duration}
@@ -359,12 +409,20 @@ const ContactPortal: React.FC = () => {
               rows={4}
             />
 
+            {scheduleError && (
+              <p role="alert" className="mt-3 text-sm text-red-400">{scheduleError}</p>
+            )}
+
             <div className="flex items-center justify-end gap-3 mt-4">
               <button type="button" onClick={() => setShowScheduler(false)} className="px-4 py-2 rounded-md bg-white/5">
                 Cancel
               </button>
-              <button type="submit" className="px-4 py-2 rounded-md bg-gradient-to-r from-green-500 to-emerald-500 text-black font-semibold">
-                Send Request
+              <button
+                type="submit"
+                disabled={scheduleSending}
+                className="px-4 py-2 rounded-md bg-gradient-to-r from-green-500 to-emerald-500 text-black font-semibold disabled:opacity-60"
+              >
+                {scheduleSending ? 'Sending…' : 'Send Request'}
               </button>
             </div>
           </form>
@@ -374,7 +432,7 @@ const ContactPortal: React.FC = () => {
       {/* small confirmation toast */}
       {sentConfirm && (
         <div className="fixed right-6 bottom-6 z-60 bg-green-600 text-black px-4 py-2 rounded-md shadow-lg">
-          Scheduling request opened in your email client — please send to complete.
+          {sentConfirm}
         </div>
       )}
     </section>

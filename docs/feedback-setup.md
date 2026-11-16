@@ -55,6 +55,35 @@ the meeting's scheduled end time. Each guest is emailed once per meeting.
 Meetings without the tag are ignored. The email has five clickable stars that
 open the form with that rating already chosen.
 
+## 5. Booking requests from the website
+
+The "Schedule Call" form now saves requests to the same sheet and emails you.
+
+**One-time setup** (in the Apps Script editor, after pasting the latest script):
+
+1. On the left, click **Services** (the + next to it), choose **Google Calendar API**,
+   and click **Add**. This lets the script add a Google Meet link to each meeting.
+   (Without it, set `MEET_LINK` at the top of the script to your own reusable Meet link.)
+2. Choose **setupTrigger** in the function dropdown and click **Run**. Allow the
+   permissions. This creates the **Requests** tab.
+3. **Deploy > Manage deployments >** pencil icon **> Version: New version > Deploy**.
+
+**How it works:**
+
+1. Someone sends a request. It appears in the **Requests** tab as *Pending*, they get a
+   "got your request" email, and you get an email with a **Review and approve** button.
+2. On the review page you can change the date, time and length, then click
+   **Approve and send invite**. A Google Calendar event with a Meet link is created, and
+   they get a confirmation email plus the calendar invite. Or click **Decline**, with an
+   optional note.
+3. About 15 minutes after the meeting ends, they get the feedback email. The form opens
+   with their name, role and session type filled in, and their answer is saved with their
+   email and booking ID.
+
+**A booking that didn't come through the website:** type a row into the Requests tab
+with at least Name, Email, Role and Session type, and put **[Session]** in the calendar
+event's title with them as a guest. The feedback email will use those details.
+
 ## Changing things
 
 - Session types: `SESSION_TYPES` in `src/lib/feedback.ts`.

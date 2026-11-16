@@ -273,6 +273,9 @@ export default function FeedbackPage() {
         rating: String(rating),
         message: message.trim(),
         sessionType,
+        // Links from the after-meeting email carry the booking, so the
+        // answer is matched to the person who booked.
+        booking: params.get("b") ?? "",
       });
       // A form-encoded POST is a "simple" request, and Apps Script's reply
       // (after its redirect) is readable, so we can confirm it was saved.
