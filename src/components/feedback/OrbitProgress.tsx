@@ -36,8 +36,18 @@ const PLANETS: Planet[] = [
  * Progress shown as a small planetary system: a comet travels along the
  * orbit line and each planet lights up as its question is reached.
  */
-export default function OrbitProgress({ step }: { step: number }) {
-  const pct = (step / (PLANETS.length - 1)) * 100;
+export default function OrbitProgress({
+  step,
+  labels,
+}: {
+  step: number;
+  /** Only these planets are shown, e.g. when some answers came from the link. */
+  labels?: string[];
+}) {
+  const planets = labels
+    ? PLANETS.filter((p) => labels.includes(p.label))
+    : PLANETS;
+  const pct = (step / Math.max(1, planets.length - 1)) * 100;
 
   return (
     <div className="relative px-6 pb-6 pt-3">
@@ -56,7 +66,7 @@ export default function OrbitProgress({ step }: { step: number }) {
       </div>
 
       <div className="relative flex items-start justify-between">
-        {PLANETS.map((p, i) => {
+        {planets.map((p, i) => {
           const reached = i <= step;
           const current = i === step;
           return (

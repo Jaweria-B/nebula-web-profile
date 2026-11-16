@@ -20,6 +20,13 @@ import { FEEDBACK_ENDPOINT, SESSION_TYPES } from "@/lib/feedback";
 
 type StepId = "name" | "role" | "type" | "rating" | "message";
 const STEPS: StepId[] = ["name", "role", "type", "rating", "message"];
+const PLANET_LABEL: Record<StepId, string> = {
+  name: "Name",
+  role: "Role",
+  type: "Session",
+  rating: "Rating",
+  message: "Review",
+};
 
 /**
  * Space-themed question transitions. Every question leaves by spiralling into
@@ -179,9 +186,20 @@ export default function FeedbackPage() {
   const [params] = useSearchParams();
   const [step, setStep] = useState(0);
   const [dir, setDir] = useState(1);
-  const [name, setName] = useState("");
-  const [role, setRole] = useState("");
-  const [sessionType, setSessionType] = useState("");
+  // Pre-fill from the link, e.g. /feedback?name=Ali&role=Student&type=Mentoring
+  const [name, setName] = useState(() => params.get("name")?.trim() ?? "");
+  const [role, setRole] = useState(() => params.get("role")?.trim() ?? "");
+  const [sessionType, setSessionType] = useState(
+    () => params.get("type")?.trim() ?? "",
+  );
+  // Questions already answered by the link aren't asked again. Name and role
+  // can be reopened from the small "Feedback from ..." line.
+  const [skipped, setSkipped] = useState<StepId[]>(() =>
+    (["name", "role", "type"] as const).filter((k) =>
+      params.get(k)?.trim(),
+    ),
+  );
+  const steps = STEPS.filter((s) => !skipped.includes(s));
   const [rating, setRating] = useState(0);
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
@@ -198,19 +216,15 @@ export default function FeedbackPage() {
     return () => clearTimeout(t);
   }, []);
 
-  // Pre-fill from the link, e.g. /feedback?name=Ali&type=Mentoring&rating=5
+  // A star clicked in the email arrives as ?rating=N.
   useEffect(() => {
-    const q = (k: string) => params.get(k) ?? "";
-    if (q("name")) setName(q("name"));
-    if (q("role")) setRole(q("role"));
-    if (q("type")) setSessionType(q("type"));
-    const r = Number(q("rating"));
+    const r = Number(params.get("rating"));
     if (Number.isInteger(r) && r >= 1 && r <= 5) setRating(r);
   }, [params]);
 
   useEffect(() => () => clearTimeout(advanceTimer.current), []);
 
-  const current = STEPS[step]!;
+  const current = steps[Math.min(step, steps.length - 1)]!;
 
   // Focus the text box once a question has landed, without scrolling the
   // page while it is still flying in.
@@ -222,10 +236,11 @@ export default function FeedbackPage() {
     );
     return () => clearTimeout(t);
   }, [current, ready]);
-  const isLast = step === STEPS.length - 1;
+  const isLast = step === steps.length - 1;
 
   function validate(id: StepId) {
     if (id === "name" && !name.trim()) return "Please tell me your name.";
+    if (id === "role" && !role.trim()) return "Please tell me your role.";
     if (id === "rating" && rating === 0) return "Please pick a rating.";
     if (id === "message" && !message.trim())
       return "A few words would mean a lot.";
@@ -238,7 +253,7 @@ export default function FeedbackPage() {
       const err = validate(current);
       if (err) return setError(err);
     }
-    const next = Math.min(STEPS.length - 1, Math.max(0, step + delta));
+    const next = Math.min(steps.length - 1, Math.max(0, step + delta));
     if (next === step) return;
     setError("");
     setDir(delta);
@@ -252,12 +267,24 @@ export default function FeedbackPage() {
       setError("");
       setDir(1);
       setVisits((v) => v + 1);
-      setStep((s) => Math.min(STEPS.length - 1, s + 1));
+      setStep((s) => Math.min(steps.length - 1, s + 1));
     }, 650);
   }
 
+  // Reopens a pre-filled question (name or role) so it can be changed.
+  function reopen(id: StepId) {
+    clearTimeout(advanceTimer.current);
+    const nextSteps = STEPS.filter((s) => s !== id && !skipped.includes(s));
+    const withField = STEPS.filter((s) => s === id || nextSteps.includes(s));
+    setSkipped((list) => list.filter((s) => s !== id));
+    setError("");
+    setDir(-1);
+    setVisits((v) => v + 1);
+    setStep(withField.indexOf(id));
+  }
+
   async function submit() {
-    const err = STEPS.map(validate).find(Boolean);
+    const err = steps.map(validate).find(Boolean);
     if (err) return setError(err);
     if (!FEEDBACK_ENDPOINT) {
       return setError(
@@ -273,6 +300,9 @@ export default function FeedbackPage() {
         rating: String(rating),
         message: message.trim(),
         sessionType,
+        // Links from the after-meeting email carry the booking, so the
+        // answer is matched to the person who booked.
+        booking: params.get("b") ?? "",
       });
       // A form-encoded POST is a "simple" request, and Apps Script's reply
       // (after its redirect) is readable, so we can confirm it was saved.
@@ -357,8 +387,41 @@ export default function FeedbackPage() {
 
                 {/* progress as a little planetary system */}
                 <div className="mt-6">
-                  <OrbitProgress step={step} />
+                  <OrbitProgress
+                    step={step}
+                    labels={steps.map((s) => PLANET_LABEL[s])}
+                  />
                 </div>
+
+                {/* answers that came from the link, shown small; tap to change */}
+                {(skipped.includes("name") || skipped.includes("role")) && (
+                  <p className="mt-4 text-center text-xs text-gray-400 sm:text-sm">
+                    Feedback from{" "}
+                    {skipped.includes("name") && (
+                      <EditableAnswer
+                        value={name}
+                        label="name"
+                        onClick={() => reopen("name")}
+                      />
+                    )}
+                    {skipped.includes("name") && skipped.includes("role") && (
+                      <span className="mx-1.5 text-gray-600">·</span>
+                    )}
+                    {skipped.includes("role") && (
+                      <EditableAnswer
+                        value={role}
+                        label="role"
+                        onClick={() => reopen("role")}
+                      />
+                    )}
+                    {sessionType && skipped.includes("type") && (
+                      <>
+                        <span className="mx-1.5 text-gray-600">·</span>
+                        {sessionType} session
+                      </>
+                    )}
+                  </p>
+                )}
 
                 <div className="relative mt-10 min-h-[320px]">
                   {!reduceMotion && (
@@ -403,7 +466,7 @@ export default function FeedbackPage() {
                               What do you <Accent>do?</Accent>
                             </>
                           }
-                          hint="Your role or company. Optional, feel free to skip."
+                          hint="Your role, and company if you like."
                         >
                           <input
                             ref={fieldRef as never}
@@ -573,11 +636,7 @@ export default function FeedbackPage() {
                       </Button>
                     ) : (
                       <Button type="button" onClick={() => go(1)}>
-                        {current === "role" || current === "type"
-                          ? (current === "role" ? role : sessionType)
-                            ? "Next"
-                            : "Skip"
-                          : "Next"}
+                        {current === "type" && !sessionType ? "Skip" : "Next"}
                         <ChevronRight className="ml-1 h-4 w-4" />
                       </Button>
                     )}
@@ -590,6 +649,27 @@ export default function FeedbackPage() {
       </div>
       <Footer />
     </div>
+  );
+}
+
+function EditableAnswer({
+  value,
+  label,
+  onClick,
+}: {
+  value: string;
+  label: string;
+  onClick: () => void;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      title={`Change your ${label}`}
+      className="font-medium text-gray-200 underline decoration-purple-400/50 decoration-dotted underline-offset-4 transition-colors hover:text-white hover:decoration-purple-400"
+    >
+      {value}
+    </button>
   );
 }
 
