@@ -143,8 +143,8 @@ const ContactPortal: React.FC = () => {
   async function submitSchedule(e?: React.FormEvent) {
     if (e) e.preventDefault();
     const f = scheduleForm;
-    if (!f.name.trim() || !f.email.trim() || !f.date || !f.time) {
-      setScheduleError('Please fill in your name, email, date and time.');
+    if (!f.name.trim() || !f.email.trim() || !f.role.trim() || !f.date || !f.time) {
+      setScheduleError('Please fill in your name, email, role, date and time.');
       return;
     }
     setScheduleError('');
@@ -358,6 +358,7 @@ const ContactPortal: React.FC = () => {
                 onChange={handleScheduleChange}
                 placeholder="Your role, e.g. Student or Developer at Acme"
                 className="px-3 py-2 rounded-md bg-black/60 border border-white/10 text-white md:col-span-2"
+                required
               />
               <input
                 type="date"

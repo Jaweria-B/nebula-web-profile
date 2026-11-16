@@ -251,6 +251,7 @@ function saveBooking_(p) {
   const date = clean_(p.date, 10);
   const time = clean_(p.time, 5);
   if (!name || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) throw new Error("Please give your name and a valid email.");
+  if (!clean_(p.role, 150)) throw new Error("Please tell me your role.");
   if (!/^\d{4}-\d{2}-\d{2}$/.test(date) || !/^\d{2}:\d{2}$/.test(time)) throw new Error("Please pick a date and time.");
 
   const tz = clean_(p.tz, 60) || scriptTz_();
